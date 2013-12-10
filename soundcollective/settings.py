@@ -95,11 +95,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 ROOT_DIR = os.path.join(BASE_DIR, '..')
 
 STATIC_ROOT = os.path.join(ROOT_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_URL = os.path.join(BASE_DIR, 'assets/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
- 
+
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
 MEDIA_URL = '/media/'
 '''
