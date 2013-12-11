@@ -103,6 +103,13 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
 MEDIA_URL = '/media/'
 
+# s3 storage
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET']
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 # Heroku
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
@@ -118,10 +125,10 @@ ALLOWED_HOSTS = ['*']
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/assets/'
+STATIC_URL = 'https://s3.amazonaws.com/gamedevlogs/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, '../assets'),
 )
 
 
