@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+<div class='registration-form'>
+
+	<form class="form-signin" method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
+		<h2 class="form-signin-heading">Log in</h2>
+		{% if form.errors %}
+		<p class="error">Please correct the errors below:</p>
+		{% endif %}
+		
+		{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}
+		{{ form.username }}
+		{% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}
+		{{ form.password }}
+		<input class="btn btn-lg btn-primary btn-block" type="submit" value="Log in" style="margin-top: 16px;"/>
+	
+		<p>
+			Don't have an account? 
+			<a href="{% url 'registration_register' %}">Sign up</a> for one.
+		</p>
+	</form>
+	{% endblock %}
+
+	{% block content-related %}
+</div>
+{% endblock %}

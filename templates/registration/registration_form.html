@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+<div class='registration-form'>
+    <form class="form-signin" method="post" action="">
+        <h2 class="form-signin-heading">Create an account</h2>
+        {% if form.errors %}
+            <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+        {% endif %}
+        
+        {% csrf_token %}
+        
+        {% if form.username.errors %}
+            <p class="errors">{{ form.username.errors.as_text }}</p>
+        {% endif %}
+        {{ form.username }}
+        
+        {% if form.email.errors %}
+            <p class="errors">{{ form.email.errors.as_text }}</p>
+        {% endif %}
+        {{ form.email }}
+        
+        {% if form.password1.errors %}
+            <p class="errors">{{ form.password1.errors.as_text }}</p>
+        {% endif %}
+        {{ form.password1 }}
+        
+        {% if form.password2.errors %}
+            <p class="errors">{{ form.password2.errors.as_text }}</p>
+        {% endif %}
+        {{ form.password2 }}
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register &rarr;" style="margin-top: 16px;">
+    </form>
+</div>  
+{% endblock %}

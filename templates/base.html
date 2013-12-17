@@ -12,23 +12,41 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-default" role="navigation"> 
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Sound</br>Collective</a>
+    <div class='navbar-default' role='navigation'> 
+        <div class='navbar-header'>
+            <a class='navbar-brand' href="{% url 'home' %}"><p>Sound</br>Collective</p></a>
         </div>
-
+        
         <div id='search'>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+            <form class='navbar-form navbar-left' role='search'>
+                <div class='form-group'>
+                    <input type='text' class='form-control' placeholder='Search'>
                 </div>
             </form>
         </div>
-    </nav>
+
+        <ul class='nav navbar-nav navbar-right'>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'users_listeners_profile' user.username %}" style="color: rgb(75, 58, 62);">{{ user.username }}</a></li>
+                <li><a href="{% url 'logout' %}" style="color: rgb(75, 58, 62);">Log out</a></li>
+            {% else %}
+                <li><a href="{% url 'registration_login' %}" style="color: rgb(75, 58, 62);">Log in</a></li>
+            {% endif %}
+        </ul>
+    </div>
     
     <div class='container'>
+        <div class='subnav'>
+            <ul>
+                <li><a href="#">Musicians</a></li>
+                <li><a href="#">Venues</a></li>
+                <li><a href="#">Listeners</a></li>
+                <li><a href="#">Featured</a></li>
+            </ul>
+        </div></br>
+
         <div class='content'>
-           asdf 
+           {% block content %}{% endblock %}
         </div>
     </div>
 </body>

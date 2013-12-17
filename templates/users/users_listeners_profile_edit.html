@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div>
+    <form role='form' method='post'>
+        <h2 class="form-signin-heading">Edit Profile</h2>
+        {% if form.errors %}
+            <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+        {% endif %}
+        
+        {% csrf_token %}
+
+        {{ form.profile_picture }}
+
+        <div class='form-group'>
+            <span>
+                <label for="input-blurb" class="col-lg-2 control-label">First Name (Optional)</label>
+                <div class='col-lg-10'>
+                    {% if form.first_name.errors %}
+                        <p class="errors">{{ form.first_name.errors.as_text }}</p>
+                    {% endif %}
+                    {{ form.first_name }}
+                </div>
+            </span>
+            
+            <span>    
+                <label for="input-blurb" class="col-lg-2 control-label">Last Name (Optional)</label>
+                <div class='col-lg-10'>
+                    {% if form.last_name.errors %}
+                        <p class="errors">{{ form.last_name.errors.as_text }}</p>
+                    {% endif %}
+                    {{ form.last_name }}
+                </div>
+            </span>
+        </div>
+
+        {% if form.location.errors %}
+            <p class="errors">{{ form.location.errors.as_text }}</p>
+        {% endif %}
+        {{ form.location }}
+
+        {% if form.interested_in.errors %}
+            <p class="errors">{{ form.interested_in.errors.as_text }}</p>
+        {% endif %}
+        {{ form.interested_in }}
+        
+        {% if form.instruments.errors %}
+            <p class="errors">{{ form.instruments.errors.as_text }}</p>
+        {% endif %}
+        {{ form.instruments }}
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Edit &rarr;" style="margin-top: 16px;">
+    </form>
+</div>  
+{% endblock %}

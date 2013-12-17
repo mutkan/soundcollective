@@ -33,6 +33,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    
+    # 3rd party
+    'registration',
+    'south',
+    'storages',
+
+    # apps
+    'users',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,12 +112,24 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
 MEDIA_URL = '/media/'
 
+LOGIN_URL = '/listeners/login/'
+
 # s3 storage
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_SOUND']
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+# emailll
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'gamedevlogs@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ['GMAIL_PASSWORD']
+
+ACCOUNT_ACTIVATION_DAYS = 999
 
 # Heroku
 # Parse database configuration from $DATABASE_URL

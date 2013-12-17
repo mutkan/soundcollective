@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% for listener in object_list %}
+		<div>{{ listener.user.username }}</div>
+	{% empty %}
+		<div>No listeners yet! Turn on the music!</div>
+	{% endfor %}
+{% endblock content %}
