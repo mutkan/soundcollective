@@ -19,7 +19,9 @@ class UserProfile(BaseProfile):
     instruments = models.CharField(max_length=128, null=True)
 
 class MusicianProfile(BaseProfile):
+    name = models.CharField(max_length=128, null=False, default='example musician')
     genre = models.CharField(max_length=128, null=True)
 
 class VenueProfile(BaseProfile):
+    name = models.CharField(max_length=128, null=False, default='example venue')
     genre = models.CharField(max_length=128, null=True)

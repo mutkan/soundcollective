@@ -30,12 +30,11 @@ html, body {
 	color: rgb(75, 58, 62);
 }
 .navbar-right {
+	margin-top: 8px;
 	padding-right: 32px;
 }
-#search {
-	padding-left: 50%;
-	padding-top: 10px;
-	margin-left: -94px;
+#base-search {
+	margin-top: -4px;
 }
 
 .container {

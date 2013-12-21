@@ -10,8 +10,10 @@ urlpatterns = patterns('',
     url(r'^$', Home.as_view(), name='home'),
     url(r'^admin/', include(admin.site.urls)),
 
-    # registration and sessions
 	url(r'^listeners/', include('users.urls')),
+	url(r'^musicians/', include('users.urls_musicians')),
+	url(r'^venues/', include('users.urls_venues')),
+	
 	url(r'^logout/$', 
 		'django.contrib.auth.views.logout_then_login', 
 		name='logout'),

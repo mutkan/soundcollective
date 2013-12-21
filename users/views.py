@@ -12,15 +12,15 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import TemplateView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 
 from registration import signals
 from registration.models import RegistrationProfile
 from registration.views import _RequestPassingFormView
 
-from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm
-from users.models import UserProfile
+from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, MusicianRegistrationForm, VenueRegistrationForm
+from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class UsersView(ListView):
 
@@ -66,6 +66,26 @@ class UserProfileEditView(UpdateView):
 		user.save()
 		
 		return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().username,)))
+
+class MusicianRegistrationView(CreateView):
+
+	form_class = MusicianRegistrationForm
+	template_name = 'users/users_musicians_registration.html'
+
+class MusiciansView(ListView):
+
+	model = MusicianProfile
+	template_name = 'users/users_musicians.html'
+
+class VenueRegistrationView(CreateView):
+
+	form_class = VenueRegistrationForm
+	template_name = 'users/users_venues_registration.html'
+
+class VenuesView(ListView):
+
+	model = VenueProfile
+	template_name = 'users/users_venues.html'
 
 class BaseRegistrationView(_RequestPassingFormView):
 	"""

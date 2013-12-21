@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Venue Registration{% endblock %}
+
+{% block content %}
+<div class='registration-form'>
+    <form class="form-signin" method="post" action="">
+        <h2 class="form-signin-heading">Create a venue account</h2>
+        {% if form.errors %}
+            <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+        {% endif %}
+        
+        {% csrf_token %}
+        
+        {% if form.name.errors %}
+            <p class="errors">{{ form.name.errors.as_text }}</p>
+        {% endif %}
+        {{ form.name }}
+        
+        {% if form.profile_picture.errors %}
+            <p class="errors">{{ form.profile_picture.errors.as_text }}</p>
+        {% endif %}
+        {{ form.profile_picture }}
+        
+        {% if form.location.errors %}
+            <p class="errors">{{ form.location.errors.as_text }}</p>
+        {% endif %}
+        {{ form.location }}
+        
+        {% if form.genre.errors %}
+            <p class="errors">{{ form.genre.errors.as_text }}</p>
+        {% endif %}
+        {{ form.genre }}
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register &rarr;" style="margin-top: 16px;">
+    </form>
+</div>  
+{% endblock %}

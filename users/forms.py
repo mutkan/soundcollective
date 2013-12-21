@@ -4,7 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
-from users.models import UserProfile
+from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class EditUserProfileForm(ModelForm):
 
@@ -58,6 +58,18 @@ class UserRegistrationForm(forms.Form):
 			if self.cleaned_data['password1'] != self.cleaned_data['password2']:
 				raise forms.ValidationError(_("The two password fields didn't match."))
 		return self.cleaned_data
+
+class MusicianRegistrationForm():
+	
+	class Meta:
+		model = MusicianProfile
+		fields = ['name', 'profile_picture', 'genre', 'location']
+
+class VenueRegistrationForm():
+
+	class Meta:
+		model = VenueProfile
+		fields = ['name', 'profile_picture', 'genre', 'location']
 
 class UserLoginForm(AuthenticationForm):
 

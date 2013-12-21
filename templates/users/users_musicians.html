@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% for musician in object_list %}
+		<div>{{ musician.user.username }}</div>
+	{% empty %}
+		<div>No musicians yet! Turn on the music!</div>
+	{% endfor %}
+{% endblock content %}

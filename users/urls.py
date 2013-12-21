@@ -5,7 +5,8 @@ from django.views.generic.base import TemplateView
 
 from registration.backends.default.views import ActivationView
 
-from users.views import UserRegistrationView, login, UsersView, UserProfileView, UserProfileEditView
+from users.views import (UserRegistrationView, login, UsersView, UserProfileView, UserProfileEditView,
+	MusiciansView, MusicianRegistrationView, VenuesView, VenueRegistrationView)
 
 # django-registration urls
 urlpatterns = patterns('',
@@ -33,12 +34,22 @@ urlpatterns = patterns('',
 
 	# listeners
 	url(r'^$', UsersView.as_view(), name='users_listeners'),
-	
 	url(r'^(?P<username>\w+)/$',
 		UserProfileView.as_view(),
 		name='users_listeners_profile'),
-
 	url(r'^(?P<username>\w+)/edit/$',
 		UserProfileEditView.as_view(),
 		name='users_listeners_profile_edit'),
+
+	# musicians
+	url(r'^$', MusiciansView.as_view(), name='users_musicians'),
+	url(r'^$', 
+		MusicianRegistrationView.as_view(), 
+		name='users_musicians'),
+
+	# venues
+	url(r'^$', VenuesView.as_view(), name='users_venues'),
+	url(r'^$', 
+		VenueRegistrationView.as_view(),
+		name='users_venues'),
 )
