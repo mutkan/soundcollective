@@ -17,10 +17,10 @@
         {% endif %}
         {{ form.name }}
         
-        {% if form.profile_picture.errors %}
-            <p class="errors">{{ form.profile_picture.errors.as_text }}</p>
+        {% if form.profile_image.errors %}
+            <p class="errors">{{ form.profile_image.errors.as_text }}</p>
         {% endif %}
-        {{ form.profile_picture }}
+        {{ form.profile_image }}
         
         {% if form.location.errors %}
             <p class="errors">{{ form.location.errors.as_text }}</p>

@@ -109,9 +109,10 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://s3.amazonaws.com/soundcollective/'
 
 LOGIN_URL = '/listeners/login/'
+LOGIN_REDIRECT_URL = '/listeners/me/'
 
 # s3 storage
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
@@ -145,7 +146,7 @@ ALLOWED_HOSTS = ['*']
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = 'https://s3.amazonaws.com/soundcollective/'
+STATIC_URL = 'https://s3.amazonaws.com/soundcollective/assets/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../assets'),

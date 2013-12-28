@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
-{% block content %}
-	{% for listener in object_list %}
-		<div>{{ listener.user.username }}</div>
+{% block content-margins %}
+
+	{% for object in object_list %}
+		{% include 'users/_list_partial.html' with profile=object %}
 	{% empty %}
 		<div>No listeners yet! Turn on the music!</div>
 	{% endfor %}
-{% endblock content %}
+{% endblock content-margins %}

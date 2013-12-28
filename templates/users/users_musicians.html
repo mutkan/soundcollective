@@ -2,7 +2,7 @@
 
 {% block content %}
 	{% for musician in object_list %}
-		<div>{{ musician.user.username }}</div>
+		<div>{{ musician.display_name }}</div>
 	{% empty %}
 		<div>No musicians yet! Turn on the music!</div>
 	{% endfor %}

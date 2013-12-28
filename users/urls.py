@@ -1,12 +1,14 @@
 from django.conf.urls import patterns
 from django.conf.urls import include
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 
 from registration.backends.default.views import ActivationView
 
-from users.views import (UserRegistrationView, login, UsersView, UserProfileView, UserProfileEditView,
-	MusiciansView, MusicianRegistrationView, VenuesView, VenueRegistrationView)
+from users.views import (check_if_user, UserRegistrationView, login, UsersView, UserHomeView,
+	UserProfileView, UserProfileEditView, MusiciansView, MusicianRegistrationView, VenuesView, 
+	VenueRegistrationView)
 
 # django-registration urls
 urlpatterns = patterns('',
@@ -34,11 +36,14 @@ urlpatterns = patterns('',
 
 	# listeners
 	url(r'^$', UsersView.as_view(), name='users_listeners'),
+	url(r'^me/$',
+		login_required(UserHomeView.as_view()),
+		name='users_home'),
 	url(r'^(?P<username>\w+)/$',
 		UserProfileView.as_view(),
 		name='users_listeners_profile'),
 	url(r'^(?P<username>\w+)/edit/$',
-		UserProfileEditView.as_view(),
+		check_if_user(UserProfileEditView.as_view()),
 		name='users_listeners_profile_edit'),
 
 	# musicians

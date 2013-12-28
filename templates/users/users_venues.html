@@ -2,7 +2,7 @@
 
 {% block content %}
 	{% for venue in object_list %}
-		<div>{{ venue.user.username }}</div>
+		<div>{{ venue.display_name }}</div>
 	{% empty %}
 		<div>No venues yet! Turn on the music!</div>
 	{% endfor %}

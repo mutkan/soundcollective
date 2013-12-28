@@ -1,0 +1,28 @@
+<span>
+	<div class="pure-g-r">
+        <div class="pure-u-1-5">
+			<div class="l-box splash-image">
+				<a href="{% url 'users_listeners_profile' profile.user.username %}">
+					<img src="{{ MEDIA_PREFIX }}{{ profile.profile_image }}" alt="">
+				</a>
+			</div>
+		</div>
+
+		<div class="pure-u-4-5">
+                <div class="l-box splash-text">
+                    <h1 class="splash-head">
+                        <div>
+                            {{ profile.display_name }}
+                        </div>
+                    </h1>
+                    <div class="splash-subhead">
+                        {{ profile.location }}
+                        <p>
+                            {{ profile.blurb }}
+                        </p>                        
+                    </div>
+
+                </div>
+            </div>
+	</div>
+</span>

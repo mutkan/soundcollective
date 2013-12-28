@@ -1,12 +1,12 @@
-# Create your views here.
-
 from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, get_user_model
 from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite, Site, get_current_site
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
@@ -15,6 +15,8 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 
+from functools import wraps
+
 from registration import signals
 from registration.models import RegistrationProfile
 from registration.views import _RequestPassingFormView
@@ -22,10 +24,29 @@ from registration.views import _RequestPassingFormView
 from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, MusicianRegistrationForm, VenueRegistrationForm
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
+class InaccessibleView(TemplateView):
+
+	template_name = 'inaccessible.html'
+
+def check_if_user(function):
+
+    @wraps(function)
+    def decorator(request, *args, **kwargs):
+    	if request.user.username == kwargs['username']:
+    		return function(request, *args, **kwargs)
+    	else:
+    		return HttpResponseRedirect(reverse('inaccessible'))
+
+    return decorator
+
 class UsersView(ListView):
 
 	model = UserProfile
 	template_name = 'users/users_listeners.html'
+
+class UserHomeView(TemplateView):
+
+	template_name = 'users/users_home.html'
 
 class UserProfileView(TemplateView):
 	
@@ -39,6 +60,7 @@ class UserProfileView(TemplateView):
 		context = super(UserProfileView, self).get_context_data(**kwargs)
 		context['user'] = self.get_object()
 		context['user_profile'] = UserProfile.objects.get(user_id=context['user'].id)
+		context['is_user'] = True if self.get_object().id == self.request.user.id else False
 		return context
 
 class UserProfileEditView(UpdateView):
@@ -54,18 +76,16 @@ class UserProfileEditView(UpdateView):
 	def get_context_data(self, **kwargs):
 		context = super(UserProfileEditView, self).get_context_data(**kwargs)
 		context['user'] = user = self.get_object()
-		# context['is_developer'] = game.developers.filter(id=self.request.user.id)
 		
 		return context
 	
 	def form_valid(self, form):
 		
 		user = form.save()
-		# user.profile_image = image=form.cleaned_data['profile_image']
-		user.modified_by = self.request.user
+		user.profile_image = form.cleaned_data['profile_image']
 		user.save()
 		
-		return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().username,)))
+		return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().user.username,)))
 
 class MusicianRegistrationView(CreateView):
 
@@ -251,6 +271,7 @@ def login(request, template_name='registration/login.html',
     """
     Displays the login form and handles the login action.
     """
+
     redirect_to = request.REQUEST.get(redirect_field_name, '')
 
     if request.method == "POST":

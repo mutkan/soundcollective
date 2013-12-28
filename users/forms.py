@@ -10,7 +10,16 @@ class EditUserProfileForm(ModelForm):
 
 	class Meta:
 		model = UserProfile
-		fields = ['profile_picture', 'location', 'first_name', 'last_name', 'interested_in', 'instruments']
+		fields = ['profile_image', 'splash_image', 'display_name', 'location', 'blurb']
+
+	def __init__(self, *args, **kwargs):
+		super(EditUserProfileForm, self).__init__(*args, **kwargs)
+
+		self.fields['profile_image'].required = False
+		self.fields['splash_image'].required = False
+		self.fields['display_name'].required = False
+		self.fields['location'].required = False
+		self.fields['blurb'].required = False
 
 class UserRegistrationForm(forms.Form):
 	"""
@@ -63,13 +72,13 @@ class MusicianRegistrationForm():
 	
 	class Meta:
 		model = MusicianProfile
-		fields = ['name', 'profile_picture', 'genre', 'location']
+		fields = ['name', 'profile_image', 'genre', 'location']
 
 class VenueRegistrationForm():
 
 	class Meta:
 		model = VenueProfile
-		fields = ['name', 'profile_picture', 'genre', 'location']
+		fields = ['name', 'profile_image', 'genre', 'location']
 
 class UserLoginForm(AuthenticationForm):
 

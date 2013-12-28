@@ -4,6 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from soundcollective.views import Home
+from users.views import InaccessibleView
 
 urlpatterns = patterns('',
 
@@ -17,4 +18,7 @@ urlpatterns = patterns('',
 	url(r'^logout/$', 
 		'django.contrib.auth.views.logout_then_login', 
 		name='logout'),
+	url(r'^inaccessible/$',
+		InaccessibleView.as_view(),
+		name='inaccessible'),
 )

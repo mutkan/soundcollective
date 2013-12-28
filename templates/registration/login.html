@@ -5,6 +5,8 @@
 {% block content %}
 <div class='registration-form'>
 
+	{% block content-related %}
+
 	<form class="form-signin" method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
 		<h2 class="form-signin-heading">Log in</h2>
 		{% if form.errors %}
@@ -23,7 +25,5 @@
 		</p>
 	</form>
 	{% endblock %}
-
-	{% block content-related %}
 </div>
 {% endblock %}
