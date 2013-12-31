@@ -41,6 +41,7 @@ INSTALLED_APPS = (
 
     # apps
     'users',
+    'mixins',
 )
 
 MIDDLEWARE_CLASSES = (

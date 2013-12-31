@@ -5,3 +5,7 @@
 	width: 900px;
 	margin: 5em auto 2em auto;
 }
+.center-it {
+	margin-left: auto;
+	margin-right: auto;
+}

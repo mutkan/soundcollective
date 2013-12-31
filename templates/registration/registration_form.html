@@ -3,35 +3,48 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-<div class='registration-form'>
-    <form class="form-signin" method="post" action="">
-        <h2 class="form-signin-heading">Create an account</h2>
-        {% if form.errors %}
-            <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
-        {% endif %}
-        
-        {% csrf_token %}
-        
-        {% if form.username.errors %}
-            <p class="errors">{{ form.username.errors.as_text }}</p>
-        {% endif %}
-        {{ form.username }}
-        
-        {% if form.email.errors %}
-            <p class="errors">{{ form.email.errors.as_text }}</p>
-        {% endif %}
-        {{ form.email }}
-        
-        {% if form.password1.errors %}
-            <p class="errors">{{ form.password1.errors.as_text }}</p>
-        {% endif %}
-        {{ form.password1 }}
-        
-        {% if form.password2.errors %}
-            <p class="errors">{{ form.password2.errors.as_text }}</p>
-        {% endif %}
-        {{ form.password2 }}
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register &rarr;" style="margin-top: 16px;">
-    </form>
+<div class="pure-g-r">
+    <div class="pure-u-1-3"></div>
+    <div class="pure-u-1-3">
+        <form class='pure-form pure-form-stacked' method="post" action="">
+            
+            {% csrf_token %}
+
+            <fieldset>
+                <legend>Create an account</legend>
+                {% if form.errors %}
+                    <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+                {% endif %}
+                
+ 
+                <label for='input-username'>Username</label>
+                {% if form.username.errors %}
+                    <p class="errors">{{ form.username.errors.as_text }}</p>
+                {% endif %}
+                {{ form.username }}
+
+                <label for='input-email'>Email Address</label>
+                {% if form.email.errors %}
+                    <p class="errors">{{ form.email.errors.as_text }}</p>
+                {% endif %}
+                {{ form.email }}
+
+                <label for='input-password1'>Password</label>
+                {% if form.password1.errors %}
+                    <p class="errors">{{ form.password1.errors.as_text }}</p>
+                {% endif %}
+                {{ form.password1 }}
+
+                <label for='input-password2'>Confirm Password</label>
+                {% if form.password2.errors %}
+                    <p class="errors">{{ form.password2.errors.as_text }}</p>
+                {% endif %}
+                {{ form.password2 }}
+
+                <button class="pure-button pure-button-primary" type="submit">Register</button>
+
+            </fieldset> 
+        </form>
+    </div>
 </div>  
 {% endblock %}

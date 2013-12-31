@@ -2,28 +2,33 @@
 
 {% block title %}Log in{% endblock %}
 
-{% block content %}
-<div class='registration-form'>
+{% block content-margins %}
+<div class="pure-g-r">
+	<div class="pure-u-1-3"></div>
+	<div class="pure-u-1-3">
+		<form class='pure-form pure-form-stacked' method="post" action="?next={{ next|default:"/" }}">
+			{% csrf_token %}
+			<fieldset>
+				<legend>Log in</legend>
+				{% if form.errors %}
+					<p class="error">Please correct the errors below:</p>
+				{% endif %}
+				
+				<label for='input-username'>Username</label>
+				{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}
+				{{ form.username }}
 
-	{% block content-related %}
+				<label for='input-password'>Password</label>
+				{% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}
+				{{ form.password }}
 
-	<form class="form-signin" method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
-		<h2 class="form-signin-heading">Log in</h2>
-		{% if form.errors %}
-		<p class="error">Please correct the errors below:</p>
-		{% endif %}
-		
-		{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}
-		{{ form.username }}
-		{% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}
-		{{ form.password }}
-		<input class="btn btn-lg btn-primary btn-block" type="submit" value="Log in" style="margin-top: 16px;"/>
-	
+				<button class="pure-button pure-button-primary" type="submit">Log in</button>
+			</fieldset>
+		</form>
 		<p>
 			Don't have an account? 
 			<a href="{% url 'registration_register' %}">Sign up</a> for one.
 		</p>
-	</form>
-	{% endblock %}
+	</div>
 </div>
 {% endblock %}

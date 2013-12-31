@@ -3,7 +3,9 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 
-class BaseProfile(models.Model):
+from mixins.models import CreateModifyDates
+
+class BaseProfile(CreateModifyDates):
     class Meta:
         abstract = True
 
@@ -21,7 +23,7 @@ class UserProfile(BaseProfile):
     last_name = models.CharField(max_length=32, null=True)
     interested_in = models.CharField(max_length=128, null=True)
     instruments = models.CharField(max_length=128, null=True)
-    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png/')
+    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png')
     splash_image = models.ImageField(upload_to=upload_path, null=True)
 
 class MusicianProfile(BaseProfile):
@@ -31,7 +33,7 @@ class MusicianProfile(BaseProfile):
 
     name = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
-    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png/')
+    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png')
     splash_image = models.ImageField(upload_to=upload_path, null=True)
 
 class VenueProfile(BaseProfile):
@@ -41,5 +43,5 @@ class VenueProfile(BaseProfile):
 
     name = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
-    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png/')
+    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png')
     splash_image = models.ImageField(upload_to=upload_path, null=True)
