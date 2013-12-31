@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     # 3rd party
     'registration',
     'storages',
+    'south',
 
     # apps
     'users',
