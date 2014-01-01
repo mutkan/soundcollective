@@ -45,6 +45,10 @@ urlpatterns = patterns('',
 	url(r'^(?P<username>\w+)/edit/$',
 		check_if_user(UserProfileEditView.as_view()),
 		name='users_listeners_profile_edit'),
+	#url(r'^(?P<username>\w+)/images/$',
+	#	login_required(ProfileImageListView.as_view()),
+	#	name='uploads_images_profile_list'),
+
 
 	# musicians
 	url(r'^$', MusiciansView.as_view(), name='users_musicians'),

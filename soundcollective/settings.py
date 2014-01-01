@@ -41,8 +41,11 @@ INSTALLED_APPS = (
     'south',
 
     # apps
-    'users',
     'mixins',
+    'tags',
+    'uploads',
+    'users',
+    'posts',
 )
 
 MIDDLEWARE_CLASSES = (

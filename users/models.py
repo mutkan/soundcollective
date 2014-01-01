@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from mixins.models import CreateModifyDates
 
 class BaseProfile(CreateModifyDates):
+
     class Meta:
         abstract = True
 
@@ -16,32 +17,24 @@ class BaseProfile(CreateModifyDates):
 
 class UserProfile(BaseProfile):
 
-    def upload_path(instance, filename):
-        return os.path.join('images', 'listeners', '%d' % instance.id, filename)
-
     first_name = models.CharField(max_length=32, null=True)
     last_name = models.CharField(max_length=32, null=True)
     interested_in = models.CharField(max_length=128, null=True)
     instruments = models.CharField(max_length=128, null=True)
-    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png')
-    splash_image = models.ImageField(upload_to=upload_path, null=True)
+    profile_image = models.ForeignKey('uploads.Image', related_name='user_profile_image')
+    splash_image = models.ForeignKey('uploads.Image', related_name='user_splash_image')
 
 class MusicianProfile(BaseProfile):
 
-    def upload_path(instance, filename):
-        return os.path.join('images', 'musicians', '%d' % instance.id, filename)
-
     name = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
-    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png')
-    splash_image = models.ImageField(upload_to=upload_path, null=True)
+    profile_image = models.ForeignKey('uploads.Image', related_name='musician_profile_image')
+    splash_image = models.ForeignKey('uploads.Image', related_name='musician_splash_image')
 
 class VenueProfile(BaseProfile):
 
-    def upload_path(instance, filename):
-        return os.path.join('images', 'venues', '%d' % instance.id, filename)
-
     name = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
-    profile_image = models.ImageField(upload_to=upload_path, null=True, default='images/common/cassette.png')
-    splash_image = models.ImageField(upload_to=upload_path, null=True)
+    profile_image = models.ForeignKey('uploads.Image', related_name='venue_profile_image')
+    splash_image = models.ForeignKey('uploads.Image', related_name='venue_splash_image')
+

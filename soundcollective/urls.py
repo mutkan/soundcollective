@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
+from posts.views import CreatePostView
 from soundcollective.views import Home
 from users.views import InaccessibleView
 
@@ -21,4 +22,8 @@ urlpatterns = patterns('',
 	url(r'^inaccessible/$',
 		InaccessibleView.as_view(),
 		name='inaccessible'),
+
+        url(r'^create/post/$',
+            CreatePostView.as_view(),
+            name='posts_create'),
 )

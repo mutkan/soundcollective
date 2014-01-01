@@ -21,6 +21,8 @@ from registration import signals
 from registration.models import RegistrationProfile
 from registration.views import _RequestPassingFormView
 
+from uploads.models import Image
+
 from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, MusicianRegistrationForm, VenueRegistrationForm
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
@@ -82,7 +84,8 @@ class UserProfileEditView(UpdateView):
 	def form_valid(self, form):
 		
 		user = form.save()
-		user.profile_image = form.cleaned_data['profile_image']
+		image = Image.objects.create(image=form.cleaned_data['profile_image'], user_profile=user)
+                user.profile_image = image 
 		user.save()
 		
 		return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().user.username,)))

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <meta charset="utf-8">
+    <title>jQuery UI Datepicker - Default functionality</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script>
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
+    </script>
+{% endblock head %}
+
+{% block content %}
+
+    <form class='pure-form pure-form-stacked' enctype="multipart/form-data" action="" role='form' method='post'>
+        {% csrf_token %}
+
+        <label for='input-subject'>Subject</label>
+        {{ form.subject }}
+
+        {{ form.date }}
+        <label for='input-location'>Location</label>
+        {{ form.location }}
+
+        <label for='input-body'>Body</label>
+        {{ form.body }}
+    </form>
+{% endblock content %}
