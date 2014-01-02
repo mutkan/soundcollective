@@ -24,7 +24,12 @@ class PostForm(ModelForm):
         )
 
         self.fields['date'].required = True
-        self.fields['date'] = forms.DateField(widget = widgets.AdminDateWidget(), initial=date.today())
+        self.fields['date'].initial = date.today().strftime("%m/%d/%Y")
+        self.fields['date'].widget = forms.TextInput(
+            attrs = {
+                'id': 'input-date',
+            }
+        )
 
         self.fields['location'].required = True
         self.fields['location'].widget = forms.TextInput(

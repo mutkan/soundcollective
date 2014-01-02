@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script>
     $(function() {
-        $( "#datepicker" ).datepicker();
+        $( "#input-date" ).datepicker();
     });
     </script>
 {% endblock head %}
 
-{% block content %}
+{% block content-margins %}
 
     <form class='pure-form pure-form-stacked' enctype="multipart/form-data" action="" role='form' method='post'>
         {% csrf_token %}
@@ -22,11 +22,15 @@
         <label for='input-subject'>Subject</label>
         {{ form.subject }}
 
+        <label for='input-date'>Date</label>
         {{ form.date }}
+
         <label for='input-location'>Location</label>
         {{ form.location }}
 
         <label for='input-body'>Body</label>
         {{ form.body }}
+
+        <button class="pure-button pure-button-primary" type="submit">Post</button>
     </form>
-{% endblock content %}
+{% endblock content-margins %}
