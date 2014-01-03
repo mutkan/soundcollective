@@ -9,9 +9,16 @@ body {
   background-color: #eee;
 }
 .l-box {
-  padding: 1em;
-  background-color: rgba(255, 255, 255, 0.9);
- 
+    padding: 1em;
+    margin: 0.5em;
+    background-color: rgba(255,255,255,0.9);
+    box-shadow: 3px 3px rgba(0,0,0,0.9);
+}
+.l-box-2 {
+    padding: 1em;
+    margin: 0.5em;
+    background-color: rgba(255,255,255,0.9);
+    box-shadow: 3px 3px rgba(0,0,0,0.9);
 }
 .header {
   margin-bottom: 3.4em;
