@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  margin: 0 auto;
+  margin: 0 auto 0 auto;
   line-height: 1.7em;
   background-color: #eee;
 }
@@ -64,11 +64,10 @@ body .primary-button {
   display: inline-block;
 }
 .content .content-ribbon {
-  margin: 3em;
   border-bottom: 1px solid #eee;
+  margin: 1.4em;
 }
 .ribbon {
-  background: #eee;
   text-align: center;
   padding: 2em;
   color: #999;
@@ -87,10 +86,22 @@ body .primary-button {
 
 .content-wrapper {
 	width: 100%;
+        height: 100%;
 }
 .content-wrapper-margins {
-	width: 850px;
-	margin: 5em auto 2em auto;
+	width: 976px;
+	margin: 0 auto 0 auto;
+
+        border-left: 1px solid #b7b7b7;
+        border-right: 1px solid #b7b7b7;
+}
+.actual-content {
+    width: 850px;
+    
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-top: 2em;
 }
 .center-it {
 	margin-left: auto;
@@ -98,5 +109,6 @@ body .primary-button {
 }
 
 .posts_list_partial {
-    margin-bottom: 1em;
+    padding-bottom: 1em;
 }
+
