@@ -3,7 +3,7 @@
 {% block content-margins %}
 
     {% for p in object_list %}
-        <div class='posts_list_partial'>
+        <div class='l-box'>
             <div><a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a></div>
             <div>{{ p.date }}</div>
             <div>{{ p.location }}</div>

@@ -39,7 +39,8 @@
             {% block content %}{% endblock %}
 
             <div class="content-wrapper-margins">
-                <div class="actual-content">
+                <div class="pure-g-r">
+                <div class="pure-u-1">
                     {% block content-margins %}{% endblock %}
                 </div>
                 {% if not user.is_authenticated %}
@@ -49,6 +50,7 @@
                     </div>
                 {% endif %}
 
+            </div>
             </div>
         </div>
 

@@ -96,14 +96,11 @@ body .primary-button {
         height: 100%;
 }
 .content-wrapper-margins {
-	width: 976px;
+	max-width: 900px;
 	margin: 0 auto 0 auto;
-
-        border-left: 1px solid #b7b7b7;
-        border-right: 1px solid #b7b7b7;
 }
 .actual-content {
-    width: 850px;
+    width: 900px;
     
     margin-left: auto;
     margin-right: auto;
