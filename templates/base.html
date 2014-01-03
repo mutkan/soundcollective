@@ -39,19 +39,20 @@
             {% block content %}{% endblock %}
 
             <div class="content-wrapper-margins">
-                {% block content-margins %}{% endblock %}
+                <div class="actual-content">
+                    {% block content-margins %}{% endblock %}
+                </div>
+                {% if not user.is_authenticated %}
+                    <div class="l-box ribbon">
+                        <h2>Get started now.</h2>
+                        <a href="{% url 'registration_login' %}" class="pure-button primary-button">Log in</a>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
 
 
-
-        {% if not user.is_authenticated %}
-            <div class="l-box ribbon">
-                    <h2>Get started now.</h2>
-                    <a href="{% url 'registration_login' %}" class="pure-button primary-button">Log in</a>
-                </div>
-            </div>
-        {% endif %}
 
         <div class="footer">
             We did it for the homie.
