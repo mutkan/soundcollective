@@ -46,6 +46,9 @@ class EditUserProfileForm(ModelForm):
 			}
 		)
 
+class UserProfileImageListForm(forms.Form):
+    pass
+
 class UserRegistrationForm(forms.Form):
 	"""
 	Overriding django-registration form.

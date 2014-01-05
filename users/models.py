@@ -3,7 +3,7 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 
-from mixins.models import CreateModifyDates
+from mixins.models import CreateModifyDates, CreateModifyDatesNoUser
 
 class BaseProfile(CreateModifyDates):
 
@@ -14,7 +14,11 @@ class BaseProfile(CreateModifyDates):
     location = models.CharField(max_length=128, null=True)
     blurb = models.CharField(max_length=256, null=True)
 
-class UserProfile(BaseProfile):
+class UserProfile(CreateModifyDatesNoUser):
+
+    display_name = models.CharField(max_length=32, null=True)
+    location = models.CharField(max_length=128, null=True)
+    blurb = models.CharField(max_length=256, null=True)
 
     user = models.OneToOneField(User, related_name='userprofile')
     first_name = models.CharField(max_length=32, null=True)

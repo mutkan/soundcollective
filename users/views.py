@@ -23,7 +23,7 @@ from registration.views import _RequestPassingFormView
 
 from uploads.models import Image
 
-from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, MusicianRegistrationForm, VenueRegistrationForm
+from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, UserProfileImageListForm, MusicianRegistrationForm, VenueRegistrationForm
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class InaccessibleView(TemplateView):
@@ -84,11 +84,14 @@ class UserProfileEditView(UpdateView):
 	def form_valid(self, form):
 		
 		user = form.save()
-		image = Image.objects.create(image=form.cleaned_data['profile_image'], user_profile=user)
-                user.profile_image = image 
 		user.save()
 		
 		return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().user.username,)))
+                
+class UserProfileImageListView(UpdateView):
+    
+    form_name = UserProfileImageListForm 
+    template_name = 'users/users_listeners_profile_images.html'
 
 class MusicianRegistrationView(CreateView):
 

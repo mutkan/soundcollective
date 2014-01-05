@@ -11,6 +11,9 @@ class PostForm(ModelForm):
         model = Post
         fields = ['subject', 'location', 'date', 'body',] 
 
+    flyer = forms.ImageField()
+    flyer.required = False
+
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
 

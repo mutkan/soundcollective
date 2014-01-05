@@ -6,6 +6,7 @@
 
     <div class='pure-u-2-3 posts_post'>
         <div>{{ post.subject }}</div>
+        <div><img src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
         <div>{{ post.date }}</div>
         <div>{{ post.location }}</div>
         <div>{{ post.body }}</div>

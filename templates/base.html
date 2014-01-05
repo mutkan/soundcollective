@@ -42,13 +42,14 @@
                 <div class="pure-g-r">
                 <div class="pure-u-1">
                     {% block content-margins %}{% endblock %}
+                    {% if not user.is_authenticated %}
+                        <div class="ribbon">
+                            <h2>Get started now.</h2>
+                            <a href="{% url 'registration_login' %}" class="pure-button primary-button">Log in</a>
+                        </div>
+                    {% endif %}
                 </div>
-                {% if not user.is_authenticated %}
-                    <div class="l-box ribbon">
-                        <h2>Get started now.</h2>
-                        <a href="{% url 'registration_login' %}" class="pure-button primary-button">Log in</a>
-                    </div>
-                {% endif %}
+                
 
             </div>
             </div>

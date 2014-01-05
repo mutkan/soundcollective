@@ -7,8 +7,8 @@ from django.views.generic.base import TemplateView
 from registration.backends.default.views import ActivationView
 
 from users.views import (check_if_user, UserRegistrationView, login, UsersView, UserHomeView,
-	UserProfileView, UserProfileEditView, MusiciansView, MusicianRegistrationView, VenuesView, 
-	VenueRegistrationView)
+	UserProfileView, UserProfileEditView, UserProfileImageListView, MusiciansView,
+        MusicianRegistrationView, VenuesView, VenueRegistrationView)
 
 # django-registration urls
 urlpatterns = patterns('',
@@ -45,10 +45,9 @@ urlpatterns = patterns('',
 	url(r'^(?P<username>\w+)/edit/$',
 		check_if_user(UserProfileEditView.as_view()),
 		name='users_listeners_profile_edit'),
-	#url(r'^(?P<username>\w+)/images/$',
-	#	login_required(ProfileImageListView.as_view()),
-	#	name='uploads_images_profile_list'),
-
+	url(r'^(?P<username>\w+)/images/$',
+		login_required(UserProfileImageListView.as_view()),
+		name='users_listeners_profile_image_list'),
 
 	# musicians
 	url(r'^$', MusiciansView.as_view(), name='users_musicians'),
