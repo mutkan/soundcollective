@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content-margins %}
+    <form class='pure-form pure-form-stacked' enctype='multipart/form-data' action='' role='form' method='post'>
+        {% csrf_token %}
+
+        <label for='input-profile-image'>Profile Image</label>
+        {{ form.profile }}
+
+        <label for='input-splash-image'>Splash Image</label>
+        {{ form.splash }}
+        
+        <button class='pure button pure-button-primary' type='submit'>Save Images</button>
+    </form>
+{% endblock content-margins %}

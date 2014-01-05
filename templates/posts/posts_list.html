@@ -2,7 +2,6 @@
 
 {% block content-margins %}
 
-    <a class="pure-button pure-button-primary" href="{% url 'posts_create' %}">What's the happs?</a>
     {% for p in object_list %}
         <div class='l-box'>
             <div><a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a></div>

@@ -47,7 +47,22 @@ class EditUserProfileForm(ModelForm):
 		)
 
 class UserProfileImageListForm(forms.Form):
-    pass
+
+    profile = forms.ImageField()
+    profile.required = False
+    profile.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-profile-image',
+        }
+    )
+
+    splash = forms.ImageField()
+    splash.required = False
+    splash.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-splash-image',
+        }
+    )
 
 class UserRegistrationForm(forms.Form):
 	"""

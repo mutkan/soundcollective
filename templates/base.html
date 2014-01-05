@@ -34,7 +34,23 @@
                 </ul>
             </div>  
         </div>
-
+        <div class='pure-u' id='sidebar'>
+            <div class="pure-menu pure-menu-open">
+                <ul>
+                    <li><a href="{% url 'posts_create' %}">Post the happs</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'users_listeners_profile' user.username %}">My Profile</a></li>
+                        <li class="pure-menu-heading">Musician Profiles</li>
+                        <li><a href="">+ New Musician Profile</a></li>
+                        <li class="pure-menu-heading">Venue Profiles</li>
+                        <li><a href="">+ New Venue Profile</a></li>
+                    {% else %}
+                        <li><a href="{% url 'registration_login' %}">Log in</a></li>
+                        <li><a href="{% url 'registration_register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
         <div class="content-wrapper">
             {% block content %}{% endblock %}
 
@@ -42,12 +58,7 @@
                 <div class="pure-g-r">
                 <div class="pure-u-1">
                     {% block content-margins %}{% endblock %}
-                    {% if not user.is_authenticated %}
-                        <div class="ribbon">
-                            <h2>Get started now.</h2>
-                            <a href="{% url 'registration_login' %}" class="pure-button primary-button">Log in</a>
-                        </div>
-                    {% endif %}
+                    
                 </div>
                 
 
