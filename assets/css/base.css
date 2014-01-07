@@ -7,6 +7,7 @@ body, html {
     height: 100%;
 }
 body {
+    padding-top: 70px;
   margin: 0 auto 0 auto;
   line-height: 1.7em;
   background-color: #eee;
@@ -94,14 +95,11 @@ body .primary-button {
 
 #sidebar {
 }
-.content {
-    height: 100%;
-}
 .content-wrapper {
     width: 100%;
 }
 .content-wrapper-margins {
-    max-width: 900px;
+    max-width: 1280px;
     margin: 0 auto 0 auto;
 }
 .actual-content {

@@ -34,43 +34,22 @@
                 </ul>
             </div>  
         </div>
-        <div class='pure-u' id='sidebar'>
-            <div class="pure-menu pure-menu-open">
-                <ul>
-                    <li><a href="{% url 'posts_create' %}">Post the happs</a></li>
-                    {% if user.is_authenticated %}
-                        <li><a href="{% url 'users_listeners_profile' user.username %}">My Profile</a></li>
-                        <li class="pure-menu-heading">Musician Profiles</li>
-                        <li><a href="">+ New Musician Profile</a></li>
-                        <li class="pure-menu-heading">Venue Profiles</li>
-                        <li><a href="">+ New Venue Profile</a></li>
-                    {% else %}
-                        <li><a href="{% url 'registration_login' %}">Log in</a></li>
-                        <li><a href="{% url 'registration_register' %}">Register</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
+
         <div class="content-wrapper">
             {% block content %}{% endblock %}
-
-            <div class="content-wrapper-margins">
-                <div class="pure-g-r">
+            <div class="pure-g-r">
                 <div class="pure-u-1">
-                    {% block content-margins %}{% endblock %}
-                    
+                    <div class="content-wrapper-margins">
+                        {% block content-margins %}{% endblock %}
+                    </div>
                 </div>
-                
-
-            </div>
             </div>
         </div>
+    </div>
+ 
 
-
-
-        <div class="footer">
-            We did it for the homie.
-        </div>
+    <div class="footer">
+        We did it for the homie.
     </div>
     
     <script src="lib/yui-min.js"></script>

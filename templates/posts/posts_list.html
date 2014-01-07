@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "base_menu.html" %}
 
-{% block content-margins %}
+{% block content-margins-menu %}
 
     {% for p in object_list %}
         <div class='l-box'>
@@ -9,4 +9,4 @@
             <div>{{ p.location }}</div>
         </div>
     {% endfor %}
-{% endblock content-margins %}
+{% endblock content-margins-menu %}

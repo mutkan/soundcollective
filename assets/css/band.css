@@ -85,3 +85,7 @@ body .primary-button {
   padding: 1em;
   font-size: 80%;
 }
+
+.content-wrapper-margins {
+    max-width: 1280px;
+}
