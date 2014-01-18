@@ -36,6 +36,7 @@
                             <li><a href="{% url 'users_listeners_profile' user.username %}">{{ user.username }}</a></li>
                         {% else %}
                             <li><a href="{% url 'registration_login' %}">Login</a></li>
+                            <li><a href="{% url 'registration_register' %}">Register</a></li>
                         {% endif %}
                     </ul>
             </div>  
