@@ -7,44 +7,56 @@ from django.utils.translation import ugettext_lazy as _
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class EditUserProfileForm(ModelForm):
+    profile_image = forms.ImageField()
+    profile_image.required = False
+    profile_image.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-profile-image',
+        }
+    )
 
-	class Meta:
-		model = UserProfile
-		fields = ['profile_image', 'splash_image', 'display_name', 'location', 'blurb']
+    splash_image = forms.ImageField()
+    splash_image.required = False
+    splash_image.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-splash-image',
+        }
+    )
 
-	def __init__(self, *args, **kwargs):
-		super(EditUserProfileForm, self).__init__(*args, **kwargs)
+    class Meta:
+        model = UserProfile
+        fields = ['display_name', 'location', 'blurb']
 
-		self.fields['profile_image'].required = False
-		self.fields['splash_image'].required = False
+    def __init__(self, *args, **kwargs):
+        super(EditUserProfileForm, self).__init__(*args, **kwargs)
 
-		self.fields['display_name'].required = False
-		self.fields['display_name'].widget = forms.TextInput(
-			attrs = {
-				'placeholder': 'Display Name',
-				'class': 'pure-input-1-3',
-				'id': 'input-display-name',
-			}
-		)
+        self.fields['display_name'].required = False
+        self.fields['display_name'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Display Name',
+                        'class': 'pure-input-1-3',
+                        'id': 'input-display-name',
+                }
+        )
 
-		self.fields['location'].required = False
-		self.fields['location'].widget = forms.TextInput(
-			attrs = {
-				'placeholder': 'Location',
-				'class': 'pure-input-1-3',
-				'id': 'input-location',
-			}
-		)
+        self.fields['location'].required = False
+        self.fields['location'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Location',
+                        'class': 'pure-input-1-3',
+                        'id': 'input-location',
+                }
+        )
 
-		self.fields['blurb'].required = False
-		self.fields['blurb'].widget = forms.Textarea(
-			attrs = {
-				'placeholder': 'Blurb',
-				'class': 'pure-input-2-3',
-				'id': 'input-blurb',
-				'rows': 5,
-			}
-		)
+        self.fields['blurb'].required = False
+        self.fields['blurb'].widget = forms.Textarea(
+                attrs = {
+                        'placeholder': 'Blurb',
+                        'class': 'pure-input-2-3',
+                        'id': 'input-blurb',
+                        'rows': 5,
+                }
+        )
 
 class UserProfileImageListForm(forms.Form):
 
@@ -115,7 +127,7 @@ class MusicianRegistrationForm():
 
 	class Meta:
 		model = MusicianProfile
-		fields = ['name', 'profile_image', 'genre', 'location']
+		fields = ['name', 'display_name']
 
 class VenueRegistrationForm():
 

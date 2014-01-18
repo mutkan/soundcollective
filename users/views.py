@@ -12,10 +12,13 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, FormView, UpdateView
 from django.views.generic.list import ListView
 
 from functools import wraps
+
+from posts.forms import ShoutboxPostForm
+from posts.models import ShoutboxPost
 
 from registration import signals
 from registration.models import RegistrationProfile
@@ -43,75 +46,113 @@ def check_if_user(function):
 
 class UsersView(ListView):
 
-	model = UserProfile
-	template_name = 'users/users_listeners.html'
+    model = UserProfile
+    template_name = 'users/users_listeners.html'
 
 class UserHomeView(TemplateView):
 
-	template_name = 'users/users_home.html'
+    template_name = 'users/users_home.html'
 
-class UserProfileView(TemplateView):
-	
-	template_name = 'users/users_listeners_profile.html'
-	
-	def get_object(self, queryset=None):
-		obj = User.objects.get(username=self.kwargs['username'])
-		return obj
-	
-	def get_context_data(self, **kwargs):
-		context = super(UserProfileView, self).get_context_data(**kwargs)
-		context['user'] = self.get_object()
-		context['user_profile'] = UserProfile.objects.get(user_id=context['user'].id)
-		context['is_user'] = True if self.get_object().id == self.request.user.id else False
-		return context
+class UserProfileView(CreateView):
+    
+    template_name = 'users/users_listeners_profile.html'
+    form_class = ShoutboxPostForm
+    
+    def get_object(self, queryset=None):
+            obj = User.objects.get(username=self.kwargs['username'])
+            return obj
+    
+    def get_context_data(self, **kwargs):
+            context = super(UserProfileView, self).get_context_data(**kwargs)
+            context['user'] = self.get_object()
+            user_profile = UserProfile.objects.get(user_id=context['user'].id)
+            context['user_profile'] = user_profile
+            context['is_user'] = True if self.get_object().id == self.request.user.id else False
+            context['shoutbox'] = user_profile.shoutbox_posts.all()
+            return context
+
+    def form_valid(self, form):
+        shoutbox_post = form.save()
+        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.save()
+
+        user_profile = UserProfile.objects.get(user_id=self.get_object().id)
+        user_profile.shoutbox_posts.add(shoutbox_post)
+
+        return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().username,)))
 
 class UserProfileEditView(UpdateView):
 
-	form_class = EditUserProfileForm
-	template_name = 'users/users_listeners_profile_edit.html'
+    form_class = EditUserProfileForm
+    template_name = 'users/users_listeners_profile_edit.html'
 
-	def get_object(self, queryset=None):
-		user = User.objects.get(username=self.kwargs['username'])
-		obj = UserProfile.objects.get(user=user)
-		return obj
-	
-	def get_context_data(self, **kwargs):
-		context = super(UserProfileEditView, self).get_context_data(**kwargs)
-		context['user'] = user = self.get_object()
-		
-		return context
-	
-	def form_valid(self, form):
-		
-		user = form.save()
-		user.save()
-		
-		return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().user.username,)))
-                
-class UserProfileImageListView(UpdateView):
+    def get_object(self, queryset=None):
+        user = User.objects.get(username=self.kwargs['username'])
+        obj = UserProfile.objects.get(user=user)
+
+        return obj
     
-    form_name = UserProfileImageListForm 
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileEditView, self).get_context_data(**kwargs)
+        context['user'] = user = self.get_object()
+        
+        return context
+    
+    def form_valid(self, form):
+        user_profile = form.save()
+        
+        try:
+            if self.request.FILES['profile_image']:
+                profile_image = Image.objects.create()
+                profile_image.created_by = user_profile
+                profile_image.modified_by = user_profile
+                profile_image.image = self.request.FILES['profile_image']
+                profile_image.save()
+
+                user_profile.profile_image = profile_image
+        except:
+            pass
+        try: 
+            if self.request.FILES['splash_image']:
+                splash_image = Image.objects.create()
+                splash_image.created_by = user_profile
+                splash_image.modified_by = user_profile
+                splash_image.image = image=self.request.FILES['splash_image']
+                splash_image.save()
+
+                user_profile.splash_image = splash_image
+        except:
+            pass
+
+        user_profile.save()
+
+        return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().user.username,)))
+                
+class UserProfileImageListView(FormView):
+    
+    form_class = UserProfileImageListForm 
     template_name = 'users/users_listeners_profile_images.html'
 
 class MusicianRegistrationView(CreateView):
 
-	form_class = MusicianRegistrationForm
-	template_name = 'users/users_musicians_registration.html'
+    form_class = MusicianRegistrationForm
+    template_name = 'users/users_musicians_registration.html'
 
 class MusiciansView(ListView):
 
-	model = MusicianProfile
-	template_name = 'users/users_musicians.html'
+    model = MusicianProfile
+    template_name = 'users/users_musicians.html'
 
 class VenueRegistrationView(CreateView):
 
-	form_class = VenueRegistrationForm
-	template_name = 'users/users_venues_registration.html'
+    form_class = VenueRegistrationForm
+    template_name = 'users/users_venues_registration.html'
 
 class VenuesView(ListView):
 
-	model = VenueProfile
-	template_name = 'users/users_venues.html'
+    model = VenueProfile
+    template_name = 'users/users_venues.html'
 
 class BaseRegistrationView(_RequestPassingFormView):
 	"""

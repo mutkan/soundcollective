@@ -11,3 +11,6 @@ class Post(CreateModifyDates):
     location = models.CharField(max_length=64, null=True)
     body = models.CharField(max_length=512, null=True)    
     date = models.DateField(null=True)
+
+class ShoutboxPost(CreateModifyDates):
+    body = models.CharField(max_length=140, null=False)

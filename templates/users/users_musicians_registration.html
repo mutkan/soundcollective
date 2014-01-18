@@ -3,35 +3,32 @@
 {% block title %}Musician Registration{% endblock %}
 
 {% block content %}
-<div class='registration-form'>
-    <form class="form-signin" method="post" action="">
-        <h2 class="form-signin-heading">Create a musician account</h2>
-        {% if form.errors %}
-            <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
-        {% endif %}
-        
-        {% csrf_token %}
-        
-        {% if form.name.errors %}
-            <p class="errors">{{ form.name.errors.as_text }}</p>
-        {% endif %}
-        {{ form.name }}
-        
-        {% if form.profile_image.errors %}
-            <p class="errors">{{ form.profile_image.errors.as_text }}</p>
-        {% endif %}
-        {{ form.profile_image }}
-        
-        {% if form.location.errors %}
-            <p class="errors">{{ form.location.errors.as_text }}</p>
-        {% endif %}
-        {{ form.location }}
-        
-        {% if form.genre.errors %}
-            <p class="errors">{{ form.genre.errors.as_text }}</p>
-        {% endif %}
-        {{ form.genre }}
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register &rarr;" style="margin-top: 16px;">
-    </form>
+<div class="pure-g-r">
+    <div class="pure-u-1-3"></div>
+    <div class="pure-u-1-3">
+        <form class="pure-form pure-form-stacked" method="post" action="">
+            <legend>Create a Musician Profile</legend>
+            {% if form.errors %}
+                <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+            {% endif %}
+            
+            {% csrf_token %}
+            
+            <label for='input-name'>Username</label>
+            {% if form.name.errors %}
+                <p class="errors">{{ form.name.errors.as_text }}</p>
+            {% endif %}
+            {{ form.name }}
+            <p>This name will be used as part of your profile link!</p> 
+
+            <label for='input-displayname'>Display Name</label>
+            {% if form.display_name.errors %}
+                <p class="errors">{{ form.display_name.errors.as_text }}</p>
+            {% endif %}
+            {{ form.display_name }}
+
+            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register &rarr;" style="margin-top: 16px;">
+        </form>
+    </div>
 </div>  
 {% endblock %}

@@ -2,11 +2,16 @@
 
 {% block content-margins-menu %}
 
+    <div class="pure-g">
     {% for p in object_list %}
-        <div class='l-box'>
-            <div><a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a></div>
-            <div>{{ p.date }}</div>
-            <div>{{ p.location }}</div>
+        <div class="pure-u-1-3">
+            <div class='l-box'>
+                <div><img src={{ MEDIA_PREFIX }}{{ p.flyer.image }}></div>
+                <div><a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a></div>
+                <div>{{ p.location }}</div>
+                <div>{{ p.date }}</div>
+            </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock content-margins-menu %}

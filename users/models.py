@@ -27,6 +27,7 @@ class UserProfile(CreateModifyDatesNoUser):
     instruments = models.CharField(max_length=128, null=True)
     profile_image = models.ForeignKey('uploads.Image', related_name='user_profile_image', null=True)
     splash_image = models.ForeignKey('uploads.Image', related_name='user_splash_image', null=True)
+    shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='user_shoutbox_posts')
 
 class MusicianProfile(BaseProfile):
 
@@ -34,6 +35,7 @@ class MusicianProfile(BaseProfile):
     genre = models.CharField(max_length=128, null=True)
     profile_image = models.ForeignKey('uploads.Image', related_name='musician_profile_image', null=True)
     splash_image = models.ForeignKey('uploads.Image', related_name='musician_splash_image', null=True)
+    shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='musician_shoutbox_posts')
 
 class VenueProfile(BaseProfile):
 
@@ -41,4 +43,4 @@ class VenueProfile(BaseProfile):
     genre = models.CharField(max_length=128, null=True)
     profile_image = models.ForeignKey('uploads.Image', related_name='venue_profile_image', null=True)
     splash_image = models.ForeignKey('uploads.Image', related_name='venue_splash_image', null=True)
-
+    shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='venue_shoutbox_posts')

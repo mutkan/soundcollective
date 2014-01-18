@@ -13,7 +13,13 @@ urlpatterns = patterns('',
 
 	# musicians
 	url(r'^$', MusiciansView.as_view(), name='users_musicians'),
-	url(r'^$', 
+	url(r'^register/$', 
 		MusicianRegistrationView.as_view(), 
 		name='users_musicians'),
+        url(r'^(?P<name>\w+/$',
+            MusicianProfileView.as_view(),
+            name='users_musicians_profile'),
+        url(r'^(?P<name>\w+/edit/$',
+            MusicianProfileEditView.as_view(),
+            name='users_musicians_profile_edit'),
 )

@@ -49,12 +49,6 @@ urlpatterns = patterns('',
 		login_required(UserProfileImageListView.as_view()),
 		name='users_listeners_profile_image_list'),
 
-	# musicians
-	url(r'^$', MusiciansView.as_view(), name='users_musicians'),
-	url(r'^$', 
-		MusicianRegistrationView.as_view(), 
-		name='users_musicians'),
-
 	# venues
 	url(r'^$', VenuesView.as_view(), name='users_venues'),
 	url(r'^$', 

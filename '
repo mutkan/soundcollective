@@ -18,8 +18,7 @@ body {
 
 .pull-right {
     display: inline-block;
-    direction: rtl;
-    float:right;
+    float: right;
 }
 
 .l-box {
@@ -54,13 +53,6 @@ body .primary-button {
   margin: 2em auto 0;
   padding: 3em 0.5em;
   background-size: cover;
-}
-.wire-font {
-    margin: 0;
-    padding: 0;
-    font-family: wire-one, sans-serif;
-    font-style: italic;
-    font-size: 150%;
 }
 .splash-head {
   font-family: wire-one, sans-serif;

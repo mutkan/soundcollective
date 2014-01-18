@@ -1,0 +1,17 @@
+<div class="pure-u-1">
+    <div class="l-box">
+        <form class="pure-form pure-form-stacked" role="form" method="post">
+
+            {% csrf_token %}
+
+            <div class="pure-g-r">
+                <div class="pure-control-group">
+                    {{ form.body }} 
+                </div>
+            </div>
+            <div class="pure-controls">
+                <button class="pure-button pure-button-primary" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+</div>

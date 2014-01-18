@@ -2,12 +2,12 @@
 
 {% block content-margins %}
 	
-    <div style="background: transparent url('{{ MEDIA_PREFIX }}{{ user_profile.splash_image }}') no-repeat center center fixed;" class="splash" data-0="background-position:0px 0px;" data-100000="background-position:0px -50000px;">
+    <div style="background: transparent url('{{ MEDIA_PREFIX }}{{ user_profile.splash_image.image }}') no-repeat center center fixed;" class="splash" data-0="background-position:0px 0px;" data-100000="background-position:0px -50000px;">
         
         <div class="pure-g-r">
             <div class="pure-u-1-3">
                 <div class="l-box splash-image">
-                    <img src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image }}"
+                    <img src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}"
                          alt="Placeholder image for example.">
                     {% if is_user %}
                         <br /><a class="pure-button pure-button-primary" href="{% url 'users_listeners_profile_edit' user.username %}">Edit Profile</a>
@@ -39,14 +39,28 @@
         <div class="pure-g-r">
 <!-- Begin Left Side --> 
             <div class="pure-u-1-2">
-                <div class="pure-u-1">
-                    <div class="l-box">
-                        <h3>Post title</h3>
-                        <p>
-                            Hey, guys. Fun show last night, yadd yadda yadaa yadda.
-                        </p>
-                    </div>
-                </div>
+                {% if user.is_authenticated %}
+                    {% include 'posts/shoutbox_post.html' %}
+                {% endif %}
+                {% for shoutbox_post in shoutbox %}
+                    <div class="pure-g-r">
+                        <div class="pure-u-1">
+                            <div class="l-box">
+                                <div class="pure-u-1-8">
+                                    <a href="{% url 'users_listeners_profile' shoutbox_post.created_by.user.username %}">
+                                        <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}">
+                                    </a>
+                                </div>
+                                <div class="pure-u-1-4">
+                                    <a href="{% url 'users_listeners_profile' shoutbox_post.created_by.user.username %}">
+                                        <div class="wire-font">{{ shoutbox_post.created_by.display_name }}</div>
+                                    </a>
+                                    {{ shoutbox_post.body }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                {% endfor %}
             </div>       
 <!-- End Left Side --> 
         

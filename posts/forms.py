@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib.admin import widgets
 from django.forms import ModelForm
 
-from posts.models import Post
+from posts.models import Post, ShoutboxPost
 
 class PostForm(ModelForm):
 
@@ -49,5 +49,23 @@ class PostForm(ModelForm):
                 'class': 'pure-input-2-3',
                 'id': 'input-body',
                 'rows': 8,
+            }
+        )
+class ShoutboxPostForm(ModelForm):
+    
+    class Meta:
+        model = ShoutboxPost
+        fields = ['body',]
+
+    def __init__(self, *args, **kwargs):
+        super(ShoutboxPostForm, self).__init__(*args, **kwargs)
+
+        self.fields['body'].required = True
+        self.fields['body'].widget = forms.Textarea(
+            attrs = {
+                'placeholder': 'Write a comment',
+                'class': 'pure-input-1',
+                'rows': 4,
+                'cols': 80,
             }
         )
