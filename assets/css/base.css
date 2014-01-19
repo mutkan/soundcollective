@@ -11,9 +11,9 @@ body, html {
 }
 body {
     padding-top: 70px;
-  margin: 0 auto 0 auto;
-  line-height: 1.7em;
-  background-color: #eee;
+    margin: 0 auto 0 auto;
+    line-height: 1.7em;
+    background-color: #eee;
 }
 
 .pull-right {
@@ -112,7 +112,7 @@ body .primary-button {
     width: 100%;
 }
 .content-wrapper-margins {
-    max-width: 1280px;
+    max-width: 980px;
     margin: 0 auto 0 auto;
 }
 .actual-content {
@@ -132,3 +132,7 @@ body .primary-button {
     padding-bottom: 1em;
 }
 
+#testing-image {
+    width: auto;
+    height: 100%;
+}

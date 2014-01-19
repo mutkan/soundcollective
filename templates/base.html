@@ -15,9 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_PREFIX }}css/pure-min.css" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_PREFIX }}css/base.css" />
     <link href="//fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet" type="text/css">
-    
-    <script src="//use.edgefonts.net/didact-gothic;abel;questrial;cabin;wire-one.js"></script>
-    <script src="{{ STATIC_PREFIX }}lib/less-1.5.0.min.js"></script> 
+
 </head>
 <body>
     <div id="skrollr-body" class="content">
@@ -59,7 +57,7 @@
         We did it for the homie.
     </div>
     
-    <script src="lib/yui-min.js"></script>
+    <script src="{{ STATIC_PREFIX }}lib/yui-min.js"></script>
     <script>
         YUI().use('node-base', 'node-event-delegate', function (Y) {
             // This just makes sure that the href="#" attached to the <a> elements
@@ -75,5 +73,10 @@
             forceHeight: false
         });
     </script>
+
+    <script src="{{ STATIC_PREFIX }}js/jquery-1.10.2.min.js"></script>
+    <script src="{{ STATIC_PREFIX }}js/base.js"></script>
+    <script src="//use.edgefonts.net/didact-gothic;abel;questrial;cabin;wire-one.js"></script>
+    <script src="{{ STATIC_PREFIX }}lib/less-1.5.0.min.js"></script>
 </body>
 </html>

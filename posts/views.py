@@ -21,7 +21,12 @@ class PostView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(PostView, self).get_context_data(**kwargs)
         context['post'] = self.get_object()
-        context['is_user'] = True if self.get_object().created_by == self.request.user.userprofile else False
+
+        try:
+            context['is_user'] = True if self.get_object().created_by == self.request.user.userprofile else False
+        except:
+            context['is_user'] = False
+
         return context
 
 class PostListView(ListView):
@@ -38,12 +43,16 @@ class CreatePostView(CreateView):
     def form_valid(self, form):
         post = form.save()
 
-        image = Image.objects.create()
-        image.created_by = self.request.user.userprofile
-        image.modified_by = self.request.user.userprofile
-        image.image = self.request.FILES['flyer']
-        image.save()
-        post.flyer = image 
+        try: 
+            flyer = self.request.FILES['flyer']
+            image = Image.objects.create()
+            image.created_by = self.request.user.userprofile
+            image.modified_by = self.request.user.userprofile
+            image.image = flyer 
+            image.save()
+            post.flyer = image 
+        except:
+            pass
 
         post.created_by = self.request.user.userprofile
         post.modified_by = self.request.user.userprofile

@@ -2,32 +2,24 @@
 
 {% block content-margins %}
 
-	{% for object in object_list %}
-	<div class="pure-g-r">
-    <div class="pure-u-1-3">
-        <div class="l-box splash-image">
-            <a href="{% url 'users_listeners_profile' object.user.username %}">
-                <img src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
-            </a>
-        </div>
-    </div>
-
-    <div class="pure-u-2-3">
-        <div class="l-box splash-text">
-            <h1 class="splash-head">
-                <div>
+{% for object in object_list %}
+    <div class="pure-g-r">
+        <div class="pure-u-1-3 l-box">
+            <div class="pure-u-1-4">
+                <a href="{% url 'users_listeners_profile' object.user.username %}">
+                    <img src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
+                </a>
+            </div>
+            <div class="pure-u-2-3">
+                <div class="wire-font">
                     <a href="{% url 'users_listeners_profile' object.user.username %}">{{ object.display_name }}</a>
                 </div>
-            </h1>
-            <div class="splash-subhead">
-                {{ object.location }}
-                <p>
-                    {{ object.blurb }}
-                </p>                        
+                <div class="splash-subhead">
+                    {{ object.location }}
+                </div>
             </div>
         </div>
-    </div>
-</div>	
+    </div>	
 <!--{% include 'users/_list_partial.html' with profile=object %}-->
 	{% empty %}
 		<div>No listeners yet! Turn on the music!</div>
