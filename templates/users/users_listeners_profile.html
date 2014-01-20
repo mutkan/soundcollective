@@ -40,8 +40,8 @@
                 {% endif %}
                 {% for shoutbox_post in shoutbox %}
                     <div class="pure-g">
-                        <div class="l-box">
-                            <div class="pure-u-1">
+                        <div class="pure-u-1">
+                            <div class="l-box">
                                 <div class="pure-u-1-8">
                                     <a href="{% url 'users_listeners_profile' shoutbox_post.created_by.user.username %}">
                                         <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}">

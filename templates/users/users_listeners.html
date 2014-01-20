@@ -2,9 +2,10 @@
 
 {% block content-margins %}
 
+<div class="pure-g-r">
 {% for object in object_list %}
-    <div class="pure-g-r">
-        <div class="pure-u-1-3 l-box">
+    <div class="pure-u-1-2">
+        <div class="l-box">
             <div class="pure-u-1-4">
                 <a href="{% url 'users_listeners_profile' object.user.username %}">
                     <img src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
@@ -19,9 +20,9 @@
                 </div>
             </div>
         </div>
-    </div>	
-<!--{% include 'users/_list_partial.html' with profile=object %}-->
-	{% empty %}
-		<div>No listeners yet! Turn on the music!</div>
-	{% endfor %}
+    </div>
+    {% empty %}
+        <div>No listeners yet! Turn on the music!</div>
+    {% endfor %}
 {% endblock content-margins %}
+</div>
