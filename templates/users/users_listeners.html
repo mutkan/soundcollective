@@ -4,20 +4,16 @@
 
 <div class="pure-g-r">
 {% for object in object_list %}
-    <div class="pure-u-1-2">
+    <div class="pure-u-1-3">
         <div class="l-box">
-            <div class="pure-u-1-4">
-                <a href="{% url 'users_listeners_profile' object.user.username %}">
-                    <img src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
-                </a>
+            <a href="{% url 'users_listeners_profile' object.user.username %}">
+                <img src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
+            </a>
+            <div class="wire-font">
+                <a href="{% url 'users_listeners_profile' object.user.username %}">{{ object.display_name }}</a>
             </div>
-            <div class="pure-u-2-3">
-                <div class="wire-font">
-                    <a href="{% url 'users_listeners_profile' object.user.username %}">{{ object.display_name }}</a>
-                </div>
-                <div class="splash-subhead">
-                    {{ object.location }}
-                </div>
+            <div class="splash-subhead">
+                {{ object.location }}
             </div>
         </div>
     </div>
