@@ -9,7 +9,7 @@
         <div><img src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
         <div>{{ post.date }}</div>
         <div>{{ post.location }}</div>
-        <div>{{ post.body }}</div>
+        <div>{{ post.body|urlize }}</div>
     </div>
 </div>
 {% endblock content-margins %}
