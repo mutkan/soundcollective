@@ -14,12 +14,11 @@
             
             {% csrf_token %}
             
-            <label for='input-name'>Username</label>
-            {% if form.name.errors %}
-                <p class="errors">{{ form.name.errors.as_text }}</p>
+            <label for='input-name'>Username (This name will be used as part of your profile link!)</label>
+            {% if form.username.errors %}
+                <p class="errors">{{ form.username.errors.as_text }}</p>
             {% endif %}
-            {{ form.name }}
-            <p>This name will be used as part of your profile link!</p> 
+            {{ form.username }}
 
             <label for='input-displayname'>Display Name</label>
             {% if form.display_name.errors %}
@@ -27,7 +26,19 @@
             {% endif %}
             {{ form.display_name }}
 
-            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register &rarr;" style="margin-top: 16px;">
+            <label for='input-displayname'>Location</label>
+            {% if form.display_name.errors %}
+                <p class="errors">{{ form.location.errors.as_text }}</p>
+            {% endif %}
+            {{ form.location }}
+
+            <label for='input-displayname'>Genre</label>
+            {% if form.display_name.errors %}
+                <p class="errors">{{ form.genre.errors.as_text }}</p>
+            {% endif %}
+            {{ form.genre }}
+
+            <input class="pure-button pure-button-primary" type="submit" value="Register" style="margin-top: 16px;">
         </form>
     </div>
 </div>  

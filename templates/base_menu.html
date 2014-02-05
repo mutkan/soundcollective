@@ -2,31 +2,45 @@
 
 {% block content %}
     <div class="pure-g-r">
-        <div class="pure-u-1-5" id='sidebar'>
-            <div class="pure-menu-open">
-                <ul>
-                    {% if user.is_authenticated %}
+        {% if user.is_authenticated %}
+            <div class="pure-u-1-5" id='sidebar'>
+                <div class="pure-menu pure-menu-open" style="margin-top: 8px; margin-left: 16px;">
+                    <ul>
+                        <li class="pure-menu-heading">Events</li>
                         <li><a href="{% url 'posts_create' %}">Post the happs</a></li>
                         <li><a href="{% url 'posts_mine' %}">My Posts</a></li>
                         <li><a href="{% url 'users_listeners_profile' user.username %}">My Profile</a></li>
-<!---                        <li class="pure-menu-heading">Musician Profiles</li>
-                        <li><a href="">+ New Musician Profile</a></li>
+                        <li class="pure-menu-heading">Musician Profiles</li>
+                        <li><a href="{% url 'users_musicians_register' %}">+ New Musician Profile</a></li>
+                        {% for musician_profile in musician_profiles %}
+                            <li><a href="{% url 'users_musicians_profile' musician_profile.username %}">
+                                {{ musician_profile.display_name }}
+                            </a></li>
+                        {% endfor %}
                         <li class="pure-menu-heading">Venue Profiles</li>
-                        <li><a href="">+ New Venue Profile</a></li>-->
-                    {% endif %}
-                </ul>
+                        <li><a href="">+ New Venue Profile</a></li>
+                        {% for venue_profile in venue_profiles %}
+
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="pure-u-4-5">
-            <div class="content-wrapper">
-                <div class="content-wrapper-margins">
-                    <div class="pure-g-r">
-                        <div class="pure-u-1">
-                            {% block content-margins-menu %}{% endblock %}
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <div class="pure-u-4-5">
+        {% else %}
+            <div class="pure-u-1">
+        {% endif %}
+                <div class="content-wrapper">
+                    <div class="content-wrapper-margins">
+                        <div class="pure-g-r">
+                            <div class="pure-u-1">
+                                {% block content-margins-menu %}{% endblock %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 {% endblock content %}

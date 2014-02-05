@@ -7,9 +7,13 @@ dj-static==0.0.5
 django-registration==1.0
 django-storages==1.1.8
 django-toolbelt==0.0.1
+fudge==1.0.3
 gunicorn==18.0
 humanize==0.5
 psycopg2==2.5.1
+requests==2.2.1
+simplejson==3.3.2
+soundcloud==0.4.1
 static==0.4
 wsgiref==0.1.2
 yolk==0.4.3

@@ -26,7 +26,7 @@ from registration.views import _RequestPassingFormView
 
 from uploads.models import Image
 
-from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, UserProfileImageListForm, MusicianRegistrationForm, VenueRegistrationForm
+from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, UserProfileImageListForm, MusicianRegistrationForm, EditMusicianProfileForm, VenueRegistrationForm
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class InaccessibleView(TemplateView):
@@ -139,10 +139,103 @@ class MusicianRegistrationView(CreateView):
     form_class = MusicianRegistrationForm
     template_name = 'users/users_musicians_registration.html'
 
+    def form_valid(self, form):
+        musician_profile = form.save()
+
+        musician_profile.created_by = self.request.user.userprofile
+        musician_profile.modified_by = self.request.user.userprofile
+        musician_profile.user_profiles.add(self.request.user.userprofile)
+
+        musician_profile.save()
+
+        return HttpResponseRedirect(reverse('users_musicians_profile', args=(musician_profile.username,)))
+
 class MusiciansView(ListView):
 
     model = MusicianProfile
     template_name = 'users/users_musicians.html'
+
+class MusiciansProfileView(CreateView):
+
+    template_name = 'users/users_musicians_profile.html'
+    form_class = ShoutboxPostForm
+    
+    def get_object(self, queryset=None):
+        obj = MusicianProfile.objects.get(username=self.kwargs['name'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(MusiciansProfileView, self).get_context_data(**kwargs)
+
+        musician_profile = self.get_object()
+        context['user_profile'] = musician_profile
+        try:
+            user_profile = UserProfile.objects.get(user_id=context['user'].id)
+            context['user'] = user_profile
+        except:
+            pass
+
+        context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
+        context['shoutbox'] = musician_profile.shoutbox_posts.all()
+        return context
+
+    def form_valid(self, form):
+        shoutbox_post = form.save()
+        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.save()
+
+        user_profile = UserProfile.objects.get(user_id=self.get_object().id)
+        user_profile.shoutbox_posts.add(shoutbox_post)
+
+        return HttpResponseRedirect(reverse('users_musicians_profile', args=(self.get_object().username,)))
+
+class MusiciansProfileEditView(UpdateView):
+
+    form_class = EditMusicianProfileForm
+    template_name = 'users/users_musicians_profile_edit.html'
+
+    def get_object(self, queryset=None):
+        obj = MusicianProfile.objects.get(username=self.kwargs['name'])
+
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(MusiciansProfileEditView, self).get_context_data(**kwargs)
+        context['user'] = user = self.get_object()
+        
+        return context
+    
+    def form_valid(self, form):
+        user_profile = form.save()
+        
+        try:
+            if self.request.FILES['profile_image']:
+                profile_image = Image.objects.create()
+                profile_image.created_by = user_profile
+                profile_image.modified_by = user_profile
+                profile_image.image = self.request.FILES['profile_image']
+                profile_image.save()
+
+                user_profile.profile_image = profile_image
+        except:
+            pass
+        try: 
+            if self.request.FILES['splash_image']:
+                splash_image = Image.objects.create()
+                splash_image.created_by = user_profile
+                splash_image.modified_by = user_profile
+                splash_image.image = image=self.request.FILES['splash_image']
+                splash_image.save()
+
+                user_profile.splash_image = splash_image
+        except:
+            pass
+
+        user_profile.save()
+
+        return HttpResponseRedirect(reverse('users_musicians_profile', args=(self.get_object().username,)))
+   
 
 class VenueRegistrationView(CreateView):
 

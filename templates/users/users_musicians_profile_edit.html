@@ -5,7 +5,7 @@
     <div style="background-image: url('{{ MEDIA_PREFIX }}{{ form.instance.splash_image.image }}'); 
         background-size: 100% auto; background-repeat: no-repeat; background-position: center center;" 
         class="splash" data-0="background-position:0px -75px;" data-100000="background-position:0px -50000px;">
-        
+
         <form class='pure-form pure-form-stacked' enctype="multipart/form-data" action="" role='form' method='post'>
             {% if form.errors %}
                 <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
@@ -29,7 +29,7 @@
                     <div class="l-box splash-image">
                         <div class='pure-control-group'>
                             <label for='input-profile-image'>Upload new profile image</label>
-                            <img src="{{ MEDIA_URL }}{{ form.instance.profile_image.image }}"/>
+                            <img src="{{ MEDIA_PREFIX }}{{ form.instance.profile_image.image }}"/>
                             {{ form.profile_image }}
                         </div>
                         <a class="pure-button pure-button-primary" href="{% url 'users_listeners_profile_image_list' user.username %}">Edit Images</a>
@@ -49,6 +49,10 @@
                         <div class='pure-control-group'>                           
                             <label for='input-blurb'>Blurb</label>
                             {{ form.blurb }}
+                        </div>
+                        <div class='pure-control-group'>                           
+                            <label for='input-blurb'>Embed a Music Player</label>
+                            {{ form.embedded_player }}
                         </div>
                         <div class="pure-controls">
                             <button class="pure-button pure-button-primary" type="submit">Save</button>

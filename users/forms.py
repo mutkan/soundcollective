@@ -25,7 +25,7 @@ class EditUserProfileForm(ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['display_name', 'location', 'blurb']
+        fields = ['display_name', 'location', 'blurb', 'embedded_player']
 
     def __init__(self, *args, **kwargs):
         super(EditUserProfileForm, self).__init__(*args, **kwargs)
@@ -54,6 +54,78 @@ class EditUserProfileForm(ModelForm):
                         'placeholder': 'Blurb',
                         'class': 'pure-input-2-3',
                         'id': 'input-blurb',
+                        'rows': 5,
+                }
+        )
+
+        self.fields['embedded_player'].required = False
+        self.fields['embedded_player'].widget = forms.Textarea(
+                attrs = {
+                        'placeholder': 'Embed a music player',
+                        'class': 'pure-input-2-3',
+                        'id': 'input-embedded_player',
+                        'rows': 5,
+                }
+        )
+
+class EditMusicianProfileForm(ModelForm):
+    profile_image = forms.ImageField()
+    profile_image.required = False
+    profile_image.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-profile-image',
+        }
+    )
+
+    splash_image = forms.ImageField()
+    splash_image.required = False
+    splash_image.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-splash-image',
+        }
+    )
+
+    class Meta:
+        model = MusicianProfile
+        fields = ['display_name', 'location', 'blurb', 'embedded_player']
+
+    def __init__(self, *args, **kwargs):
+        super(EditMusicianProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields['display_name'].required = False
+        self.fields['display_name'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Display Name',
+                        'class': 'pure-input-1-3',
+                        'id': 'input-display-name',
+                }
+        )
+
+        self.fields['location'].required = False
+        self.fields['location'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Location',
+                        'class': 'pure-input-1-3',
+                        'id': 'input-location',
+                }
+        )
+
+        self.fields['blurb'].required = False
+        self.fields['blurb'].widget = forms.Textarea(
+                attrs = {
+                        'placeholder': 'Blurb',
+                        'class': 'pure-input-2-3',
+                        'id': 'input-blurb',
+                        'rows': 5,
+                }
+        )
+
+        self.fields['embedded_player'].required = False
+        self.fields['embedded_player'].widget = forms.Textarea(
+                attrs = {
+                        'placeholder': 'Embed a music player',
+                        'class': 'pure-input-2-3',
+                        'id': 'input-embedded_player',
                         'rows': 5,
                 }
         )
@@ -123,17 +195,17 @@ class UserRegistrationForm(forms.Form):
 				raise forms.ValidationError(_("The two password fields didn't match."))
 		return self.cleaned_data
 
-class MusicianRegistrationForm():
+class MusicianRegistrationForm(ModelForm):
 
-	class Meta:
-		model = MusicianProfile
-		fields = ['name', 'display_name']
+    class Meta:
+        model = MusicianProfile
+        fields = ['username', 'display_name', 'location', 'genre']
 
-class VenueRegistrationForm():
+class VenueRegistrationForm(ModelForm):
 
-	class Meta:
-		model = VenueProfile
-		fields = ['name', 'profile_image', 'genre', 'location']
+    class Meta:
+        model = VenueProfile
+        fields = ['username', 'profile_image', 'genre', 'location']
 
 class UserLoginForm(AuthenticationForm):
 	username = forms.RegexField(

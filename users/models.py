@@ -13,6 +13,7 @@ class BaseProfile(CreateModifyDates):
     display_name = models.CharField(max_length=32, null=True)
     location = models.CharField(max_length=128, null=True)
     blurb = models.CharField(max_length=256, null=True)
+    embedded_player = models.CharField(max_length=512, null=True)
 
 class UserProfile(CreateModifyDatesNoUser):
 
@@ -29,18 +30,20 @@ class UserProfile(CreateModifyDatesNoUser):
     splash_image = models.ForeignKey('uploads.Image', related_name='user_splash_image', null=True)
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='user_shoutbox_posts')
 
-class MusicianProfile(BaseProfile):
+    embedded_player = models.CharField(max_length=512, null=True)
 
-    name = models.CharField(max_length=128, null=False)
+class MusicianProfile(BaseProfile):
+    username = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
     profile_image = models.ForeignKey('uploads.Image', related_name='musician_profile_image', null=True)
     splash_image = models.ForeignKey('uploads.Image', related_name='musician_splash_image', null=True)
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='musician_shoutbox_posts')
+    user_profiles = models.ManyToManyField(UserProfile, related_name='%(class)s')
 
 class VenueProfile(BaseProfile):
-
-    name = models.CharField(max_length=128, null=False)
+    username = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
     profile_image = models.ForeignKey('uploads.Image', related_name='venue_profile_image', null=True)
     splash_image = models.ForeignKey('uploads.Image', related_name='venue_splash_image', null=True)
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='venue_shoutbox_posts')
+    user_profiles = models.ManyToManyField(UserProfile, related_name='%(class)s')

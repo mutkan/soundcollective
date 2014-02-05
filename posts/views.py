@@ -10,6 +10,8 @@ from posts.models import Post
 
 from uploads.models import Image
 
+from users.models import UserProfile, MusicianProfile, VenueProfile
+
 class PostView(TemplateView):
 
     template_name = 'posts/posts_post.html'
@@ -33,6 +35,15 @@ class PostListView(ListView):
 
     model = Post
     template_name = 'posts/posts_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        
+        if self.request.user.is_authenticated():
+            context['musician_profiles'] = self.request.user.userprofile.musicianprofile.all()
+            context['venue_profiles'] = self.request.user.userprofile.venueprofile.all()
+
+        return context
 
 class PostMineView(ListView):
 
