@@ -4,20 +4,20 @@
 
     <div class="pure-g">
     {% for p in object_list %}
-        <div class="pure-u-1-3">
-            <div class='l-box'>
-                <div>
+        <div class="pure-u-1">
+            <div class="l-box">
+                <div class="pull-right" id="post-image">
                     <a href="{% url 'posts_post' p.id %}"><img src={{ MEDIA_PREFIX }}{{ p.flyer.image }}></a>
                 </div>
                 <div>
                     <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
+                    {% if p.created_by.user == user %}
+                        - <a href="{% url 'posts_edit' p.id %}">(edit)</a>
+                    {% endif %}
                 </div>
                 <div>{{ p.location }}</div>
                 <div>
                     {{ p.date }}
-                    {% if p.created_by.user == user %}
-                        <a class="pull-right" href="{% url 'posts_edit' p.id %}">(edit)</a>
-                    {% endif %}
                 </div>
             </div>
         </div>

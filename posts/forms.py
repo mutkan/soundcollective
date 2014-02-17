@@ -14,6 +14,24 @@ class PostForm(ModelForm):
     flyer = forms.ImageField()
     flyer.required = False
 
+    musicians = forms.CharField(widget=forms.TextInput(
+        attrs = {
+            'placeholder': 'Musicians',
+            'id': 'input-musicians',
+            'style': 'display: none;'
+        }
+    ))
+    musicians.required = False
+
+    venues = forms.CharField(widget=forms.TextInput(
+        attrs = {
+            'placeholder': 'Venues',
+            'id': 'input-venues',
+            'style': 'display: none;'
+        }
+    ))
+    venues.required = False
+
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
 
@@ -51,6 +69,7 @@ class PostForm(ModelForm):
                 'rows': 8,
             }
         )
+
 class ShoutboxPostForm(ModelForm):
     
     class Meta:

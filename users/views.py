@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, get_user_model
 from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite, Site, get_current_site
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import redirect
@@ -47,15 +48,15 @@ def check_if_user(function):
 class UsersView(ListView):
 
     model = UserProfile
-    template_name = 'users/users_listeners.html'
+    template_name = 'users/listeners_list.html'
 
 class UserHomeView(TemplateView):
 
-    template_name = 'users/users_home.html'
+    template_name = 'users/home.html'
 
 class UserProfileView(CreateView):
     
-    template_name = 'users/users_listeners_profile.html'
+    template_name = 'users/listeners_profile.html'
     form_class = ShoutboxPostForm
     
     def get_object(self, queryset=None):
@@ -63,13 +64,26 @@ class UserProfileView(CreateView):
             return obj
     
     def get_context_data(self, **kwargs):
-            context = super(UserProfileView, self).get_context_data(**kwargs)
-            context['user'] = self.get_object()
-            user_profile = UserProfile.objects.get(user_id=context['user'].id)
-            context['user_profile'] = user_profile
-            context['is_user'] = True if self.get_object().id == self.request.user.id else False
-            context['shoutbox'] = user_profile.shoutbox_posts.all()
-            return context
+        context = super(UserProfileView, self).get_context_data(**kwargs)
+
+        context['user'] = self.get_object()
+
+        user_profile = UserProfile.objects.get(user_id=context['user'].id)
+        context['user_profile'] = user_profile
+        context['is_user'] = True if self.get_object().id == self.request.user.id else False
+
+        shoutbox_posts = user_profile.shoutbox_posts.order_by("-created_date")
+        paginator = Paginator(shoutbox_posts, 10)
+        page = self.request.GET.get('page')
+        try:
+            shoutbox = paginator.page(page)
+        except PageNotAnInteger:
+            shoutbox = paginator.page(1)
+        except EmptyPage:
+            shoutbox = paginator.page(paginator.num_pages)
+        context['shoutbox'] = shoutbox
+
+        return context
 
     def form_valid(self, form):
         shoutbox_post = form.save()
@@ -80,12 +94,12 @@ class UserProfileView(CreateView):
         user_profile = UserProfile.objects.get(user_id=self.get_object().id)
         user_profile.shoutbox_posts.add(shoutbox_post)
 
-        return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().username,)))
+        return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().username,)))
 
 class UserProfileEditView(UpdateView):
 
     form_class = EditUserProfileForm
-    template_name = 'users/users_listeners_profile_edit.html'
+    template_name = 'users/listeners_profile_edit.html'
 
     def get_object(self, queryset=None):
         user = User.objects.get(username=self.kwargs['username'])
@@ -127,17 +141,17 @@ class UserProfileEditView(UpdateView):
 
         user_profile.save()
 
-        return HttpResponseRedirect(reverse('users_listeners_profile', args=(self.get_object().user.username,)))
+        return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().user.username,)))
                 
 class UserProfileImageListView(FormView):
     
     form_class = UserProfileImageListForm 
-    template_name = 'users/users_listeners_profile_images.html'
+    template_name = 'users/listeners_profile_images.html'
 
 class MusicianRegistrationView(CreateView):
 
     form_class = MusicianRegistrationForm
-    template_name = 'users/users_musicians_registration.html'
+    template_name = 'users/musicians_registration.html'
 
     def form_valid(self, form):
         musician_profile = form.save()
@@ -148,16 +162,16 @@ class MusicianRegistrationView(CreateView):
 
         musician_profile.save()
 
-        return HttpResponseRedirect(reverse('users_musicians_profile', args=(musician_profile.username,)))
+        return HttpResponseRedirect(reverse('musicians_profile', args=(musician_profile.username,)))
 
 class MusiciansView(ListView):
 
     model = MusicianProfile
-    template_name = 'users/users_musicians.html'
+    template_name = 'users/musicians_list.html'
 
 class MusiciansProfileView(CreateView):
 
-    template_name = 'users/users_musicians_profile.html'
+    template_name = 'users/musicians_profile.html'
     form_class = ShoutboxPostForm
     
     def get_object(self, queryset=None):
@@ -176,7 +190,18 @@ class MusiciansProfileView(CreateView):
             pass
 
         context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
-        context['shoutbox'] = musician_profile.shoutbox_posts.all()
+
+        shoutbox_posts = musician_profile.shoutbox_posts.order_by("-created_date")
+        paginator = Paginator(shoutbox_posts, 10)
+        page = self.request.GET.get('page')
+        try:
+            shoutbox = paginator.page(page)
+        except PageNotAnInteger:
+            shoutbox = paginator.page(1)
+        except EmptyPage:
+            shoutbox = paginator.page(paginator.num_pages)
+        context['shoutbox'] = shoutbox
+
         return context
 
     def form_valid(self, form):
@@ -185,15 +210,15 @@ class MusiciansProfileView(CreateView):
         shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
         shoutbox_post.save()
 
-        user_profile = UserProfile.objects.get(user_id=self.get_object().id)
+        user_profile = self.get_object()
         user_profile.shoutbox_posts.add(shoutbox_post)
 
-        return HttpResponseRedirect(reverse('users_musicians_profile', args=(self.get_object().username,)))
+        return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
 
 class MusiciansProfileEditView(UpdateView):
 
     form_class = EditMusicianProfileForm
-    template_name = 'users/users_musicians_profile_edit.html'
+    template_name = 'users/musicians_profile_edit.html'
 
     def get_object(self, queryset=None):
         obj = MusicianProfile.objects.get(username=self.kwargs['name'])
@@ -234,18 +259,18 @@ class MusiciansProfileEditView(UpdateView):
 
         user_profile.save()
 
-        return HttpResponseRedirect(reverse('users_musicians_profile', args=(self.get_object().username,)))
+        return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
    
 
 class VenueRegistrationView(CreateView):
 
     form_class = VenueRegistrationForm
-    template_name = 'users/users_venues_registration.html'
+    template_name = 'users/venues_registration.html'
 
 class VenuesView(ListView):
 
     model = VenueProfile
-    template_name = 'users/users_venues.html'
+    template_name = 'users/venues_list.html'
 
 class BaseRegistrationView(_RequestPassingFormView):
 	"""
