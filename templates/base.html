@@ -26,14 +26,14 @@
             <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal" id="demo-horizontal-menu">
                 <a class="pure-menu-heading" href="{% url 'home' %}">The Happs</a>
                 <ul>
-                    <li><a href="{% url 'users_musicians' %}">Musicians</a></li>
-                    <li><a href="{% url 'users_venues' %}">Venues</a></li>
-                    <li><a href="{% url 'users_listeners' %}">Listeners</a></li>
+                    <li><a href="{% url 'musicians' %}">Musicians</a></li>
+                    <li><a href="{% url 'venues' %}">Venues</a></li>
+                    <li><a href="{% url 'listeners' %}">Listeners</a></li>
 
                 </ul>
                 <ul class="pull-right">
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'users_listeners_profile' user.username %}">{{ user.username }}</a></li>
+                        <li><a href="{% url 'listeners_profile' user.username %}">{{ user.username }}</a></li>
                         <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
                         <li><a href="{% url 'registration_login' %}">Login</a></li>

@@ -14,7 +14,7 @@
             musicians:<br />
             {% if musician_tags %}
                 {% for musician_tag in musician_tags %}
-                    <a href="{% url 'users_musicians_profile' musician_tag.tagged_musician.username %}">
+                    <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
                         {{ musician_tag.tagged_musician.display_name }}
                     </a><br />
                 {% endfor %}

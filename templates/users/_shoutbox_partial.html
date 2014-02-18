@@ -2,12 +2,12 @@
     <div class="pure-u-1">
         <div class="l-box">
             <div class="pure-u-1-8">
-                <a href="{% url 'users_listeners_profile' shoutbox_post.created_by.user.username %}">
+                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
                     <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}">
                 </a>
             </div>
             <div class="pure-u-1-4">
-                <a href="{% url 'users_listeners_profile' shoutbox_post.created_by.user.username %}">
+                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
                     {{ shoutbox_post.created_by.display_name }}
                 </a><br/>
                 {{ shoutbox_post.body }}

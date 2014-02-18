@@ -11,7 +11,7 @@
                 <img id="testing-image" src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}"
                      alt="Placeholder image for example.">
                 {% if is_user %}
-                    <br /><a class="pure-button pure-button-primary" href="{% url 'users_listeners_profile_edit' user.username %}">Edit Profile</a>
+                    <br /><a class="pure-button pure-button-primary" href="{% url 'listeners_profile_edit' user.username %}">Edit Profile</a>
                 {% endif %}
             </div>
 
@@ -45,12 +45,12 @@
                         <div class="pure-u-1">
                             <div class="l-box">
                                 <div class="pure-u-1-8">
-                                    <a href="{% url 'users_listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
                                         <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}">
                                     </a>
                                 </div>
                                 <div class="pure-u-3-4">
-                                    <a href="{% url 'users_listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
                                         <div class="wire-font">{{ shoutbox_post.created_by.display_name }}</div>
                                     </a>
                                     {{ shoutbox_post.body|urlize }}

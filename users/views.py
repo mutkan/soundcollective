@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, get_user_model
 from django.contrib.auth.models import User
@@ -24,6 +26,8 @@ from posts.models import ShoutboxPost
 from registration import signals
 from registration.models import RegistrationProfile
 from registration.views import _RequestPassingFormView
+
+from tags.models import MusicianPostTag, UserPostTag, VenuePostTag
 
 from uploads.models import Image
 
@@ -201,6 +205,8 @@ class MusiciansProfileView(CreateView):
         except EmptyPage:
             shoutbox = paginator.page(paginator.num_pages)
         context['shoutbox'] = shoutbox
+
+        context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
 
         return context
 

@@ -12,8 +12,8 @@ from users.views import (UserRegistrationView, login, UsersView, UserProfileView
 urlpatterns = patterns('',
 
 	# venues
-	url(r'^$', VenuesView.as_view(), name='users_venues'),
+	url(r'^$', VenuesView.as_view(), name='venues'),
 	url(r'^$', 
 		VenueRegistrationView.as_view(),
-		name='users_venues'),
+		name='venues_registration'),
 )

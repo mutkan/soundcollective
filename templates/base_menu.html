@@ -9,11 +9,11 @@
                         <li class="pure-menu-heading">Events</li>
                         <li><a href="{% url 'posts_create' %}">Post the happs</a></li>
                         <li><a href="{% url 'posts_mine' %}">My Posts</a></li>
-                        <li><a href="{% url 'users_listeners_profile' user.username %}">My Profile</a></li>
+                        <li><a href="{% url 'listeners_profile' user.username %}">My Profile</a></li>
                         <li class="pure-menu-heading">Musician Profiles</li>
-                        <li><a href="{% url 'users_musicians_register' %}">+ New Musician Profile</a></li>
+                        <li><a href="{% url 'musicians_register' %}">+ New Musician Profile</a></li>
                         {% for musician_profile in musician_profiles %}
-                            <li><a href="{% url 'users_musicians_profile' musician_profile.username %}">
+                            <li><a href="{% url 'musicians_profile' musician_profile.username %}">
                                 {{ musician_profile.display_name }}
                             </a></li>
                         {% endfor %}
