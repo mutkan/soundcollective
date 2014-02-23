@@ -6,8 +6,10 @@
     {% for p in object_list %}
         <div class="pure-u-1">
             <div class="l-box">
-                <div class="pull-right" id="post-image">
-                    <a href="{% url 'posts_post' p.id %}"><img src={{ MEDIA_PREFIX }}{{ p.flyer.image }}></a>
+                <div class="pure-u-1-4 pull-right" id="post-image">
+                    <a href="{% url 'posts_post' p.id %}">
+                        <img src={{ MEDIA_PREFIX }}{{ p.flyer.image }}>
+                    </a>
                 </div>
                 <div>
                     <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
