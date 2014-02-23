@@ -33,7 +33,7 @@
     </div>
 
     <div class="content">
-        {{ user_profile.embedded_player|safe }}
+        {{ embedded_player|safe }}
         <div class="pure-g-r">
 <!-- Begin Left Side --> 
             <div class="pure-u-1-2">
@@ -80,7 +80,9 @@
                         <div class="l-box">
                             <h3>Upcoming Shows</h3>
                             {% for show in upcoming_shows %}
-                                {{ show.post.subject }}
+                                <a href="{% url 'posts_post' show.post.id %}">{{ show.post.subject }}</a>
+                                <div class="pull-right">{{ show.post.date }}</div>
+                                <br />
                             {% endfor %}
                         </div>
                     </div>

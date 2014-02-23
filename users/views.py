@@ -1,4 +1,5 @@
-import datetime
+import datetime, os
+import soundcloud
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, get_user_model
@@ -86,6 +87,13 @@ class UserProfileView(CreateView):
         except EmptyPage:
             shoutbox = paginator.page(paginator.num_pages)
         context['shoutbox'] = shoutbox
+
+        client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
+        track_url = user_profile.embedded_player
+        try:
+            context['embedded_player'] = client.get('/oembed', url=track_url)
+        except:
+            context['embedded_player'] = ''
 
         return context
 
@@ -208,6 +216,12 @@ class MusiciansProfileView(CreateView):
 
         context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
 
+        client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
+        track_url = str(musician_profile.embedded_player)
+        embed_info = client.get('/oembed', maxheight=166, url=track_url)
+
+        context['embedded_player'] = embed_info.fields()['html']
+
         return context
 
     def form_valid(self, form):
@@ -262,6 +276,14 @@ class MusiciansProfileEditView(UpdateView):
                 user_profile.splash_image = splash_image
         except:
             pass
+        
+#        import soundcloud
+#        client = soundcloud.Client(client_id='YOUR_CLIENT_ID')
+#
+#        track_url = form.cleaned_data['
+#        embed_info = client.get('/oembed', url=track_url)
+#
+#        print embed_info['html']
 
         user_profile.save()
 
