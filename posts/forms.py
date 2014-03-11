@@ -17,6 +17,7 @@ class PostForm(ModelForm):
     musicians = forms.CharField(widget=forms.TextInput(
         attrs = {
             'placeholder': 'Musicians',
+            'class': 'form-control',
             'id': 'input-musicians',
             'style': 'display: none;'
         }
@@ -26,6 +27,7 @@ class PostForm(ModelForm):
     venues = forms.CharField(widget=forms.TextInput(
         attrs = {
             'placeholder': 'Venues',
+            'class': 'form-control',
             'id': 'input-venues',
             'style': 'display: none;'
         }
@@ -39,7 +41,7 @@ class PostForm(ModelForm):
         self.fields['subject'].widget = forms.TextInput(
             attrs = {
                 'placeholder': 'Subject',
-                'class': 'pure-input-1-3',
+                'class': 'form-control',
                 'id': 'input-subject',
             }
         )
@@ -48,6 +50,7 @@ class PostForm(ModelForm):
         self.fields['date'].initial = date.today().strftime("%m/%d/%Y")
         self.fields['date'].widget = forms.TextInput(
             attrs = {
+                'class': 'form-control',
                 'id': 'input-date',
             }
         )
@@ -56,7 +59,7 @@ class PostForm(ModelForm):
         self.fields['location'].widget = forms.TextInput(
             attrs = {
                 'placeholder': 'Location',
-                'class': 'pure-input-1-3',
+                'class': 'form-control',
                 'id': 'input-location',
             }
         )
@@ -64,7 +67,7 @@ class PostForm(ModelForm):
         self.fields['body'].required = True
         self.fields['body'].widget = forms.Textarea(
             attrs = {
-                'class': 'pure-input-2-3',
+                'class': 'form-control',
                 'id': 'input-body',
                 'rows': 8,
             }

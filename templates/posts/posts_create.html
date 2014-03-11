@@ -13,12 +13,12 @@
         $("#input-date").datepicker();
 
         var musicianTags = {{ musicians|safe }}
-        $('#input-musicians').tagit({
+        $("#input-musicians").tagit({
             availableTags: musicianTags,
         });
 
         var venueTags = {{ venues|safe }}
-        $('#input-venues').tagit({
+        $("#input-venues").tagit({
             availableTags: venueTags,
         });
 
@@ -28,30 +28,46 @@
 
 {% block content-margins %}
 
-    <form class='pure-form pure-form-stacked' enctype="multipart/form-data" action="" role='form' method='post'>
+    <form class="center-it registration-form" enctype="multipart/form-data" action="" role="form" method="post">
         {% csrf_token %}
 
-        <label for='input-subject'>Subject</label>
-        {{ form.subject }}
+        <legend>Post an event</legend>
 
-        <label for='input-image'>Upload image/flyer</label>
-        {{ form.flyer }}
+        <div class="form-group">
+            <label for="input-subject">Subject</label>
+            {{ form.subject }}
+        </div>
 
-        <label for='input-date'>Date</label>
-        {{ form.date }}
+        <div class="form-group">
+            <label for="input-image">Upload image/flyer</label>
+            {{ form.flyer }}
+        </div>
 
-        <label for='input-location'>Location</label>
-        {{ form.location }}
+        <div class="form-group">
+            <label for="input-date">Date</label>
+            {{ form.date }}
+        </div>
 
-        <label for='input-body'>Body</label>
-        {{ form.body }}
+        <div class="form-group">
+            <label for="input-location">Location</label>
+            {{ form.location }}
+        </div>
 
-        <label for='input-musicians'>Tag Musicians</label>
-        {{ form.musicians }}
+        <div class="form-group">
+            <label for="input-body">Body</label>
+            {{ form.body }}
+        </div>
 
-        <label for='input-venues'>Tag Venues</label>
-        {{ form.venues }}
+        <div class="form-group">
+            <label for="input-musicians">Tag Musicians</label>
+            {{ form.musicians }}
+        </div>
 
-        <button class="pure-button pure-button-primary" type="submit">Post</button>
+        <div class="form-group">
+            <label for="input-venues">Tag Venues</label>
+            {{ form.venues }}
+        </div>
+
+        <button class="btn btn-primary" type="submit">Post</button>
     </form>
 {% endblock content-margins %}
