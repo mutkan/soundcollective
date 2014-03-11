@@ -10,10 +10,8 @@ body, html {
     height: 100%;
 }
 body {
-    padding-top: 70px;
     margin: 0 auto 0 auto;
     line-height: 1.7em;
-    background-color: #eee;
 }
 
 .pull-right {
@@ -22,28 +20,19 @@ body {
 }
 
 .l-box {
-    padding: 1em;
-    margin: 0.5em;
-    background-color: rgba(255,255,255,0.9);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+
+    margin: 1em;
+
+    background-color: rgba(255, 255, 255, 0.9);
     
     border-style: solid;
     border-width: 1px;
     border-color: rgb(183, 183, 183);
 }
 
-.header .pure-menu {
-  padding: 0.5em;
-}
-.header .pure-menu li a:hover,
-.header .pure-menu li a:focus {
-  background: none;
-  border: none;
-  color: #aaa;
-}
-body .primary-button {
-  background: #02a6eb;
-  color: #fff;
-}
 .user-link {
   color: #000000;
 }
@@ -85,34 +74,26 @@ body .primary-button {
   border-bottom: 1px solid #eee;
   margin: 1.4em;
 }
-.ribbon {
-  text-align: center;
-  padding: 2em;
-  color: #999;
-}
-.ribbon h2 {
-  display: inline;
-  font-weight: normal;
-}
+
 .footer {
-  background: #111;
-  color: #666;
-  text-align: center;
-  padding: 1em;
-  font-size: 80%;
+    margin-top: 32px;
+    padding: 1em;
+
+    background: #111;
+    color: #666;
+    text-align: center;
+    font-size: 80%;
 }
 
-#sidebar {
-}
 .content-wrapper {
     width: 100%;
 }
 .content-wrapper-margins {
-    max-width: 980px;
+    max-width: 1080px;
     margin: 0 auto 0 auto;
 }
 .actual-content {
-    width: 900px;
+    max-width: 900px;
     
     margin-left: auto;
     margin-right: auto;
@@ -120,18 +101,89 @@ body .primary-button {
     padding-top: 2em;
 }
 .center-it {
-	margin-left: auto;
-	margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .posts_list_partial {
     padding-bottom: 1em;
 }
 
-#testing-image {
-    width: auto;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
+.registration-form {
+    width: 400px;
 }
 
+
+/* new mockups */
+.navbar-red {
+    background: rgb(194, 47, 47); 
+}
+
+.navbar-green {
+    background: rgb(34, 94, 56); 
+}
+.navbar-maroon {
+    background: rgb(100, 7, 7);
+}
+.cream {
+    background: rgb(248, 245, 238);
+}
+
+.display-name h2 {
+    margin-bottom: 0;
+    color: rgb(42, 78, 101);
+}
+.location {
+    color: rgb(72, 151, 212);
+}
+
+.navbar .nav > li > a {
+    color:  white;
+}
+
+.carousel-image {
+    max-height: 200px;
+    width: auto;
+}
+.carousel-image-container {
+    
+}
+.social-media-icon {
+    height: 24px;
+    width: 24px;
+}
+.social-media-icon-gmail {
+    height: 18px;
+    width: 24px;
+}
+.social-media-spacing {
+    line-height: 2em;
+}
+
+.divider {
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    padding-top: .2em;
+    padding-bottom: .2em;
+}
+.l-box-header {
+    padding-top: .2em;
+    padding-bottom: .2em;
+}
+.gray {
+    color: white;
+    background: #c6c6c6;
+}
+.green {
+    color: white;
+    background: #65ae25;
+}
+#gallery {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.blurb {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

@@ -75,7 +75,10 @@ class UserProfileView(CreateView):
 
         user_profile = UserProfile.objects.get(user_id=context['user'].id)
         context['user_profile'] = user_profile
-        context['is_user'] = True if self.get_object().id == self.request.user.id else False
+        try:
+            context['is_user'] = True if self.get_object().id == self.request.user.id else False
+        except:
+            context['is_user'] = False
 
         shoutbox_posts = user_profile.shoutbox_posts.order_by("-created_date")
         paginator = Paginator(shoutbox_posts, 10)
@@ -201,7 +204,124 @@ class MusiciansProfileView(CreateView):
         except:
             pass
 
-        context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
+        try:
+            context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
+        except:
+            context['is_user'] = False
+
+        shoutbox_posts = musician_profile.shoutbox_posts.order_by("-created_date")
+        paginator = Paginator(shoutbox_posts, 10)
+        page = self.request.GET.get('page')
+        try:
+            shoutbox = paginator.page(page)
+        except PageNotAnInteger:
+            shoutbox = paginator.page(1)
+        except EmptyPage:
+            shoutbox = paginator.page(paginator.num_pages)
+        context['shoutbox'] = shoutbox
+
+        context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
+
+        client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
+        track_url = str(musician_profile.embedded_player)
+        embed_info = client.get('/oembed', maxheight=166, url=track_url)
+
+        context['embedded_player'] = embed_info.fields()['html']
+
+        return context
+
+    def form_valid(self, form):
+        shoutbox_post = form.save()
+        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.save()
+
+        user_profile = self.get_object()
+        user_profile.shoutbox_posts.add(shoutbox_post)
+
+        return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
+
+class MusiciansProfileViewMe(CreateView):
+
+    template_name = 'profile-mockup-me.html'
+    form_class = ShoutboxPostForm
+    
+    def get_object(self, queryset=None):
+        obj = MusicianProfile.objects.get(username=self.kwargs['name'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(MusiciansProfileViewMe, self).get_context_data(**kwargs)
+
+        musician_profile = self.get_object()
+        context['user_profile'] = musician_profile
+        try:
+            user_profile = UserProfile.objects.get(user_id=context['user'].id)
+            context['user'] = user_profile
+        except:
+            pass
+
+        try:
+            context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
+        except:
+            context['is_user'] = False
+
+        shoutbox_posts = musician_profile.shoutbox_posts.order_by("-created_date")
+        paginator = Paginator(shoutbox_posts, 10)
+        page = self.request.GET.get('page')
+        try:
+            shoutbox = paginator.page(page)
+        except PageNotAnInteger:
+            shoutbox = paginator.page(1)
+        except EmptyPage:
+            shoutbox = paginator.page(paginator.num_pages)
+        context['shoutbox'] = shoutbox
+
+        context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
+
+        client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
+        track_url = str(musician_profile.embedded_player)
+        embed_info = client.get('/oembed', maxheight=166, url=track_url)
+
+        context['embedded_player'] = embed_info.fields()['html']
+
+        return context
+
+    def form_valid(self, form):
+        shoutbox_post = form.save()
+        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.save()
+
+        user_profile = self.get_object()
+        user_profile.shoutbox_posts.add(shoutbox_post)
+
+        return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
+
+class MusiciansProfileViewRed(CreateView):
+
+    template_name = 'profile-mockup-red.html'
+    form_class = ShoutboxPostForm
+    
+    def get_object(self, queryset=None):
+        obj = MusicianProfile.objects.get(username=self.kwargs['name'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(MusiciansProfileViewRed, self).get_context_data(**kwargs)
+
+        musician_profile = self.get_object()
+        context['user_profile'] = musician_profile
+        try:
+            user_profile = UserProfile.objects.get(user_id=context['user'].id)
+            context['user'] = user_profile
+        except:
+            pass
+
+        try:
+            context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
+        except:
+            context['is_user'] = False
 
         shoutbox_posts = musician_profile.shoutbox_posts.order_by("-created_date")
         paginator = Paginator(shoutbox_posts, 10)

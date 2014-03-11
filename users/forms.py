@@ -158,16 +158,16 @@ class UserRegistrationForm(forms.Form):
 	username = forms.RegexField(regex=r'^[\w.@+-]+$',
 		max_length=64,
 		label=_("Username"),
-		widget=forms.TextInput(attrs={'id': 'input-username', 'type': 'text', 'placeholder': 'username',}),
+		widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-username', 'type': 'text', 'placeholder': 'username',}),
 		error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")})
 	email = forms.EmailField(
 		label=_("E-mail"),
-		widget=forms.TextInput(attrs={'id': 'input-email', 'type': 'text', 'placeholder': 'email',}))
+		widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-email', 'type': 'text', 'placeholder': 'email',}))
 	password1 = forms.CharField(
-		widget=forms.PasswordInput(attrs={'id': 'input-password1', 'type': 'password', 'placeholder': 'password',}),
+		widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'input-password1', 'type': 'password', 'placeholder': 'password',}),
 		label=_("Password"))
 	password2 = forms.CharField(
-		widget=forms.PasswordInput(attrs={'id': 'input-password2', 'type': 'password', 'placeholder': 'password confirmation',}),
+		widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'input-password2', 'type': 'password', 'placeholder': 'password confirmation',}),
 		label=_("Password (again)"))
 
 	def clean_username(self):
@@ -201,29 +201,73 @@ class MusicianRegistrationForm(ModelForm):
         model = MusicianProfile
         fields = ['username', 'display_name', 'location', 'genre']
 
+    def __init__(self, *args, **kwargs):
+        super(MusicianRegistrationForm, self).__init__(*args, **kwargs)
+    
+	self.fields['username'] = forms.RegexField(regex=r'^[\w.@+-]+$',
+            max_length=64,
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-username', 'type': 'text', 'placeholder': 'username',}),
+            error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")}
+        )
+
+	self.fields['display_name'] = forms.RegexField(regex=r'^[\w.@+-]+$',
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-email', 'type': 'text', 'placeholder': 'email',})
+        )
+            
+	self.fields['location'] = forms.CharField(
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-location', 'placeholder': 'location',}),
+        )
+
+	self.fields['genre'] = forms.CharField(
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-genre', 'placeholder': 'genre',}),
+        )
+
 class VenueRegistrationForm(ModelForm):
 
     class Meta:
         model = VenueProfile
-        fields = ['username', 'profile_image', 'genre', 'location']
+        fields = ['username', 'display_name', 'location', 'genre']
+
+    def __init__(self, *args, **kwargs):
+        super(VenueRegistrationForm, self).__init__(*args, **kwargs)
+    
+	self.fields['username'] = forms.RegexField(regex=r'^[\w.@+-]+$',
+            max_length=64,
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-username', 'type': 'text', 'placeholder': 'username',}),
+            error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")}
+        )
+
+	self.fields['display_name'] = forms.RegexField(regex=r'^[\w.@+-]+$',
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-email', 'type': 'text', 'placeholder': 'email',})
+        )
+            
+	self.fields['location'] = forms.CharField(
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-location', 'placeholder': 'location',}),
+        )
+
+	self.fields['genre'] = forms.CharField(
+            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-genre', 'placeholder': 'genre',}),
+        )
 
 class UserLoginForm(AuthenticationForm):
-	username = forms.RegexField(
-		regex = r'^[\w.@+-]+$',
-		max_length = 64,
-		widget=forms.TextInput(
-			attrs = {
-				'id': 'input-username',
-				'placeholder': 'Username',
-			}
-		),
-		error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")}
-	)
-	password = forms.CharField(
-		widget = forms.PasswordInput(
-			attrs = {
-				'id': 'input-password',
-				'placeholder': 'Password',
-			}
-		),
-	)
+    username = forms.RegexField(
+        regex = r'^[\w.@+-]+$',
+        max_length = 64,
+        widget=forms.TextInput(
+            attrs = {
+                'class': 'form-control',
+                'id': 'input-username',
+                'placeholder': 'Username',
+            }
+        ),
+        error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")}
+    )
+    password = forms.CharField(
+        widget = forms.PasswordInput(
+            attrs = {
+                'class': 'form-control',
+                'id': 'input-password',
+                'placeholder': 'Password',
+            }
+        ),
+    )

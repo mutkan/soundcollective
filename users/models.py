@@ -40,6 +40,10 @@ class MusicianProfile(BaseProfile):
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='musician_shoutbox_posts')
     user_profiles = models.ManyToManyField(UserProfile, related_name='%(class)s')
 
+    contact_email = models.CharField(max_length=128, null=True)
+    contact_twitter = models.CharField(max_length=128, null=True)
+    contact_facebook = models.CharField(max_length=128, null=True)
+
 class VenueProfile(BaseProfile):
     username = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
@@ -47,3 +51,7 @@ class VenueProfile(BaseProfile):
     splash_image = models.ForeignKey('uploads.Image', related_name='venue_splash_image', null=True)
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='venue_shoutbox_posts')
     user_profiles = models.ManyToManyField(UserProfile, related_name='%(class)s')
+
+    contact_email = models.CharField(max_length=128, null=True)
+    contact_twitter = models.CharField(max_length=128, null=True)
+    contact_facebook = models.CharField(max_length=128, null=True)

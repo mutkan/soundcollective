@@ -5,17 +5,16 @@
     <div style="background-image: url('{{ MEDIA_PREFIX }}{{ user_profile.splash_image.image }}'); 
         background-size: 100% auto; background-repeat: no-repeat; background-position: center center;" 
         class="splash" data-0="background-position:0px -75px;" data-100000="background-position:0px -50000px;">
-        
-        <div class="pure-g-r">
-            <div class="pure-u-1-4 l-box" id="profile-column-1">
-                <img id="testing-image" src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}"
-                     alt="Placeholder image for example.">
+    
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3 l-box">
+                <img src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}" class="img-responsive">
                 {% if is_user %}
-                    <br /><a class="pure-button pure-button-primary" href="{% url 'listeners_profile_edit' user.username %}">Edit Profile</a>
+                    <br /><a class="btn btn-primary" href="{% url 'listeners_profile_edit' user.username %}">Edit Profile</a>
                 {% endif %}
             </div>
-
-            <div class="pure-u-2-3 l-box" id="profile-column-2">
+            <div class="col-sm-6 l-box">
                 <h1 class="splash-head">
                     <div>
                         {{ user_profile.display_name }}
@@ -27,37 +26,34 @@
                         {{ user_profile.blurb|urlize }}
                     </p>                        
                 </div>
-
             </div>
         </div>
     </div>
 
     <div class="content">
         {{ embedded_player }}
-        <div class="pure-g-r">
 <!-- Begin Left Side --> 
-            <div class="pure-u-1-2">
+        <div class="row">
+            <div class="col-sm-6">
                 {% if user.is_authenticated %}
                     {% include 'posts/shoutbox_post.html' %}
                 {% endif %}
                 {% for shoutbox_post in shoutbox %}
-                    <div class="pure-g">
-                        <div class="pure-u-1">
-                            <div class="l-box">
-                                <div class="pure-u-1-8">
-                                    <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
-                                        <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}">
-                                    </a>
-                                </div>
-                                <div class="pure-u-3-4">
-                                    <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
-                                        <div class="wire-font">{{ shoutbox_post.created_by.display_name }}</div>
-                                    </a>
-                                    {{ shoutbox_post.body|urlize }}
-                                </div>
+                    <div class="l-box">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}" class="img-responsive" />
+                                </a>
+                            </div>
+                            <div class="col-sm-9">
+                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <div class="wire-font">{{ shoutbox_post.created_by.display_name }}</div>
+                                </a>
+                                {{ shoutbox_post.body|urlize }}
                             </div>
                         </div>
-                    </div>                
+                    </div>
                 {% endfor %}
 
                 {% if shoutbox.has_previous %}
@@ -69,59 +65,21 @@
                         <a href="?page={{ shoutbox.next_page_number }}">older posts &gt;</a>
                     {% endif %}
                 </div>
-
-            </div>       
-<!-- End Left Side --> 
-        
-<!-- Begin Right Side --> 
-            <div class="pure-u-1-2">
-                <div class="pure-g">
-                    <div class="pure-u-1">
-                        <div class="l-box">
-                            <h3>Next Show</h3>
-                            <iframe width="250px" height="250px" frameborder="1" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=los+angeles,+ca&amp;aq=&amp;sll=45.397486,-73.612518&amp;sspn=0.898731,0.727844&amp;ie=UTF8&amp;hq=&amp;hnear=Los+Angeles,+Los+Angeles+County,+California&amp;ll=34.052234,-118.243685&amp;spn=2.1208,1.455688&amp;t=m&amp;z=9&amp;output=embed"></iframe>
-                        </div>
-                    </div>
-                    <div class="pure-u-1-2">
-                        <div class="l-box">
-                            <h4>previous show 1</h4>
-                        </div>
-                    </div>
-                    <div class="pure-u-1-2">
-                        <div class="l-box">
-                            <h4>previous show 2</h4>
-                        </div>
-                    </div>
-                </div>
-<!-- End Show Maps -->
-    
-<!-- Begin Friends --> 
-            <div class="pure-u-r">
-                <div class="pure-u-1">
-                    <div class="l-box">
-                        <h3>Played With</h3>
-                    </div>
-                        
-                     <div class="pure-u-1">
-                        <div class="l-box">
-                            <img alt="White Rainbow" src="http://internationaltapes.com/covers/white_rainbow.jpg"  />
-                        </div>
-                    </div>                                                   
-                    <div class="pure-u-1-3">
-                        <div class="l-box">
-                            <img alt="Baths" src="http://factmag-images.s3.amazonaws.com/wp-content/uploads/2013/05/baths_obsidian_press_final_1_685.jpg" />
-                        </div>
-                    </div>
-                    <div class="pure-u-1-3">
-                        <div class="l-box">
-                            <img alt="Darkside" src="http://thekey.xpn.org/aatk/files/2013/10/darkside.jpg" />
-                        </div>
-                    </div>
-                </div>       
-<!-- End Friends -->
-
             </div>
-<!-- End Right Side --> 
+    <!-- End Left Side --> 
+            
+    <!-- Begin Right Side --> 
+            <div class="col-sm-6">
+                <div class="l-box">
+                    <h3>Played With</h3>
+                </div>
+                <div class="row">
+                    <img src="http://internationaltapes.com/covers/white_rainbow.jpg" class="img-responsive col-sm-4" />
+                    <img src="http://factmag-images.s3.amazonaws.com/wp-content/uploads/2013/05/baths_obsidian_press_final_1_685.jpg" class="img-responsive col-sm-4" />
+                    <img src="http://thekey.xpn.org/aatk/files/2013/10/darkside.jpg" class="img-responsive col-sm-4" />
+                </div>
+            </div>
         </div>
+<!-- End Right Side --> 
     </div>
 {% endblock content-margins %}

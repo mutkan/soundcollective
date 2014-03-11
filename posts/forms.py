@@ -83,8 +83,8 @@ class ShoutboxPostForm(ModelForm):
         self.fields['body'].widget = forms.Textarea(
             attrs = {
                 'placeholder': 'Write a comment',
-                'class': 'pure-input-1',
+                'class': 'form-group',
                 'rows': 4,
-                'cols': 80,
+                'cols': 68,
             }
         )
