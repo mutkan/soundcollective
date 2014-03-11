@@ -173,7 +173,7 @@ class MusicianRegistrationView(CreateView):
 
         musician_profile.created_by = self.request.user.userprofile
         musician_profile.modified_by = self.request.user.userprofile
-        raise Excpetion(self.request.user.userprofile)
+        raise Exception(self.request.user.userprofile)
         musician_profile.user_profiles.add(self.request.user.userprofile)
 
         musician_profile.save()
