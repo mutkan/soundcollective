@@ -336,6 +336,7 @@ class MusiciansProfileViewRed(CreateView):
 
         context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
 
+
         if musician_profile.embedded_player:
             client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
             track_url = str(musician_profile.embedded_player)
