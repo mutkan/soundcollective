@@ -198,11 +198,6 @@ class MusiciansProfileView(CreateView):
 
         musician_profile = self.get_object()
         context['user_profile'] = musician_profile
-        try:
-            user_profile = UserProfile.objects.get(user_id=context['user'].id)
-            context['user'] = user_profile
-        except:
-            pass
 
         try:
             context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
@@ -223,7 +218,7 @@ class MusiciansProfileView(CreateView):
         context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
 
         client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
-        track_url = user_profile.embedded_player
+        track_url = musician_profile.embedded_player
         try:
             context['embedded_player'] = client.get('/oembed', url=track_url)
         except:
@@ -256,11 +251,6 @@ class MusiciansProfileViewMe(CreateView):
 
         musician_profile = self.get_object()
         context['user_profile'] = musician_profile
-        try:
-            user_profile = UserProfile.objects.get(user_id=context['user'].id)
-            context['user'] = user_profile
-        except:
-            pass
 
         try:
             context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
@@ -281,7 +271,7 @@ class MusiciansProfileViewMe(CreateView):
         context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
 
         client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
-        track_url = user_profile.embedded_player
+        track_url = musician_profile.embedded_player
         try:
             context['embedded_player'] = client.get('/oembed', url=track_url)
         except:
@@ -314,11 +304,6 @@ class MusiciansProfileViewRed(CreateView):
 
         musician_profile = self.get_object()
         context['user_profile'] = musician_profile
-        try:
-            user_profile = UserProfile.objects.get(user_id=context['user'].id)
-            context['user'] = user_profile
-        except:
-            pass
 
         try:
             context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
@@ -338,9 +323,8 @@ class MusiciansProfileViewRed(CreateView):
 
         context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
 
-
         client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
-        track_url = user_profile.embedded_player
+        track_url = musician_profile.embedded_player
         try:
             context['embedded_player'] = client.get('/oembed', url=track_url)
         except:
