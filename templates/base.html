@@ -10,6 +10,7 @@
     <title>the happs</title>
 
     <script src="{{ STATIC_PREFIX }}js/jquery-1.10.2.min.js"></script>
+    <script src="{{ STATIC_PREFIX }}js/portfolio.pack.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
     {% block head %}{% endblock %}
     
@@ -21,7 +22,8 @@
 
 </head>
 <body>
-    <div class="navbar navbar-default" role="navigation">
+    <div class="wrapper">
+    <div class="navbar navbar-inverse navbar-maroon" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -55,9 +57,10 @@
             {% block content-margins %}{% endblock %}
         </div>
     </div>
+    </div>
  
 
-    <div class="footer">
+    <div id="footer">
         We did it for the homie.
     </div>
     
@@ -71,5 +74,15 @@
     <script src="{{ STATIC_PREFIX }}js/base.js"></script>
     <script src="//use.edgefonts.net/didact-gothic;abel;questrial;cabin;wire-one.js"></script>
     <script src="{{ STATIC_PREFIX }}lib/less-1.5.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+                var p = $("#gallery").portfolio({
+                    loop: true,
+                    height: '300px',
+                    width: '100%',
+                });
+                p.init();
+        });
+    </script>
 </body>
 </html>

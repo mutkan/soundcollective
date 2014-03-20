@@ -12,11 +12,8 @@ body, html {
 body {
     margin: 0 auto 0 auto;
     line-height: 1.7em;
-}
 
-.pull-right {
-    display: inline-block;
-    float:right;
+    background: rgb(248, 245, 238);
 }
 
 .l-box {
@@ -75,31 +72,19 @@ body {
   margin: 1.4em;
 }
 
-.footer {
-    margin-top: 32px;
-    padding: 1em;
+.wrapper {
+    min-height: 100%;
+    height: auto;
 
-    background: #111;
-    color: #666;
-    text-align: center;
-    font-size: 80%;
-}
+    margin: 0 auto -64px;
 
-.content-wrapper {
-    width: 100%;
+    padding: 0 0 64px;
 }
 .content-wrapper-margins {
     max-width: 1080px;
     margin: 0 auto 0 auto;
 }
-.actual-content {
-    max-width: 900px;
-    
-    margin-left: auto;
-    margin-right: auto;
 
-    padding-top: 2em;
-}
 .center-it {
     margin-left: auto;
     margin-right: auto;
@@ -186,4 +171,32 @@ body {
 .blurb {
     margin-top: 2em;
     margin-bottom: 2em;
+}
+
+/* REGISTRATION */
+#registration-blurb {
+    margin: auto;
+    width: 200px;
+    font-size: 150%;
+    text-align: center;
+}
+
+.l-box > .media {
+    margin-top: 1em;
+}
+
+/* LISTS */
+.list-image {
+    max-height: 150px;
+}
+
+/* FOOTER */
+#footer {
+    height: 64px;
+    padding: 1.5em;
+
+    background: #111;
+    color: #666;
+    text-align: center;
+    font-size: 80%;
 }

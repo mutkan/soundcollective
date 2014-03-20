@@ -184,7 +184,7 @@ class MusiciansView(ListView):
     model = MusicianProfile
     template_name = 'users/musicians_list.html'
 
-class MusiciansProfileView(CreateView):
+class MusiciansProfileViewOld(CreateView):
 
     template_name = 'users/musicians_profile.html'
     form_class = ShoutboxPostForm
@@ -194,7 +194,7 @@ class MusiciansProfileView(CreateView):
         return obj
     
     def get_context_data(self, **kwargs):
-        context = super(MusiciansProfileView, self).get_context_data(**kwargs)
+        context = super(MusiciansProfileViewOld, self).get_context_data(**kwargs)
 
         musician_profile = self.get_object()
         context['user_profile'] = musician_profile
@@ -237,9 +237,9 @@ class MusiciansProfileView(CreateView):
 
         return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
 
-class MusiciansProfileViewMe(CreateView):
+class MusiciansProfileView(CreateView):
 
-    template_name = 'profile-mockup-me.html'
+    template_name = 'users/musicians_profile_maroon.html'
     form_class = ShoutboxPostForm
     
     def get_object(self, queryset=None):
@@ -247,7 +247,7 @@ class MusiciansProfileViewMe(CreateView):
         return obj
     
     def get_context_data(self, **kwargs):
-        context = super(MusiciansProfileViewMe, self).get_context_data(**kwargs)
+        context = super(MusiciansProfileView, self).get_context_data(**kwargs)
 
         musician_profile = self.get_object()
         context['user_profile'] = musician_profile
@@ -273,7 +273,8 @@ class MusiciansProfileViewMe(CreateView):
         client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
         track_url = musician_profile.embedded_player
         try:
-            context['embedded_player'] = client.get('/oembed', url=track_url)
+            player = client.get('/oembed', url=track_url, maxheight='166')
+            context['embedded_player'] = player.fields()['html'] 
         except:
             context['embedded_player'] = ''
 
