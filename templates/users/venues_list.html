@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 
-{% block content %}
-	{% for venue in object_list %}
-		<div>{{ venue.display_name }}</div>
-	{% empty %}
-		<div>No venues yet! Turn on the music!</div>
-	{% endfor %}
-{% endblock content %}
+{% block content-margins %}
+
+<div class="row">
+{% for object in object_list %}
+    <div class="col-sm-4">
+        <div class="l-box">
+            <div class="media">
+                <div class="pull-left">
+                    <a href="{% url 'venues_profile' object.username %}">
+                        <img src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
+                    </a>
+                </div>
+                <div class="wire-font">
+                    <a href="{% url 'venues_profile' object.username %}">{{ object.display_name }}</a>
+                </div>
+                <div class="splash-subhead">
+                    {{ object.location }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+        <div>No venues yet! Turn on the music!</div>
+    {% endfor %}
+</div>
+{% endblock content-margins %}

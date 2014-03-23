@@ -28,6 +28,7 @@ class PostView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(PostView, self).get_context_data(**kwargs)
         post = self.get_object()
+
         context['post'] = post
         context['musician_tags'] = MusicianPostTag.objects.filter(post=post)
         context['venue_tags'] = VenuePostTag.objects.filter(post=post)
@@ -46,6 +47,8 @@ class PostListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
+
+        context['dates_list'] = Post.objects.values_list('date', flat=True)
         
         if self.request.user.is_authenticated():
             context['musician_profiles'] = self.request.user.userprofile.musicianprofile.all()

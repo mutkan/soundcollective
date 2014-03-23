@@ -2,36 +2,33 @@
 
 {% block content-margins %}
 
-<div class='pure-g-r'>
-
-    <div class='pure-u-2-3 posts_post'>
-        <div>{{ post.subject }}</div>
-        <div><img src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
-        <div>{{ post.date }}</div>
-        <div>{{ post.location }}</div>
-        <div>{{ post.body|urlize }}</div>
-        <div>
-            musicians:<br />
-            {% if musician_tags %}
-                {% for musician_tag in musician_tags %}
-                    <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
-                        {{ musician_tag.tagged_musician.display_name }}
-                    </a><br />
-                {% endfor %}
-            {% else %}
-                no musicians tagged
-            {% endif %}
-        </div>
-        <div>
-            venue:<br />
-            {% if venue_tags %}
-                {% for venue_tag in venue_tags %}
-                    {{ venue_tag.tagged_venue.display_name }}
-                {% endfor %}
-            {% else %}
-                no venue tagged
-            {% endif %}
-        </div>
+<div class="posts_post">
+    <div>{{ post.subject }}</div>
+    <div><img src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
+    <div>{{ post.date }}</div>
+    <div>{{ post.location }}</div>
+    <div>{{ post.body|urlize }}</div>
+    <div>
+        musicians:<br />
+        {% if musician_tags %}
+            {% for musician_tag in musician_tags %}
+                <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
+                    {{ musician_tag.tagged_musician.display_name }}
+                </a><br />
+            {% endfor %}
+        {% else %}
+            no musicians tagged
+        {% endif %}
+    </div>
+    <div>
+        venue:<br />
+        {% if venue_tags %}
+            {% for venue_tag in venue_tags %}
+                {{ venue_tag.tagged_venue.display_name }}
+            {% endfor %}
+        {% else %}
+            no venue tagged
+        {% endif %}
     </div>
 </div>
 {% endblock content-margins %}

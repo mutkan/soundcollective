@@ -1,24 +1,47 @@
 {% extends "base_menu.html" %}
 
 {% block content-margins-menu %}
-
-    {% for p in object_list %}
+    
+    {% for event_date in dates_list %}
+        <div class="green l-box-header source600">
+            &nbsp;&nbsp;{{ event_date|date:"l" }}, {{ event_date|date:"F d" }}
+        </div>
+            
+        
         <div class="l-box">
-            <div class="media">
-                <div class="pull-left">
-                    <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
-                    {% if p.created_by.user == user %}
-                        - <a href="{% url 'posts_edit' p.id %}">(edit)</a>
-                    {% endif %}
-                    <div>{{ p.location }}</div>
-                    <div>
-                        {{ p.date }}
+            {% for p in object_list %}
+                {% if p.date == event_date %}
+                    <div class="media">
+                        <div class="list-image pull-left">
+                            <a href="{% url 'posts_post' p.id %}">
+                                <img class="media-object list-image" src={{ MEDIA_PREFIX }}{{ p.flyer.image }}>
+                            </a>
+                        </div>
+                        <div>
+                            <h4 class="source600 post-title">
+                                <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
+                            </h4>
+                            {% if p.created_by.user == user %}
+                                <div class="pull-right">
+                                    <a href="{% url 'posts_edit' p.id %}">(edit)</a>
+                                </div>
+                            {% endif %}
+                            <div class="shoutbox-post-created-date">
+                                in {{ p.location }}
+                            </div>
+                            <div>
+                                musicians:
+                                {% for musician_tag in p.musicianposttag_set.all %}
+                                    <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
+                                        {{ musician_tag.tagged_musician.display_name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <a class="pull-right" href="{% url 'posts_post' p.id %}">
-                    <img class="media-object list-image" src={{ MEDIA_PREFIX }}{{ p.flyer.image }}>
-                </a>
-            </div>
+                {% endif %}
+            {% endfor %}
         </div>
     {% endfor %}
+
 {% endblock content-margins-menu %}

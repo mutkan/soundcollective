@@ -609,3 +609,4 @@ def login(request, template_name='registration/login.html',
 
     return TemplateResponse(request, template_name, context,
                             current_app=current_app)
+                            

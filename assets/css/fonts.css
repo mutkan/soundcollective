@@ -1,0 +1,10 @@
+@font-face {
+    font-family: NexaLight;
+    src: url("https://s3.amazonaws.com/soundcollective/fonts/nexa-light.otf") format("opentype");
+}
+
+@font-face {
+    font-family: NexaBold;
+    font-weight: bold;
+    src: url("https://s3.amazonaws.com/soundcollective/fonts/nexa-bold.otf") format("opentype");
+}
