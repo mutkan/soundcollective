@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="wrapper">
-    <div class="navbar navbar-maroon" role="navigation">
+    <div class="navbar navbar-default navbar-maroon" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -72,15 +72,5 @@
 
     <script src="{{ STATIC_PREFIX }}js/base.js"></script>
     <script src="{{ STATIC_PREFIX }}lib/less-1.5.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-                var p = $("#gallery").portfolio({
-                    loop: true,
-                    height: '240px',
-                    width: '100%',
-                });
-                p.init();
-        });
-    </script>
 </body>
 </html>

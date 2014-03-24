@@ -9,7 +9,7 @@ class Post(CreateModifyDates):
     subject = models.CharField(max_length=64, null=True)
     flyer = models.ForeignKey(Image, null=True)
     location = models.CharField(max_length=64, null=True)
-    body = models.CharField(max_length=512, null=True)    
+    body = models.TextField(null=True)
     date = models.DateField(null=True)
 
 class ShoutboxPost(CreateModifyDates):

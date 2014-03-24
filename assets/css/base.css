@@ -80,6 +80,11 @@ body {
     margin-bottom: 0; 
 }
 
+/* POST */
+.post-image {
+    margin-right: 12px;
+}
+
 /* PROFILE */
 .display-name h2 {
     margin-bottom: 0;

@@ -85,4 +85,15 @@
                     </div>
                 </div>
             </div>
+    <script>
+        $(document).ready(function() {
+                var p = $("#gallery").portfolio({
+                    enableKeyboardNavigation: false,
+                    loop: true,
+                    height: '240px',
+                    width: '100%',
+                });
+                p.init();
+        });
+    </script>
 {% endblock content-margins %}

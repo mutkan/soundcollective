@@ -96,7 +96,7 @@ class EditMusicianProfileForm(ModelForm):
         self.fields['display_name'].widget = forms.TextInput(
                 attrs = {
                         'placeholder': 'Display Name',
-                        'class': 'pure-input-1-3',
+                        'class': 'form-control',
                         'id': 'input-display-name',
                 }
         )
@@ -105,7 +105,7 @@ class EditMusicianProfileForm(ModelForm):
         self.fields['location'].widget = forms.TextInput(
                 attrs = {
                         'placeholder': 'Location',
-                        'class': 'pure-input-1-3',
+                        'class': 'form-control',
                         'id': 'input-location',
                 }
         )
@@ -114,7 +114,7 @@ class EditMusicianProfileForm(ModelForm):
         self.fields['blurb'].widget = forms.Textarea(
                 attrs = {
                         'placeholder': 'Blurb',
-                        'class': 'pure-input-2-3',
+                        'class': 'form-control',
                         'id': 'input-blurb',
                         'rows': 5,
                 }
@@ -124,7 +124,7 @@ class EditMusicianProfileForm(ModelForm):
         self.fields['embedded_player'].widget = forms.Textarea(
                 attrs = {
                         'placeholder': 'Embed a music player',
-                        'class': 'pure-input-2-3',
+                        'class': 'form-control',
                         'id': 'input-embedded_player',
                         'rows': 5,
                 }

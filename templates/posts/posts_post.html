@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 
 {% block content-margins %}
-
-<div class="posts_post">
-    <div>{{ post.subject }}</div>
-    <div><img src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
+    <div class="post-image pull-left"><img src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
+    <div><h2 class="source600">{{ post.subject }}</h2></div>
     <div>{{ post.date }}</div>
     <div>{{ post.location }}</div>
     <div>{{ post.body|urlize }}</div>
@@ -30,5 +28,4 @@
             no venue tagged
         {% endif %}
     </div>
-</div>
 {% endblock content-margins %}
