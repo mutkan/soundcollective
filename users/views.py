@@ -28,11 +28,12 @@ from registration import signals
 from registration.models import RegistrationProfile
 from registration.views import _RequestPassingFormView
 
-from tags.models import MusicianPostTag, UserPostTag, VenuePostTag
+from tags.models import MusicianImageTag, UserImageTag, VenueImageTag, MusicianPostTag, UserPostTag, VenuePostTag
 
 from uploads.models import Image
 
-from users.forms import UserLoginForm, UserRegistrationForm, EditUserProfileForm, UserProfileImageListForm, MusicianRegistrationForm, EditMusicianProfileForm, VenueRegistrationForm
+from users.forms import (UserLoginForm, UserRegistrationForm, EditUserProfileForm, UserProfileImageListForm, 
+    MusicianRegistrationForm, EditMusicianProfileForm, AddPhotoForm, VenueRegistrationForm)
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class InaccessibleView(TemplateView):
@@ -94,9 +95,12 @@ class UserProfileView(CreateView):
         client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
         track_url = user_profile.embedded_player
         try:
-            context['embedded_player'] = client.get('/oembed', url=track_url)
+            player = client.get('/oembed', url=track_url, maxheight='166')
+            context['embedded_player'] = player.fields()['html'] 
         except:
             context['embedded_player'] = ''
+
+        context['associated_acts'] = user_profile.musicianprofile.all()
 
         return context
 
@@ -142,17 +146,6 @@ class UserProfileEditView(UpdateView):
                 user_profile.profile_image = profile_image
         except:
             pass
-        try: 
-            if self.request.FILES['splash_image']:
-                splash_image = Image.objects.create()
-                splash_image.created_by = user_profile
-                splash_image.modified_by = user_profile
-                splash_image.image = image=self.request.FILES['splash_image']
-                splash_image.save()
-
-                user_profile.splash_image = splash_image
-        except:
-            pass
 
         user_profile.save()
 
@@ -184,62 +177,9 @@ class MusiciansView(ListView):
     model = MusicianProfile
     template_name = 'users/musicians_list.html'
 
-class MusiciansProfileViewOld(CreateView):
-
-    template_name = 'users/musicians_profile.html'
-    form_class = ShoutboxPostForm
-    
-    def get_object(self, queryset=None):
-        obj = MusicianProfile.objects.get(username=self.kwargs['name'])
-        return obj
-    
-    def get_context_data(self, **kwargs):
-        context = super(MusiciansProfileViewOld, self).get_context_data(**kwargs)
-
-        musician_profile = self.get_object()
-        context['user_profile'] = musician_profile
-
-        try:
-            context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
-        except:
-            context['is_user'] = False
-
-        shoutbox_posts = musician_profile.shoutbox_posts.order_by("-created_date")
-        paginator = Paginator(shoutbox_posts, 10)
-        page = self.request.GET.get('page')
-        try:
-            shoutbox = paginator.page(page)
-        except PageNotAnInteger:
-            shoutbox = paginator.page(1)
-        except EmptyPage:
-            shoutbox = paginator.page(paginator.num_pages)
-        context['shoutbox'] = shoutbox
-
-        context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
-
-        client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
-        track_url = musician_profile.embedded_player
-        try:
-            context['embedded_player'] = client.get('/oembed', url=track_url)
-        except:
-            context['embedded_player'] = ''
-
-        return context
-
-    def form_valid(self, form):
-        shoutbox_post = form.save()
-        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
-        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
-        shoutbox_post.save()
-
-        user_profile = self.get_object()
-        user_profile.shoutbox_posts.add(shoutbox_post)
-
-        return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
-
 class MusiciansProfileView(CreateView):
 
-    template_name = 'users/musicians_profile_maroon.html'
+    template_name = 'users/musicians_profile.html'
     form_class = ShoutboxPostForm
     
     def get_object(self, queryset=None):
@@ -291,59 +231,6 @@ class MusiciansProfileView(CreateView):
 
         return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
 
-class MusiciansProfileViewRed(CreateView):
-
-    template_name = 'profile-mockup-red.html'
-    form_class = ShoutboxPostForm
-    
-    def get_object(self, queryset=None):
-        obj = MusicianProfile.objects.get(username=self.kwargs['name'])
-        return obj
-    
-    def get_context_data(self, **kwargs):
-        context = super(MusiciansProfileViewRed, self).get_context_data(**kwargs)
-
-        musician_profile = self.get_object()
-        context['user_profile'] = musician_profile
-
-        try:
-            context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
-        except:
-            context['is_user'] = False
-
-        shoutbox_posts = musician_profile.shoutbox_posts.order_by("-created_date")
-        paginator = Paginator(shoutbox_posts, 10)
-        page = self.request.GET.get('page')
-        try:
-            shoutbox = paginator.page(page)
-        except PageNotAnInteger:
-            shoutbox = paginator.page(1)
-        except EmptyPage:
-            shoutbox = paginator.page(paginator.num_pages)
-        context['shoutbox'] = shoutbox
-
-        context['upcoming_shows'] = MusicianPostTag.objects.filter(tagged_musician=musician_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
-
-        client = soundcloud.Client(client_id=os.environ['SOUNDCLOUD_ID'])
-        track_url = musician_profile.embedded_player
-        try:
-            context['embedded_player'] = client.get('/oembed', url=track_url)
-        except:
-            context['embedded_player'] = ''
-
-        return context
-
-    def form_valid(self, form):
-        shoutbox_post = form.save()
-        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
-        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
-        shoutbox_post.save()
-
-        user_profile = self.get_object()
-        user_profile.shoutbox_posts.add(shoutbox_post)
-
-        return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
-
 class MusiciansProfileEditView(UpdateView):
 
     form_class = EditMusicianProfileForm
@@ -351,53 +238,76 @@ class MusiciansProfileEditView(UpdateView):
 
     def get_object(self, queryset=None):
         obj = MusicianProfile.objects.get(username=self.kwargs['name'])
-
         return obj
     
     def get_context_data(self, **kwargs):
         context = super(MusiciansProfileEditView, self).get_context_data(**kwargs)
-        context['user'] = user = self.get_object()
+        context['user'] = self.get_object()
         
         return context
     
     def form_valid(self, form):
         user_profile = form.save()
         
+        user = UserProfile.objects.get(user_id=self.request.user.id)
+        
         try:
             if self.request.FILES['profile_image']:
                 profile_image = Image.objects.create()
-                profile_image.created_by = user_profile
-                profile_image.modified_by = user_profile
+                profile_image.created_by = user
+                profile_image.modified_by = user
                 profile_image.image = self.request.FILES['profile_image']
                 profile_image.save()
 
                 user_profile.profile_image = profile_image
-        except:
-            pass
-        try: 
-            if self.request.FILES['splash_image']:
-                splash_image = Image.objects.create()
-                splash_image.created_by = user_profile
-                splash_image.modified_by = user_profile
-                splash_image.image = image=self.request.FILES['splash_image']
-                splash_image.save()
 
-                user_profile.splash_image = splash_image
+                musician_image_tag = MusicianImageTag.objects.create(image=profile_image, tagged_musician=user_profile)
+                musician_image_tag.save()
         except:
             pass
-        
-#        import soundcloud
-#        client = soundcloud.Client(client_id='YOUR_CLIENT_ID')
-#
-#        track_url = form.cleaned_data['
-#        embed_info = client.get('/oembed', url=track_url)
-#
-#        print embed_info['html']
 
         user_profile.save()
 
         return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
    
+class MusiciansProfileAddPhoto(FormView):
+    
+    form_class = AddPhotoForm
+    template_name = 'users/add_photo.html'
+
+    def get_object(self, queryset=None):
+        obj = MusicianProfile.objects.get(username=self.kwargs['name'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(MusiciansProfileAddPhoto, self).get_context_data(**kwargs)
+        context['user_profile'] = self.get_object()
+        
+        return context
+    
+    def form_valid(self, form):
+        
+        user = UserProfile.objects.get(user_id=self.request.user.id)
+        
+        raise Exception(self.request.FILES['images'])
+        try:
+            if self.request.FILES['images']:
+                profile_image = Image.objects.create()
+                profile_image.created_by = user
+                profile_image.modified_by = user
+                profile_image.image = self.request.FILES['profile_image']
+                profile_image.save()
+
+                user_profile.profile_image = profile_image
+
+                musician_image_tag = MusicianImageTag.objects.create(image=profile_image, tagged_musician=user_profile)
+                musician_image_tag.save()
+        except:
+            pass
+
+        user_profile.save()
+
+        return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
 
 class VenueRegistrationView(CreateView):
 
@@ -528,16 +438,16 @@ class UserRegistrationView(BaseRegistrationView):
 			site = Site.objects.get_current()
 		else:
 			site = RequestSite(request)
-		new_user = RegistrationProfile.objects.create_inactive_user(username, email,
-																	password, site)
+
+		new_user = RegistrationProfile.objects.create_inactive_user(username, email, password, site)
 		
 		# user_profile creation
 		user_profile = UserProfile.objects.create(user=new_user)
+                user_profile.display_name = username
 		user_profile.save()
 		
-		signals.user_registered.send(sender=self.__class__,
-									 user=new_user,
-									 request=request)
+		signals.user_registered.send(sender=self.__class__, user=new_user, request=request)
+
 		return new_user
 	
 	def registration_allowed(self, request):

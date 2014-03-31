@@ -1,101 +1,117 @@
 {% extends "base.html" %}
 
 {% block content-margins %}
-	
-    <div style="background-image: url('{{ MEDIA_PREFIX }}{{ user_profile.splash_image.image }}'); 
-        background-size: 100% auto; background-repeat: no-repeat; background-position: center center;" 
-        class="splash" data-0="background-position:0px -75px;" data-100000="background-position:0px -50000px;">
-        
-        <div class="row">
-            <div class="col-md-3 l-box">
-                <img id="testing-image" src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}"
-                     alt="Placeholder image for example.">
-                {% if is_user %}
-                    <br /><a class="btn btn-primary" href="{% url 'musicians_profile_edit' user_profile.username %}">Edit Profile</a>
-                {% endif %}
-            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="display-name"><h2 class="source600">{{ user_profile.display_name }}</h2></div>
+                    <div class="location source600">{{ user_profile.location }}</div>
 
-            <div class="col-md-7 l-box">
-                <h1 class="splash-head">
-                    <div>
-                        {{ user_profile.display_name }}
+                    <div class="blurb">
+                        {% if user_profile.blurb %}
+                            {{ user_profile.blurb }}
+                        {% endif %}
                     </div>
-                </h1>
-                <div class="splash-subhead">
-                    {{ user_profile.location }}
-                    <p>
-                        {{ user_profile.blurb|urlize }}
-                    </p>                        
+                    {% if user_profile.contact_email %}
+                        <div class="social-media-spacing">
+                            <a href="mailto:{{ user_profile.contact_email }}">
+                                <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
+                                &nbsp;{{ user_profile.contact_email }}
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if user_profile.contact_twitter %}
+                        <div class="social-media-spacing">
+                            <a href="https://twitter.com/{{ user_profile.contact_twitter }}">
+                                <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/twitter.png" >
+                                &nbsp;{{ user_profile.contact_twitter }}
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if user_profile.contact_facebook %}
+                        <div class="social-media-spacing">
+                            <a href="https://facebook.com/{{ user_profile.contact_facebook }}">
+                                <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/facebook.png" >
+                                &nbsp;{{ user_profile.contact_facebook }}
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="gray divider"><h4>&nbsp;&nbsp;related acts</h4></div>
                 </div>
+                <div class="col-sm-9">
+                    
+                    <div id="gallery">
+                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg1.jpg" >
+                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg2.jpg" >
+                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg3.jpg" >
+                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg4.jpg" >
+                    </div>
 
-            </div>
-        </div>
-    </div>
+                    <div><a href=
 
-    <div class="content">
-        {{ embedded_player|safe }}
-        <div class="row">
-<!-- Begin Left Side --> 
-            <div class="col-md-6">
-                {% if user.is_authenticated %}
-                    {% include 'posts/shoutbox_post.html' %}
-                {% endif %}
-                {% for shoutbox_post in shoutbox %}
-                    <div class="l-box">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
-                                    <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}" class="img-responsive" />
-                                </a>
+                    <div class="row">
+                        {% if embedded_player %}
+                            <div class="col-sm-6">
+                                {{ embedded_player|safe }}
                             </div>
-                            <div class="col-md-9">
-                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
-                                    <div class="wire-font">{{ shoutbox_post.created_by.display_name }}</div>
-                                </a>
-                                {{ shoutbox_post.body|urlize }}
+                        {% endif %}
+                        <div class="col-sm-6">
+                            <div class="green l-box-header"><h4>&nbsp;&nbsp;Shows</h4></div>
+                            <div>
+                                {% for show in upcoming_shows %}
+                                    <a href="{% url 'posts_post' show.post.id %}"><div class="source600">{{ show.post.subject }}</div></a>
+                                    <div class="pull-right">{{ show.post.date }}</div>
+                                    <div>{{ show.post.location }}</div>
+                                    <br />
+                                {% endfor %}
                             </div>
                         </div>
-                    </div>                
-                {% endfor %}
+                    </div>
+                    <div>
+                        {% if user.is_authenticated %}
+                            {% include 'posts/shoutbox_post.html' %}
+                        {% endif %}
+                        {% for shoutbox_post in shoutbox %}
+                            <div class="l-box">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                            <img class="media-object shoutbox-post-image" src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}" class="img-responsive" />
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <div class="shoutbox-post-display-name pull-left">
+                                            <a class="source600" href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                                {{ shoutbox_post.created_by.display_name }}
+                                            </a>
+                                        </div>
+                                        <div class="shoutbox-post-created-date">&nbsp;&nbsp;{{ shoutbox_post.created_date }}</div>
+                                        {{ shoutbox_post.body|urlize }}
+                                    </div>
+                                </div>
+                            </div>                
+                        {% endfor %}
 
-                {% if shoutbox.has_previous %}
-                    <a href="?page={{ shoutbox.previous_page_number }}">&lt; newer posts</a>
-                {% endif %}
+                        {% if shoutbox.has_previous %}
+                            <a href="?page={{ shoutbox.previous_page_number }}">&lt; newer posts</a>
+                        {% endif %}
 
-                <div class="pull-right">
-                    {% if shoutbox.has_next %}
-                        <a href="?page={{ shoutbox.next_page_number }}">older posts &gt;</a>
-                    {% endif %}
+                        <div class="pull-right">
+                            {% if shoutbox.has_next %}
+                                <a href="?page={{ shoutbox.next_page_number }}">older posts &gt;</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-
-            </div>       
-<!-- End Left Side --> 
-        
-<!-- Begin Right Side --> 
-            <div class="col-md-6">
-                <div class="l-box">
-                    <h3>Upcoming Shows</h3>
-                    {% for show in upcoming_shows %}
-                        <a href="{% url 'posts_post' show.post.id %}">{{ show.post.subject }}</a>
-                        <div class="pull-right">{{ show.post.date }}</div>
-                        <br />
-                    {% endfor %}
-                </div>
-<!-- End Show Maps -->
-    
-<!-- Begin Friends --> 
-                <div class="l-box">
-                    <h3>Played With</h3>
-                </div>
-                <div class="row">                    
-                    <img alt="White Rainbow" src="http://internationaltapes.com/covers/white_rainbow.jpg" class="img-responsive col-md-4" />
-                    <img alt="Baths" src="http://factmag-images.s3.amazonaws.com/wp-content/uploads/2013/05/baths_obsidian_press_final_1_685.jpg" class="img-responsive col-md-4" />
-                    <img alt="Darkside" src="http://thekey.xpn.org/aatk/files/2013/10/darkside.jpg" class="img-responsive col-md-4" />
-                </div>
-<!-- End Friends -->
-
             </div>
-<!-- End Right Side --> 
-        </div>
-    </div>
+    <script>
+        $(document).ready(function() {
+                var p = $("#gallery").portfolio({
+                    enableKeyboardNavigation: false,
+                    loop: true,
+                    height: '240px',
+                    width: '100%',
+                });
+                p.init();
+        });
+    </script>
 {% endblock content-margins %}

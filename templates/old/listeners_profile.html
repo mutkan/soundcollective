@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content-margins %}
+	
+    <div style="background-image: url('{{ MEDIA_PREFIX }}{{ user_profile.splash_image.image }}'); 
+        background-size: 100% auto; background-repeat: no-repeat; background-position: center center;" 
+        class="splash" data-0="background-position:0px -75px;" data-100000="background-position:0px -50000px;">
+    
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3 l-box">
+                <img src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}" class="img-responsive">
+                {% if is_user %}
+                    <br /><a class="btn btn-primary" href="{% url 'listeners_profile_edit' user.username %}">Edit Profile</a>
+                {% endif %}
+            </div>
+            <div class="col-sm-6 l-box">
+                <h1 class="splash-head">
+                    <div>
+                        {{ user_profile.display_name }}
+                    </div>
+                </h1>
+                <div class="splash-subhead">
+                    {{ user_profile.location }}
+                    <p>
+                        {{ user_profile.blurb|urlize }}
+                    </p>                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        {{ embedded_player }}
+<!-- Begin Left Side --> 
+        <div class="row">
+            <div class="col-sm-6">
+                {% if user.is_authenticated %}
+                    {% include 'posts/shoutbox_post.html' %}
+                {% endif %}
+                {% for shoutbox_post in shoutbox %}
+                    <div class="l-box">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}" class="img-responsive" />
+                                </a>
+                            </div>
+                            <div class="col-sm-9">
+                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <div class="wire-font">{{ shoutbox_post.created_by.display_name }}</div>
+                                </a>
+                                {{ shoutbox_post.body|urlize }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% if shoutbox.has_previous %}
+                    <a href="?page={{ shoutbox.previous_page_number }}">&lt; newer posts</a>
+                {% endif %}
+
+                <div class="pull-right">
+                    {% if shoutbox.has_next %}
+                        <a href="?page={{ shoutbox.next_page_number }}">older posts &gt;</a>
+                    {% endif %}
+                </div>
+            </div>
+    <!-- End Left Side --> 
+            
+    <!-- Begin Right Side --> 
+            <div class="col-sm-6">
+                <div class="l-box">
+                    <h3>Played With</h3>
+                </div>
+                <div class="row">
+                    <img src="http://internationaltapes.com/covers/white_rainbow.jpg" class="img-responsive col-sm-4" />
+                    <img src="http://factmag-images.s3.amazonaws.com/wp-content/uploads/2013/05/baths_obsidian_press_final_1_685.jpg" class="img-responsive col-sm-4" />
+                    <img src="http://thekey.xpn.org/aatk/files/2013/10/darkside.jpg" class="img-responsive col-sm-4" />
+                </div>
+            </div>
+        </div>
+<!-- End Right Side --> 
+    </div>
+{% endblock content-margins %}

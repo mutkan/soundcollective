@@ -25,7 +25,7 @@ class EditUserProfileForm(ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['display_name', 'location', 'blurb', 'embedded_player']
+        fields = ['display_name', 'location', 'blurb', 'embedded_player', 'contact_twitter', 'contact_facebook']
 
     def __init__(self, *args, **kwargs):
         super(EditUserProfileForm, self).__init__(*args, **kwargs)
@@ -34,7 +34,7 @@ class EditUserProfileForm(ModelForm):
         self.fields['display_name'].widget = forms.TextInput(
                 attrs = {
                         'placeholder': 'Display Name',
-                        'class': 'pure-input-1-3',
+                        'class': 'form-control',
                         'id': 'input-display-name',
                 }
         )
@@ -43,7 +43,7 @@ class EditUserProfileForm(ModelForm):
         self.fields['location'].widget = forms.TextInput(
                 attrs = {
                         'placeholder': 'Location',
-                        'class': 'pure-input-1-3',
+                        'class': 'form-control',
                         'id': 'input-location',
                 }
         )
@@ -52,7 +52,7 @@ class EditUserProfileForm(ModelForm):
         self.fields['blurb'].widget = forms.Textarea(
                 attrs = {
                         'placeholder': 'Blurb',
-                        'class': 'pure-input-2-3',
+                        'class': 'form-control',
                         'id': 'input-blurb',
                         'rows': 5,
                 }
@@ -62,9 +62,27 @@ class EditUserProfileForm(ModelForm):
         self.fields['embedded_player'].widget = forms.Textarea(
                 attrs = {
                         'placeholder': 'Embed a music player',
-                        'class': 'pure-input-2-3',
+                        'class': 'form-control',
                         'id': 'input-embedded_player',
                         'rows': 5,
+                }
+        )
+
+        self.fields['contact_twitter'].required = False
+        self.fields['contact_twitter'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Twitter Username',
+                        'class': 'form-control',
+                        'id': 'input-twitter',
+                }
+        )
+
+        self.fields['contact_facebook'].required = False
+        self.fields['contact_facebook'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Facebook Username',
+                        'class': 'form-control',
+                        'id': 'input-facebook',
                 }
         )
 
@@ -87,7 +105,7 @@ class EditMusicianProfileForm(ModelForm):
 
     class Meta:
         model = MusicianProfile
-        fields = ['display_name', 'location', 'blurb', 'embedded_player']
+        fields = ['display_name', 'location', 'blurb', 'embedded_player', 'contact_email', 'contact_twitter', 'contact_facebook']
 
     def __init__(self, *args, **kwargs):
         super(EditMusicianProfileForm, self).__init__(*args, **kwargs)
@@ -129,6 +147,43 @@ class EditMusicianProfileForm(ModelForm):
                         'rows': 5,
                 }
         )
+
+        self.fields['contact_email'].required = False
+        self.fields['contact_email'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Email',
+                        'class': 'form-control',
+                        'id': 'input-email',
+                }
+        )
+        
+        self.fields['contact_twitter'].required = False
+        self.fields['contact_twitter'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Twitter Username',
+                        'class': 'form-control',
+                        'id': 'input-twitter',
+                }
+        )
+
+        self.fields['contact_facebook'].required = False
+        self.fields['contact_facebook'].widget = forms.TextInput(
+                attrs = {
+                        'placeholder': 'Facebook Username',
+                        'class': 'form-control',
+                        'id': 'input-facebook',
+                }
+        )
+
+class AddPhotoForm(forms.Form):
+    
+    images = forms.ImageField()
+    images.required = True
+    images.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-add-photo',
+        }
+    )
 
 class UserProfileImageListForm(forms.Form):
 

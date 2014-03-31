@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content-margins %}
-    <div class="post-image pull-left"><img src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
+    <div class="pull-left"><img class="post-image" src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
     <div><h2 class="source600">{{ post.subject }}</h2></div>
     <div>{{ post.date }}</div>
     <div>{{ post.location }}</div>

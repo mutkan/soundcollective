@@ -83,10 +83,30 @@ body {
 /* POST */
 .post-image {
     margin-right: 12px;
+    width: auto;
+    max-height: 300px;
+}
+
+/* LISTS */
+.profile-list-image {
+    width: auto;
+    max-width: 150px;
+    max-height: 150px;
 }
 
 /* PROFILE */
+.profile-image {
+    margin-top: 24px;
+    width: auto;
+    max-width: 248px;
+    max-height: 240px;
+}
+.related-image {
+    width: auto;
+    height: 80px;
+}
 .display-name h2 {
+    margin-top: 24px;
     margin-bottom: 0;
     color: rgb(42, 78, 101);
 }
@@ -129,7 +149,6 @@ body {
 
 .divider {
     margin-top: 2em;
-    margin-bottom: 2em;
 
     padding-top: .2em;
     padding-bottom: .2em;

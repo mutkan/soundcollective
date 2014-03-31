@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'registration',
     'storages',
     'south',
+    'fileupload',
 
     # apps
     'mixins',

@@ -1,33 +1,38 @@
 {% extends "base_menu.html" %}
 
 {% block content-margins-menu %}
-    
-    {% for event_date in dates_list %}
-        <div class="green l-box-header source600">
-            &nbsp;&nbsp;{{ event_date|date:"l" }}, {{ event_date|date:"F d" }}
-        </div>
-            
+
+{% for event_date in dates_list %}
+    <div class="green l-box-header source600">
+        &nbsp;&nbsp;{{ event_date|date:"l" }}, {{ event_date|date:"F d" }}
+    </div>
         
-        <div class="l-box">
-            {% for p in object_list %}
-                {% if p.date == event_date %}
-                    <div class="media">
-                        <div class="list-image pull-left">
-                            <a href="{% url 'posts_post' p.id %}">
-                                <img class="media-object list-image" src={{ MEDIA_PREFIX }}{{ p.flyer.image }}>
-                            </a>
-                        </div>
-                        <div>
+    
+    <div class="l-box">
+        {% for p in object_list %}
+            {% if p.date == event_date %}
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="media">
+                            <div class="list-image pull-left">
+                                <a href="{% url 'posts_post' p.id %}">
+                                    <img class="media-object list-image" src={{ MEDIA_PREFIX }}{{ p.flyer.image }}>
+                                </a>
+                            </div>
                             <h4 class="source600 post-title">
                                 <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
+                                {% if p.created_by.user == user %}
+                                     - <a href="{% url 'posts_edit' p.id %}">(edit)</a>
+                                {% endif %}
                             </h4>
-                            {% if p.created_by.user == user %}
-                                <div class="pull-right">
-                                    <a href="{% url 'posts_edit' p.id %}">(edit)</a>
-                                </div>
-                            {% endif %}
                             <div class="shoutbox-post-created-date">
                                 in {{ p.location }}
+                            </div>
+                            <div>
+                                posted by: 
+                                <a href="{% url 'listeners_profile' p.created_by.user.username %}">
+                                    {{ p.created_by.display_name }}                                        
+                                </a>
                             </div>
                             <div>
                                 musicians:
@@ -39,9 +44,19 @@
                             </div>
                         </div>
                     </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% endfor %}
+
+                    <div class="col-sm-4">
+                        <div>venue: </div>
+                        <div>
+                            <div>opens: {{ p.opens }}</div>
+                            <div>starts: {{ p.starts }}</div>
+                            <div>cost: {{ p.cost }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
 
 {% endblock content-margins-menu %}

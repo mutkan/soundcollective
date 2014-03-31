@@ -4,14 +4,8 @@
 
             {% csrf_token %}
 
-            <div class="pure-g-r">
-                <div class="pure-control-group">
-                    {{ form.body }} 
-                </div>
-            </div>
-            <div class="pure-controls">
-                <button class="pure-button pure-button-primary" type="submit">Post</button>
-            </div>
+            {{ form.body }} 
+            <button class="pure-button pure-button-primary" type="submit">Post</button>
         </form>
     </div>
 </div>

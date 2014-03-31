@@ -28,44 +28,84 @@
 
 {% block content-margins %}
 
-    <form class="center-it registration-form" enctype="multipart/form-data" action="" role="form" method="post">
+    <form class="center-it" enctype="multipart/form-data" action="" role="form" method="post">
         {% csrf_token %}
 
-        <legend>Post an event</legend>
+        <p>Post an event</p>
 
-        <div class="form-group">
-            <label for="input-subject">Subject</label>
-            {{ form.subject }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="input-subject">Subject</label>
+                    {{ form.subject }}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="input-image">Upload image/flyer</label>
+                    {{ form.flyer }}
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="input-image">Upload image/flyer</label>
-            {{ form.flyer }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="input-date">Date</label>
+                    {{ form.date }}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="input-musicians">Tag Musicians</label>
+                    {{ form.musicians }}
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="input-date">Date</label>
-            {{ form.date }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="input-location">Location</label>
+                    {{ form.location }}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="input-venues">Tag Venue</label>
+                    {{ form.venues }}
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="input-location">Location</label>
-            {{ form.location }}
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="input-opens">Open Time</label>
+                    {{ form.opens }}
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="input-starts">Start Time</label>
+                    {{ form.starts }}
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="input-cost">Cost</label>
+                    {{ form.cost }}
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="input-body">Body</label>
-            {{ form.body }}
-        </div>
-
-        <div class="form-group">
-            <label for="input-musicians">Tag Musicians</label>
-            {{ form.musicians }}
-        </div>
-
-        <div class="form-group">
-            <label for="input-venues">Tag Venues</label>
-            {{ form.venues }}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="input-body">Body</label>
+                    {{ form.body }}
+                </div>
+            </div>
         </div>
 
         <button class="btn btn-primary" type="submit">Post</button>

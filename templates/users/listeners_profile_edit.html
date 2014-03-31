@@ -1,65 +1,80 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block content-margins %}
 	
-    <div style="background-image: url('{{ MEDIA_PREFIX }}{{ form.instance.splash_image.image }}'); 
-        background-size: 100% auto; background-repeat: no-repeat; background-position: center center;" 
-        class="splash" data-0="background-position:0px -75px;" data-100000="background-position:0px -50000px;">
-        
-        <form class='pure-form pure-form-stacked' enctype="multipart/form-data" action="" role='form' method='post'>
-            {% if form.errors %}
-                <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
-                {% for field, errors in form.errors.items %}
-                    {% for error in errors %}
-                        {{ error }}
-                    {% endfor %}
-                {% endfor %}
-            {% endif %}
-            
-            {% csrf_token %}
+<form class="center-it"  enctype="multipart/form-data" action="" role="form" method="post">
+    {% if form.errors %}
+        <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                {{ error }}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    
+    {% csrf_token %}
 
-            <div class="pure-g-r">
-                <div class="pure-u-1">
-                    <div class='pure-control-group'>
-                        <label for='input-splash-image'>Upload new splash image</label>
-                        {{ form.splash_image }}
-                    </div>
-                </div>
-                <div class="pure-u-1-3">
-                    <div class="l-box splash-image">
-                        <div class='pure-control-group'>
-                            <label for='input-profile-image'>Upload new profile image</label>
-                            <img src="{{ MEDIA_URL }}{{ form.instance.profile_image.image }}"/>
-                            {{ form.profile_image }}
-                        </div>
-                        <a class="pure-button pure-button-primary" href="{% url 'listeners_profile_image_list' user.username %}">Edit Images</a>
-                    </div>
-                </div>
-
-                <div class="pure-u-2-3">
-                    <div class="l-box splash-text">
-                        <div class='pure-control-group'>
-                            <label for='input-display-name'>Name</label>
-                            {{ form.display_name }}
-                        </div>
-                        <div class='pure-control-group'>
-                            <label for='input-location'>Location</label>
-                            {{ form.location }}
-                        </div>
-                        <div class='pure-control-group'>                           
-                            <label for='input-blurb'>Blurb</label>
-                            {{ form.blurb }}
-                        </div>
-                        <div class="pure-controls">
-                            <button class="pure-button pure-button-primary" type="submit">Save</button>
-                        </div>
-                    </div>
-                </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="img-responsive input-profile-image">Upload new profile image</label>
+                <img src="{{ MEDIA_PREFIX }}{{ form.instance.profile_image.image }}"/>
+                {{ form.profile_image }}
             </div>
-        </form>
+            <!--<a class="btn btn-primary" href="{% url "listeners_profile_image_list" user.username %}">Edit Images</a>-->
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="input-display-name">Name</label>
+                {{ form.display_name }}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="input-twitter">Twitter Username</label>
+                {{ form.contact_twitter }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="input-location">Location</label>
+                {{ form.location }}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="input-facebook">Facebook Username</label>
+                {{ form.contact_facebook }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">                           
+                <label for="input-blurb">Blurb</label>
+                {{ form.blurb }}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">                           
+                <label for="input-embedded_player">Embed a Music Player</label>
+                {{ form.embedded_player }}
+            </div>
+        </div>
+    </div>
+
+
+    <button class="btn btn-primary btn-block" type="submit">Save</button>
+</form>
 
     <div class="content">
         {{ form.instance.embedded_player|safe }}
     </div>
-{% endblock content %}
+{% endblock content-margins %}

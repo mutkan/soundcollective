@@ -9,7 +9,7 @@
             <div class="media">
                 <div class="pull-left">
                     <a href="{% url 'musicians_profile' object.username %}">
-                        <img src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
+                        <img class="profile-list-image" src="{{ MEDIA_PREFIX }}{{ object.profile_image.image }}" alt="">
                     </a>
                 </div>
                 <div class="wire-font">

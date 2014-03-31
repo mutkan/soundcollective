@@ -9,7 +9,7 @@ class PostForm(ModelForm):
 
     class Meta:
         model = Post
-        fields = ['subject', 'location', 'date', 'body',] 
+        fields = ['subject', 'location', 'date', 'body', 'opens', 'starts', 'cost'] 
 
     flyer = forms.ImageField()
     flyer.required = False
@@ -70,6 +70,33 @@ class PostForm(ModelForm):
                 'class': 'form-control',
                 'id': 'input-body',
                 'rows': 8,
+            }
+        )
+
+        self.fields['opens'].required = True
+        self.fields['opens'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Open Time',
+                'class': 'form-control',
+                'id': 'input-opens',
+            }
+        )
+
+        self.fields['starts'].required = True
+        self.fields['starts'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Start Time',
+                'class': 'form-control',
+                'id': 'input-starts',
+            }
+        )
+
+        self.fields['cost'].required = True
+        self.fields['cost'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Cost',
+                'class': 'form-control',
+                'id': 'input-cost',
             }
         )
 

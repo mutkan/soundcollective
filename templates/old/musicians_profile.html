@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content-margins %}
+	
+    <div style="background-image: url('{{ MEDIA_PREFIX }}{{ user_profile.splash_image.image }}'); 
+        background-size: 100% auto; background-repeat: no-repeat; background-position: center center;" 
+        class="splash" data-0="background-position:0px -75px;" data-100000="background-position:0px -50000px;">
+        
+        <div class="row">
+            <div class="col-md-3 l-box">
+                <img id="testing-image" src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}"
+                     alt="Placeholder image for example.">
+                {% if is_user %}
+                    <br /><a class="btn btn-primary" href="{% url 'musicians_profile_edit' user_profile.username %}">Edit Profile</a>
+                {% endif %}
+            </div>
+
+            <div class="col-md-7 l-box">
+                <h1 class="splash-head">
+                    <div>
+                        {{ user_profile.display_name }}
+                    </div>
+                </h1>
+                <div class="splash-subhead">
+                    {{ user_profile.location }}
+                    <p>
+                        {{ user_profile.blurb|urlize }}
+                    </p>                        
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        {{ embedded_player|safe }}
+        <div class="row">
+<!-- Begin Left Side --> 
+            <div class="col-md-6">
+                {% if user.is_authenticated %}
+                    {% include 'posts/shoutbox_post.html' %}
+                {% endif %}
+                {% for shoutbox_post in shoutbox %}
+                    <div class="l-box">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <img src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}" class="img-responsive" />
+                                </a>
+                            </div>
+                            <div class="col-md-9">
+                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <div class="wire-font">{{ shoutbox_post.created_by.display_name }}</div>
+                                </a>
+                                {{ shoutbox_post.body|urlize }}
+                            </div>
+                        </div>
+                    </div>                
+                {% endfor %}
+
+                {% if shoutbox.has_previous %}
+                    <a href="?page={{ shoutbox.previous_page_number }}">&lt; newer posts</a>
+                {% endif %}
+
+                <div class="pull-right">
+                    {% if shoutbox.has_next %}
+                        <a href="?page={{ shoutbox.next_page_number }}">older posts &gt;</a>
+                    {% endif %}
+                </div>
+
+            </div>       
+<!-- End Left Side --> 
+        
+<!-- Begin Right Side --> 
+            <div class="col-md-6">
+                <div class="l-box">
+                    <h3>Upcoming Shows</h3>
+                    {% for show in upcoming_shows %}
+                        <a href="{% url 'posts_post' show.post.id %}">{{ show.post.subject }}</a>
+                        <div class="pull-right">{{ show.post.date }}</div>
+                        <br />
+                    {% endfor %}
+                </div>
+<!-- End Show Maps -->
+    
+<!-- Begin Friends --> 
+                <div class="l-box">
+                    <h3>Played With</h3>
+                </div>
+                <div class="row">                    
+                    <img alt="White Rainbow" src="http://internationaltapes.com/covers/white_rainbow.jpg" class="img-responsive col-md-4" />
+                    <img alt="Baths" src="http://factmag-images.s3.amazonaws.com/wp-content/uploads/2013/05/baths_obsidian_press_final_1_685.jpg" class="img-responsive col-md-4" />
+                    <img alt="Darkside" src="http://thekey.xpn.org/aatk/files/2013/10/darkside.jpg" class="img-responsive col-md-4" />
+                </div>
+<!-- End Friends -->
+
+            </div>
+<!-- End Right Side --> 
+        </div>
+    </div>
+{% endblock content-margins %}

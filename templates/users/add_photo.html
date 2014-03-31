@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content-margins %}
+
+<div class="center-it vertical-center-it registration-form">
+    <form method="post" action="">
+        
+        {% csrf_token %}
+
+        <p>Add photos to the {{ user_profile.display_name }}'s photo stream.</p>
+
+        {% if form.errors %}
+            <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+        {% endif %}
+
+        <div class="form-group">
+            <!--<label for='input-username'>Username</label>-->
+            {% if form.images.errors %}
+                <p class="errors">{{ form.images.errors.as_text }}</p>
+            {% endif %}
+            {{ form.images }}
+        </div>
+
+    </form>
+</div>
+{% endblock content-margins %}
