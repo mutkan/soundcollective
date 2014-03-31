@@ -62,13 +62,14 @@
 
                     <div class="col-sm-6">
                         <div class="green l-box-header"><h4>&nbsp;&nbsp;Shows Attended</h4></div>
-                        <div>
-                            {% for show in upcoming_shows %}
-                                <a href="{% url 'posts_post' show.post.id %}"><div class="source600">{{ show.post.subject }}</div></a>
-                                <div class="pull-right">{{ show.post.date }}</div>
-                                <div>{{ show.post.location }}</div>
-                                <br />
-                            {% endfor %}
+                            <div>
+                                {% for show in upcoming_shows %}
+                                    <a href="{% url 'posts_post' show.post.id %}"><div class="source600">{{ show.post.subject }}</div></a>
+                                    <div class="pull-right">{{ show.post.date }}</div>
+                                    <div>{{ show.post.location }}</div>
+                                    <br />
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                     <div>
