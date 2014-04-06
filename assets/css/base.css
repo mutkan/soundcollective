@@ -23,12 +23,20 @@ body {
     /*background: #efebe3;*/
 }
 
+/*
+.navbar .nav > li > a {
+    color:  white;
+}
 .navbar-red {
     background: rgb(194, 47, 47); 
 }
 .navbar-maroon {
     background: rgb(100, 7, 7);
-    /*background: rgb(174, 37, 37);*/
+}
+*/
+
+.error {
+    color: red;
 }
 
 .l-box {
@@ -79,6 +87,12 @@ body {
     margin-top: 0;
     margin-bottom: 0; 
 }
+.row1 {
+    background-color: rgb(247, 247, 247);
+}
+.row2 {
+    background-color: rgb(255, 255, 255);
+}
 
 /* POST */
 .post-image {
@@ -127,9 +141,6 @@ body {
     color: gray;
 }
 
-.navbar .nav > li > a {
-    color:  white;
-}
 
 .carousel-image {
     max-height: 200px;
@@ -146,13 +157,10 @@ body {
 .social-media-spacing {
     line-height: 2em;
 }
-
-.divider {
-    margin-top: 2em;
-
-    padding-top: .2em;
-    padding-bottom: .2em;
+.social-media-box {
+    margin-bottom: 2em;
 }
+
 .l-box-header {
     padding-top: .2em;
     padding-bottom: .2em;
@@ -162,8 +170,12 @@ body {
     background: #c6c6c6;
 }
 .green {
-    color: white;
-    background: #2ba9b7;
+    color: #60c884;
+    /*background: #60c884;*/
+}
+.orange {
+    color: #f08d57;
+    /*background: #f08d57;*/
 }
 #gallery {
     margin-top: 24px;

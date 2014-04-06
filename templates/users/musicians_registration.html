@@ -6,7 +6,7 @@
 <div class="center-it registration-form">
     <div class="l-box">
         <form class="pure-form pure-form-stacked" method="post" action="">
-            <legend>Create a Musician Profile</legend>
+            <h2>Create a Musician Profile</h2>
             {% if form.errors %}
                 <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
             {% endif %}
@@ -14,7 +14,6 @@
             {% csrf_token %}
             
             <div class="form-group">
-                <label for='input-username'>Username (This name will be used as part of your profile link!)</label>
                 {% if form.username.errors %}
                     <p class="errors">{{ form.username.errors.as_text }}</p>
                 {% endif %}
@@ -22,7 +21,6 @@
             </div>
 
             <div class="form-group">
-                <label for='input-displayname'>Display Name</label>
                 {% if form.display_name.errors %}
                     <p class="errors">{{ form.display_name.errors.as_text }}</p>
                 {% endif %}
@@ -30,7 +28,6 @@
             </div>
 
             <div class="form-group">
-                <label for='input-location'>Location</label>
                 {% if form.display_name.errors %}
                     <p class="errors">{{ form.location.errors.as_text }}</p>
                 {% endif %}
@@ -38,14 +35,13 @@
             </div>
 
             <div class="form-group">
-                <label for='input-genre'>Genre</label>
                 {% if form.display_name.errors %}
                     <p class="errors">{{ form.genre.errors.as_text }}</p>
                 {% endif %}
                 {{ form.genre }}
             </div>
 
-            <input class="btn btn-primary" type="submit" value="Register" style="margin-top: 16px;">
+            <input class="btn btn-primary btn-block" type="submit" value="Register" style="margin-top: 16px;">
         </form>
     </div>
 </div>

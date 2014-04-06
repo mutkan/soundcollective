@@ -5,13 +5,11 @@ from django.views.generic.base import TemplateView
 
 from registration.backends.default.views import ActivationView
 
-from users.views import (UserRegistrationView, login, UsersView, UserProfileView, UserProfileEditView,
-	MusiciansView, MusiciansProfileView, MusiciansProfileEditView, MusicianRegistrationView, MusiciansProfileAddPhoto,
-        VenuesView, VenueRegistrationView)
+from users.views import	(MusiciansView, MusiciansProfileView, MusiciansProfileEditView, MusicianRegistrationView,
+    MusiciansProfileAddPhoto)
 
 urlpatterns = patterns('',
 
-	# musicians
 	url(r'^$', 
             MusiciansView.as_view(),
             name='musicians'),
@@ -26,5 +24,5 @@ urlpatterns = patterns('',
             name='musicians_profile_edit'),
         url(r'^(?P<name>\w+)/add_photo/$',
             MusiciansProfileAddPhoto.as_view(),
-            name='musicians_profile_edit'),
+            name='musicians_profile_add_photo'),
 )

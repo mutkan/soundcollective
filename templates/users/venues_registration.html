@@ -3,7 +3,7 @@
 {% block title %}Venue Registration{% endblock %}
 
 {% block content %}
-<div class='registration-form'>
+<div class="center-it registration-form">
     <form class="form-signin" method="post" action="">
         <h2 class="form-signin-heading">Create a venue account</h2>
         {% if form.errors %}
@@ -12,26 +12,28 @@
         
         {% csrf_token %}
         
-        {% if form.name.errors %}
-            <p class="errors">{{ form.name.errors.as_text }}</p>
-        {% endif %}
-        {{ form.name }}
-        
-        {% if form.profile_image.errors %}
-            <p class="errors">{{ form.profile_image.errors.as_text }}</p>
-        {% endif %}
-        {{ form.profile_image }}
-        
-        {% if form.location.errors %}
-            <p class="errors">{{ form.location.errors.as_text }}</p>
-        {% endif %}
-        {{ form.location }}
-        
-        {% if form.genre.errors %}
-            <p class="errors">{{ form.genre.errors.as_text }}</p>
-        {% endif %}
-        {{ form.genre }}
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register &rarr;" style="margin-top: 16px;">
+        <div class="form-group">
+            {% if form.name.errors %}
+                <p class="errors">{{ form.name.errors.as_text }}</p>
+            {% endif %}
+            {{ form.username }}
+        </div>
+            
+        <div class="form-group">
+            {% if form.profile_image.errors %}
+                <p class="errors">{{ form.profile_image.errors.as_text }}</p>
+            {% endif %}
+            {{ form.display_name }}
+        </div>
+            
+        <div class="form-group">
+            {% if form.location.errors %}
+                <p class="errors">{{ form.location.errors.as_text }}</p>
+            {% endif %}
+            {{ form.location }}
+        </div>
+
+        <input class="btn btn-primary btn-block" type="submit" value="Register" style="margin-top: 16px;">
     </form>
 </div>  
 {% endblock %}

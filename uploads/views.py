@@ -6,10 +6,10 @@ from users.models import MusicianProfile, UserProfile, VenueProfile
 
 class UserProfileImageListView(TemplateView):
 
-	template_name = "uploads/uploads_profile_image_list.html"
+    template_name = "uploads/upload_images.html"
 
-	def get_context_data(self, **kwargs):
-		context = super(UserProfileImageListView, self).get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileImageListView, self).get_context_data(**kwargs)
+        context['images'] = Image.filter(UserProfile__user__username=kwargs['username'])
 
-		context['images'] = Image.filter(UserProfile__user__username=kwargs['username'])
-		return context
+        return context

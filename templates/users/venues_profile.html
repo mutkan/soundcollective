@@ -37,7 +37,6 @@
                             </div>
                         {% endif %}
                     </div>
-                    <legend class="orange source600">RELATED ACTS</legend>
                 </div>
                 <div class="col-sm-9">
                     
@@ -49,21 +48,16 @@
                     </div>
 
                     <div class="row">
-                        {% if embedded_player %}
-                            <div class="col-sm-6">
-                                {{ embedded_player|safe }}
-                            </div>
-                        {% endif %}
-                        <div class="col-sm-6">
-                            <legend class="green source600">SHOWS</h4></legend>
-                            {% for show in upcoming_shows %}
+                        <div class="col-sm-12">
+                            <legend class="green">SCHEDULE</legend>
                             <div>
-                                <a href="{% url 'posts_post' show.post.id %}"><div class="source600">{{ show.post.subject }}</div></a>
-                                <div class="pull-right">{{ show.post.date }}</div>
-                                <div>{{ show.post.location }}</div>
-                                <br />
+                                {% for show in upcoming_shows %}
+                                    <a href="{% url 'posts_post' show.post.id %}"><div class="source600">{{ show.post.subject }}</div></a>
+                                    <div class="pull-right">{{ show.post.date }}</div>
+                                    <div>{{ show.post.location }}</div>
+                                    <br />
+                                {% endfor %}
                             </div>
-                            {% endfor %}
                         </div>
                     </div>
                     <div>

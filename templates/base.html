@@ -22,7 +22,8 @@
 </head>
 <body>
     <div class="wrapper">
-    <div class="navbar navbar-default navbar-maroon" role="navigation">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="center-it" style="max-width: 1080px;">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -30,23 +31,63 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <a class="navbar-brand" id="logo-text" href="{% url 'home' %}">THE HAPPS</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a id="logo-text" href="{% url 'home' %}">the happs</a></li>
+            <ul class="nav navbar-nav nav-pills">
+                <li><a href="{% url 'musicians' %}">MUSICIANS</a></li>
+                <li><a href="{% url 'venues' %}">VENUES</a></li>
+                <li><a href="{% url 'listeners' %}">LISTENERS</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'musicians' %}">musicians</a></li>
-                <li><a href="{% url 'venues' %}">venues</a></li>
-                <li><a href="{% url 'listeners' %}">listeners</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'listeners_profile' user.username %}">{{ user.username }}</a></li>
-                    <li><a href="{% url 'logout' %}">logout</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user" />
+                        </a>
+                        
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'listeners_profile' user.username %}">My Profile</a></li>
+                            <li><a href="{% url 'listeners_profile_edit' user.username %}">Edit Profile</a></li>
+
+                            <li class="divider"></li>
+
+                            {% for musician_profile in musician_profiles %}
+                                <li><a href="{% url 'musicians_profile' musician_profile.username %}">
+                                    {{ musician_profile.display_name }}
+                                </a></li>
+                            {% endfor %}
+                            <li><a href="{% url 'musicians_register' %}">+ New Musician Profile</a></li>
+
+                            <li class="divider"></li>
+
+                            {% for venue_profile in venue_profiles %}
+
+                            {% endfor %}
+                            <li><a href="{% url 'venues_registration' %}">+ New Venue Profile</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog" />
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'posts_create' %}">Post the happs</a></li>
+                            <li><a href="{% url 'posts_mine' %}">My Posts</a></li>
+
+                            <li class="divider"></li>
+
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
                 {% else %}
-                    <li><a href="{% url 'registration_login' %}">login</a></li>
-                    <li><a href="{% url 'registration_register' %}">register</a></li>
+                    <li><a href="{% url 'registration_login' %}"><span class="glyphicon glyphicon-user" /></a></li>
                 {% endif %}
             </ul>
+        </div>
         </div>
     </div>  
 
@@ -71,6 +112,7 @@
     </script>
 
     <script src="{{ STATIC_PREFIX }}js/base.js"></script>
+    <script src="{{ STATIC_PREFIX }}js/bootstrap.js"></script>
     <script src="{{ STATIC_PREFIX }}lib/less-1.5.0.min.js"></script>
 </body>
 </html>

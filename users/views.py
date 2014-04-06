@@ -273,7 +273,7 @@ class MusiciansProfileEditView(UpdateView):
 class MusiciansProfileAddPhoto(FormView):
     
     form_class = AddPhotoForm
-    template_name = 'users/add_photo.html'
+    template_name = 'uploads/upload_images.html'
 
     def get_object(self, queryset=None):
         obj = MusicianProfile.objects.get(username=self.kwargs['name'])
@@ -314,10 +314,67 @@ class VenueRegistrationView(CreateView):
     form_class = VenueRegistrationForm
     template_name = 'users/venues_registration.html'
 
+    def form_valid(self, form):
+        venue_profile = form.save()
+
+        venue_profile.created_by = self.request.user.userprofile
+        venue_profile.modified_by = self.request.user.userprofile
+        venue_profile.user_profiles.add(self.request.user.userprofile)
+
+        venue_profile.save()
+
+        return HttpResponseRedirect(reverse('venues_profile', args=(venue_profile.username,)))
+
 class VenuesView(ListView):
 
     model = VenueProfile
     template_name = 'users/venues_list.html'
+
+class VenuesProfileView(CreateView):
+
+    template_name = 'users/venues_profile.html'
+    form_class = ShoutboxPostForm
+    
+    def get_object(self, queryset=None):
+        obj = VenueProfile.objects.get(username=self.kwargs['name'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(VenuesProfileView, self).get_context_data(**kwargs)
+
+        venue_profile = self.get_object()
+        context['user_profile'] = venue_profile
+
+        try:
+            context['is_user'] = True if self.get_object().user_profiles.all().filter(id=self.request.user.userprofile.id) else False
+        except:
+            context['is_user'] = False
+
+        shoutbox_posts = venue_profile.shoutbox_posts.order_by("-created_date")
+        paginator = Paginator(shoutbox_posts, 10)
+        page = self.request.GET.get('page')
+        try:
+            shoutbox = paginator.page(page)
+        except PageNotAnInteger:
+            shoutbox = paginator.page(1)
+        except EmptyPage:
+            shoutbox = paginator.page(paginator.num_pages)
+        context['shoutbox'] = shoutbox
+
+        context['upcoming_shows'] = VenuePostTag.objects.filter(tagged_venue=venue_profile).order_by('post__date').exclude(post__date__lt=datetime.date.today()-datetime.timedelta(days=1))[:3]
+
+        return context
+
+    def form_valid(self, form):
+        shoutbox_post = form.save()
+        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.save()
+
+        user_profile = self.get_object()
+        user_profile.shoutbox_posts.add(shoutbox_post)
+
+        return HttpResponseRedirect(reverse('venues_profile', args=(self.get_object().username,)))
 
 class BaseRegistrationView(_RequestPassingFormView):
 	"""

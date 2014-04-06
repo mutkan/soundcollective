@@ -15,14 +15,6 @@ class EditUserProfileForm(ModelForm):
         }
     )
 
-    splash_image = forms.ImageField()
-    splash_image.required = False
-    splash_image.widget = forms.ClearableFileInput(
-        attrs = {
-            'id': 'input-splash-image',
-        }
-    )
-
     class Meta:
         model = UserProfile
         fields = ['display_name', 'location', 'blurb', 'embedded_player', 'contact_twitter', 'contact_facebook']
@@ -32,58 +24,58 @@ class EditUserProfileForm(ModelForm):
 
         self.fields['display_name'].required = False
         self.fields['display_name'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Display Name',
-                        'class': 'form-control',
-                        'id': 'input-display-name',
-                }
+            attrs = {
+                'placeholder': 'Display Name',
+                'class': 'form-control',
+                'id': 'input-display-name',
+            }
         )
 
         self.fields['location'].required = False
         self.fields['location'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Location',
-                        'class': 'form-control',
-                        'id': 'input-location',
-                }
+            attrs = {
+                'placeholder': 'Location',
+                'class': 'form-control',
+                'id': 'input-location',
+            }
         )
 
         self.fields['blurb'].required = False
         self.fields['blurb'].widget = forms.Textarea(
-                attrs = {
-                        'placeholder': 'Blurb',
-                        'class': 'form-control',
-                        'id': 'input-blurb',
-                        'rows': 5,
-                }
+            attrs = {
+                'placeholder': 'Blurb',
+                'class': 'form-control',
+                'id': 'input-blurb',
+                'rows': 5,
+            }
         )
 
         self.fields['embedded_player'].required = False
         self.fields['embedded_player'].widget = forms.Textarea(
-                attrs = {
-                        'placeholder': 'Embed a music player',
-                        'class': 'form-control',
-                        'id': 'input-embedded_player',
-                        'rows': 5,
-                }
+            attrs = {
+                'placeholder': 'Embed a music player',
+                'class': 'form-control',
+                'id': 'input-embedded_player',
+                'rows': 5,
+            }
         )
 
         self.fields['contact_twitter'].required = False
         self.fields['contact_twitter'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Twitter Username',
-                        'class': 'form-control',
-                        'id': 'input-twitter',
-                }
+            attrs = {
+                'placeholder': 'Twitter Username',
+                'class': 'form-control',
+                'id': 'input-twitter',
+            }
         )
 
         self.fields['contact_facebook'].required = False
         self.fields['contact_facebook'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Facebook Username',
-                        'class': 'form-control',
-                        'id': 'input-facebook',
-                }
+            attrs = {
+                'placeholder': 'Facebook Username',
+                'class': 'form-control',
+                'id': 'input-facebook',
+            }
         )
 
 class EditMusicianProfileForm(ModelForm):
@@ -112,67 +104,67 @@ class EditMusicianProfileForm(ModelForm):
 
         self.fields['display_name'].required = False
         self.fields['display_name'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Display Name',
-                        'class': 'form-control',
-                        'id': 'input-display-name',
-                }
+            attrs = {
+                'placeholder': 'Display Name',
+                'class': 'form-control',
+                'id': 'input-display-name',
+            }
         )
 
         self.fields['location'].required = False
         self.fields['location'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Location',
-                        'class': 'form-control',
-                        'id': 'input-location',
-                }
+            attrs = {
+                'placeholder': 'Location',
+                'class': 'form-control',
+                'id': 'input-location',
+            }
         )
 
         self.fields['blurb'].required = False
         self.fields['blurb'].widget = forms.Textarea(
-                attrs = {
-                        'placeholder': 'Blurb',
-                        'class': 'form-control',
-                        'id': 'input-blurb',
-                        'rows': 5,
-                }
+            attrs = {
+                'placeholder': 'Blurb',
+                'class': 'form-control',
+                'id': 'input-blurb',
+                'rows': 5,
+            }
         )
 
         self.fields['embedded_player'].required = False
         self.fields['embedded_player'].widget = forms.Textarea(
-                attrs = {
-                        'placeholder': 'Embed a music player',
-                        'class': 'form-control',
-                        'id': 'input-embedded_player',
-                        'rows': 5,
-                }
+            attrs = {
+                'placeholder': 'Embed a music player',
+                'class': 'form-control',
+                'id': 'input-embedded_player',
+                'rows': 5,
+            }
         )
 
         self.fields['contact_email'].required = False
         self.fields['contact_email'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Email',
-                        'class': 'form-control',
-                        'id': 'input-email',
-                }
+            attrs = {
+                'placeholder': 'Email',
+                'class': 'form-control',
+                'id': 'input-email',
+            }
         )
         
         self.fields['contact_twitter'].required = False
         self.fields['contact_twitter'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Twitter Username',
-                        'class': 'form-control',
-                        'id': 'input-twitter',
-                }
+            attrs = {
+                'placeholder': 'Twitter Username',
+                'class': 'form-control',
+                'id': 'input-twitter',
+            }
         )
 
         self.fields['contact_facebook'].required = False
         self.fields['contact_facebook'].widget = forms.TextInput(
-                attrs = {
-                        'placeholder': 'Facebook Username',
-                        'class': 'form-control',
-                        'id': 'input-facebook',
-                }
+            attrs = {
+                'placeholder': 'Facebook Username',
+                'class': 'form-control',
+                'id': 'input-facebook',
+            }
         )
 
 class AddPhotoForm(forms.Form):
@@ -259,50 +251,85 @@ class MusicianRegistrationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MusicianRegistrationForm, self).__init__(*args, **kwargs)
     
-	self.fields['username'] = forms.RegexField(regex=r'^[\w.@+-]+$',
-            max_length=64,
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-username', 'type': 'text', 'placeholder': 'username',}),
+	self.fields['username'] = forms.RegexField(
+            regex=r'^[\w.@+-]+$',
+            max_length = 64,
+            widget = forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'id': 'input-username',
+                    'type': 'text',
+                    'placeholder': 'username',
+                }
+            ),
             error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")}
         )
 
-	self.fields['display_name'] = forms.RegexField(regex=r'^[\w.@+-]+$',
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-email', 'type': 'text', 'placeholder': 'email',})
+        self.fields['display_name'].required = False
+        self.fields['display_name'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Display Name',
+                'class': 'form-control',
+                'id': 'input-display-name',
+            }
         )
             
-	self.fields['location'] = forms.CharField(
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-location', 'placeholder': 'location',}),
+	self.fields['location'].widget = forms.TextInput(
+            attrs = {
+                'class': 'form-control',
+                'id': 'input-location',
+                'placeholder': 'location',
+            }
         )
 
-	self.fields['genre'] = forms.CharField(
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-genre', 'placeholder': 'genre',}),
+	self.fields['genre'].widget = forms.TextInput(
+            attrs = {
+                'class': 'form-control',
+                'id': 'input-genre',
+                'placeholder': 'genre',
+            }
         )
 
 class VenueRegistrationForm(ModelForm):
 
     class Meta:
         model = VenueProfile
-        fields = ['username', 'display_name', 'location', 'genre']
+        fields = ['username', 'display_name', 'location']
 
     def __init__(self, *args, **kwargs):
         super(VenueRegistrationForm, self).__init__(*args, **kwargs)
     
-	self.fields['username'] = forms.RegexField(regex=r'^[\w.@+-]+$',
-            max_length=64,
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-username', 'type': 'text', 'placeholder': 'username',}),
+	self.fields['username'] = forms.RegexField(
+            regex = r'^[\w.@+-]+$',
+            max_length = 64,
+            widget = forms.TextInput(
+                attrs = {
+                    'class': 'form-control',
+                    'id': 'input-username',
+                    'type': 'text',
+                    'placeholder': 'Username',
+                }
+            ),
             error_messages={'invalid': _("This value may contain only letters, numbers and @/./+/-/_ characters.")}
         )
 
-	self.fields['display_name'] = forms.RegexField(regex=r'^[\w.@+-]+$',
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-email', 'type': 'text', 'placeholder': 'email',})
+        self.fields['display_name'].required = False
+        self.fields['display_name'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Display Name',
+                'class': 'form-control',
+                'id': 'input-display-name',
+            }
         )
             
-	self.fields['location'] = forms.CharField(
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-location', 'placeholder': 'location',}),
+	self.fields['location'].widget = forms.TextInput(
+            attrs = {
+                'class': 'form-control',
+                'id': 'input-location',
+                'placeholder': 'Location',
+            }
         )
-
-	self.fields['genre'] = forms.CharField(
-            widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'input-genre', 'placeholder': 'genre',}),
-        )
+        
 
 class UserLoginForm(AuthenticationForm):
     username = forms.RegexField(

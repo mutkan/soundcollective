@@ -18,31 +18,33 @@
                             {{ user_profile.blurb }}
                         {% endif %}
                     </div>
-                    {% if user.email %}
-                        <div class="social-media-spacing">
-                            <a href="mailto:{{ user.email }}">
-                                <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
-                                &nbsp;{{ user.email }}
-                            </a>
-                        </div>
-                    {% endif %}
-                    {% if user_profile.contact_twitter %}
-                        <div class="social-media-spacing">
-                            <a href="https://twitter.com/{{ user_profile.contact_twitter }}">
-                                <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/twitter.png" >
-                                &nbsp;{{ user_profile.contact_twitter }}
-                            </a>
-                        </div>
-                    {% endif %}
-                    {% if user_profile.contact_facebook %}
-                        <div class="social-media-spacing">
-                            <a href="https://facebook.com/{{ user_profile.contact_facebook }}">
-                                <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/facebook.png" >
-                                &nbsp;{{ user_profile.contact_facebook }}
-                            </a>
-                        </div>
-                    {% endif %}
-                    <div class="gray divider"><h4>&nbsp;&nbsp;associated acts</h4></div>
+                    <div class="social-media-box">
+                        {% if user.email %}
+                            <div class="social-media-spacing">
+                                <a href="mailto:{{ user.email }}">
+                                    <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
+                                    &nbsp;{{ user.email }}
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% if user_profile.contact_twitter %}
+                            <div class="social-media-spacing">
+                                <a href="https://twitter.com/{{ user_profile.contact_twitter }}">
+                                    <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/twitter.png" >
+                                    &nbsp;{{ user_profile.contact_twitter }}
+                                </a>
+                            </div>
+                        {% endif %}
+                        {% if user_profile.contact_facebook %}
+                            <div class="social-media-spacing">
+                                <a href="https://facebook.com/{{ user_profile.contact_facebook }}">
+                                    <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/facebook.png" >
+                                    &nbsp;{{ user_profile.contact_facebook }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <legend class="orange">ASSOCIATED ACTS</legend>
                     <div>
                         {% for act in associated_acts %}
                             <a href="{% url 'musicians_profile' act.username %}">
@@ -61,7 +63,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <div class="green l-box-header"><h4>&nbsp;&nbsp;Shows Attended</h4></div>
+                        <legend class="green">SHOWS ATTENDED</legend>
                             {% for show in upcoming_shows %}
                                 <a href="{% url 'posts_post' show.post.id %}"><div class="source600">{{ show.post.subject }}</div></a>
                                 <div class="pull-right">{{ show.post.date }}</div>
