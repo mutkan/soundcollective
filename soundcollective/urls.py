@@ -4,7 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from posts.views import PostListView
-from soundcollective.views import Home
+from soundcollective.views import MainSearch
 from users.views import InaccessibleView
 
 urlpatterns = patterns('',
@@ -24,4 +24,14 @@ urlpatterns = patterns('',
     url(r'^inaccessible/$',
             InaccessibleView.as_view(),
             name='inaccessible'),
+
+    url(r'^upload/',
+            include('fileupload.urls')),
+
+    url(r'^tinymce/', include('tinymce.urls')),
+
+    url(r'^search',
+        MainSearch.as_view(),
+        name='main_search'
+    ),
 )

@@ -34,11 +34,11 @@
             <a class="navbar-brand" id="logo-text" href="{% url 'home' %}">THE HAPPS</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav nav-pills">
+            <!--<ul class="nav navbar-nav nav-pills">
                 <li><a href="{% url 'musicians' %}">MUSICIANS</a></li>
                 <li><a href="{% url 'venues' %}">VENUES</a></li>
                 <li><a href="{% url 'listeners' %}">LISTENERS</a></li>
-            </ul>
+            </ul>-->
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li class="dropdown">
@@ -87,6 +87,12 @@
                     <li><a href="{% url 'registration_login' %}"><span class="glyphicon glyphicon-user" /></a></li>
                 {% endif %}
             </ul>
+            <form action="{% url 'main_search' %}" method="get" class="navbar-form navbar-right" role="search">
+                <div class="right-inner-addon">
+                    <input type="text" class="form-control" placeholder="Search for artist or venue" name="search_term" size="40">
+                    <i type="submit" class="glyphicon glyphicon-search"></i>
+                </div>
+            </form>
         </div>
         </div>
     </div>  
@@ -99,7 +105,6 @@
     </div>
     </div>
  
-
     <div id="footer">
         We did it for the homie.
     </div>

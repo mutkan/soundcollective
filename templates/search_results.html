@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content-margins %}
+
+{% for musician in musicians %}
+    <div class="l-box">
+        <div class="media">
+            <div class="pull-left">
+                <a href="{% url 'musicians_profile' musician.username %}">
+                    <img class="profile-list-image" src="{{ MEDIA_PREFIX }}{{ musician.profile_image.image }}" alt="">
+                </a>
+            </div>
+            <div class="wire-font">
+                <h6>MUSICIAN</h6>
+                <a href="{% url 'musicians_profile' musician.username %}">{{ musician.display_name }}</a>
+            </div>
+            <div class="splash-subhead">
+                {{ musician.location }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% for venue in venues %}
+    <div class="l-box">
+        <div class="media">
+            <div class="pull-left">
+                <a href="{% url 'venues_profile' venue.username %}">
+                    <img src="{{ MEDIA_PREFIX }}{{ venue.profile_image.image }}" alt="">
+                </a>
+            </div>
+            <div class="wire-font">
+                <h6>VENUE</h6>
+                <a href="{% url 'venues_profile' venue.username %}">{{ venue.display_name }}</a>
+            </div>
+            <div class="splash-subhead">
+                {{ venue.location }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% for listener in listeners %}
+    <div class="l-box">
+        <div class="media">
+            <div class="pull-left">
+                <a href="{% url 'listeners_profile' listener.user.username %}">
+                    <img class="profile-list-image" src="{{ MEDIA_PREFIX }}{{ listener.profile_image.image }}" alt="">
+                </a>
+            </div>
+            <div class="wire-font">
+                <h6>LISTENER</h6>
+                <a href="{% url 'listeners_profile' listener.user.username %}">{{ listener.display_name }}</a>
+            </div>
+            <div class="splash-subhead">
+                {{ listener.location }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock content-margins %}

@@ -3,7 +3,8 @@ from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from posts.views import CreatePostView, EditPostView, PostListView, PostMineView, PostView
+from posts.views import (CreatePostView, EditPostView, PostListView, PostMineView,
+    PostView, CreateFeaturePost)
 
 urlpatterns = patterns('',
 
@@ -22,4 +23,8 @@ urlpatterns = patterns('',
     url(r'^(?P<post>\d+)/edit/$',
         EditPostView.as_view(),
         name='posts_edit'),
+
+    url(r'^create_feature/$',
+        login_required(CreateFeaturePost.as_view()),
+        name='create_feature'),
 )

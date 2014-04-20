@@ -3,7 +3,9 @@ from datetime import date
 from django.contrib.admin import widgets
 from django.forms import ModelForm
 
-from posts.models import Post, ShoutboxPost
+from posts.models import Post, ShoutboxPost, FeaturePost
+
+from tinymce.widgets import TinyMCE
 
 class PostForm(ModelForm):
 
@@ -118,3 +120,11 @@ class ShoutboxPostForm(ModelForm):
                 'cols': 68,
             }
         )
+
+class CreateFeatureForm(ModelForm):
+
+    class Meta:
+        model = FeaturePost
+        fields = ['subject', 'content']
+
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 10}))

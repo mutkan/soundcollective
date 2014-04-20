@@ -10,6 +10,7 @@ class PictureCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        
         files = [serialize(self.object)]
         data = {'files': files}
         response = JSONResponse(data, mimetype=response_mimetype(self.request))

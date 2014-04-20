@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ form.media }}
+{% endblock head %}
+
+{% block content-margins %}
+
+    <form method="post">
+        {{ form.as_p }}    
+    </form>
+
+{% endblock content-margins %}

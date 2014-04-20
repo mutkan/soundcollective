@@ -8,8 +8,8 @@ from django.views.generic.list import ListView
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse
 
-from posts.forms import PostForm
-from posts.models import Post
+from posts.forms import PostForm, CreateFeatureForm
+from posts.models import Post, FeaturePost
 
 from tags.models import MusicianPostTag, UserPostTag, VenuePostTag
 
@@ -162,3 +162,9 @@ class EditPostView(UpdateView):
         post.save()
 
         return HttpResponseRedirect(reverse('posts_post', args=(post.id,)))
+
+class CreateFeaturePost(CreateView):
+    
+    model = FeaturePost
+    form_class = CreateFeatureForm
+    template_name = 'posts/create_feature_post.html'

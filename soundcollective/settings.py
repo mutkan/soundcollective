@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'storages',
     'south',
     'fileupload',
+    'tinymce',
 
     # apps
     'mixins',

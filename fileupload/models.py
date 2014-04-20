@@ -1,8 +1,16 @@
 # encoding: utf-8
 from django.db import models
 
+from mixins.models import CreateModifyDates
 
-class Picture(models.Model):
+
+class Picture(CreateModifyDates):
+    """This is a small demo using just two fields. The slug field is really not
+    necessary, but makes the code simpler. ImageField depends on PIL or
+    pillow (where Pillow is easily installable in a virtualenv. If you have
+    problems installing pillow, use a more generic FileField instead.
+
+    """
 
     def upload_path(instance, filename):
         return os.path.join('images', 'listeners', '%d' % instance.created_by.id, filename)
