@@ -168,3 +168,33 @@ class CreateFeaturePost(CreateView):
     model = FeaturePost
     form_class = CreateFeatureForm
     template_name = 'posts/create_feature_post.html'
+
+    def form_valid(self, form):
+        feature_post = form.save()
+
+        feature_post.created_by = self.request.user.userprofile
+        feature_post.modified_by = self.request.user.userprofile
+        feature_post.save()
+
+        return HttpResponseRedirect(reverse('posts_feature_post', args=(feature_post.id,)))
+
+class FeaturePostView(TemplateView):
+
+    template_name = "posts/feature_post.html"
+
+    def get_object(self, queryset=None):
+        obj = FeaturePost.objects.get(id=self.kwargs['post'])
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context = super(FeaturePost, self).get_context_data(**kwargs)
+        post = self.get_object()
+
+        context['post'] = post
+
+        try:
+            context['is_user'] = True if self.get_object().created_by == self.request.user.userprofile else False
+        except:
+            context['is_user'] = False
+
+        return context

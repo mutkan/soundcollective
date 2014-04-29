@@ -25,9 +25,6 @@ urlpatterns = patterns('',
             InaccessibleView.as_view(),
             name='inaccessible'),
 
-    url(r'^upload/',
-            include('fileupload.urls')),
-
     url(r'^tinymce/', include('tinymce.urls')),
 
     url(r'^search',
