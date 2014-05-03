@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'registration',
     'storages',
     'south',
-    'tinymce',
 
     # apps
     'mixins',

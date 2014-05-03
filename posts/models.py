@@ -4,8 +4,6 @@ from mixins.models import CreateModifyDates
 from users.models import UserProfile, VenueProfile
 from uploads.models import Image
 
-from tinymce.models import HTMLField
-
 class Post(CreateModifyDates):
     
     subject = models.CharField(max_length=64, null=True)
@@ -22,8 +20,8 @@ class Post(CreateModifyDates):
 class ShoutboxPost(CreateModifyDates):
     body = models.CharField(max_length=140, null=False)
 
-class FeaturePost(CreateModifyDates):
-    
-    subject = models.CharField(max_length=64, null=True)
-    preview_image = models.ForeignKey(Image, null=True)
-    content = HTMLField()
+#class FeaturePost(CreateModifyDates):
+#    
+#    subject = models.CharField(max_length=64, null=True)
+#    preview_image = models.ForeignKey(Image, null=True)
+#    content = HTMLField()

@@ -25,8 +25,6 @@ urlpatterns = patterns('',
             InaccessibleView.as_view(),
             name='inaccessible'),
 
-    url(r'^tinymce/', include('tinymce.urls')),
-
     url(r'^search',
         MainSearch.as_view(),
         name='main_search'
