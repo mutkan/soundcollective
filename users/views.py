@@ -21,6 +21,8 @@ from django.views.generic.list import ListView
 
 from functools import wraps
 
+from notifications.models import Notifications
+
 from posts.forms import ShoutboxPostForm
 from posts.models import ShoutboxPost
 
@@ -33,7 +35,7 @@ from tags.models import MusicianImageTag, UserImageTag, VenueImageTag, MusicianP
 from uploads.models import Image
 
 from users.forms import (UserLoginForm, UserRegistrationForm, EditUserProfileForm, UserProfileImageListForm, 
-    MusicianRegistrationForm, EditMusicianProfileForm, AddPhotoForm, VenueRegistrationForm)
+    MusicianRegistrationForm, EditMusicianProfileForm, EditVenueProfileForm, AddPhotoForm, VenueRegistrationForm)
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class InaccessibleView(TemplateView):
@@ -81,6 +83,9 @@ class UserProfileView(CreateView):
         except:
             context['is_user'] = False
 
+        tagged_images = UserImageTag.objects.filter(tagged_user=self.get_object())
+        context['tagged_images'] = tagged_images
+
         shoutbox_posts = user_profile.shoutbox_posts.order_by("-created_date")
         paginator = Paginator(shoutbox_posts, 10)
         page = self.request.GET.get('page')
@@ -105,13 +110,18 @@ class UserProfileView(CreateView):
         return context
 
     def form_valid(self, form):
+
+        poster = UserProfile.objects.get(user_id=self.request.user.id)
         shoutbox_post = form.save()
-        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
-        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.created_by = poster
+        shoutbox_post.modified_by = poster
         shoutbox_post.save()
 
         user_profile = UserProfile.objects.get(user_id=self.get_object().id)
         user_profile.shoutbox_posts.add(shoutbox_post)
+
+        message = "%s wrote you a post" % poster.display_name
+        Notifications.objects.create(user=user_profile, message=message)
 
         return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().username,)))
 
@@ -144,10 +154,48 @@ class UserProfileEditView(UpdateView):
                 profile_image.save()
 
                 user_profile.profile_image = profile_image
+
+                user_image_tag = UserImageTag.objects.create(image=profile_image, tagged_user=user_profile)
+                user_image_tag.save()
         except:
             pass
 
         user_profile.save()
+
+        return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().user.username,)))
+
+class UserProfileAddPhoto(FormView):
+    
+    form_class = AddPhotoForm
+    template_name = 'uploads/upload_images.html'
+
+    def get_object(self, queryset=None):
+        obj = UserProfile.objects.get(user__username=self.kwargs['username'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileAddPhoto, self).get_context_data(**kwargs)
+        context['user_profile'] = self.get_object()
+        
+        return context
+    
+    def form_valid(self, form):
+        
+        user = UserProfile.objects.get(user_id=self.request.user.id)
+        user_profile = self.get_object()
+
+        try:
+            if self.request.FILES['image']:
+                image = Image.objects.create()
+                image.created_by = user
+                image.modified_by = user
+                image.image = self.request.FILES['image']
+                image.save()
+
+                user_image_tag = UserImageTag.objects.create(image=image, tagged_user=user_profile)
+                user_image_tag.save()
+        except:
+            pass
 
         return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().user.username,)))
                 
@@ -197,6 +245,9 @@ class MusiciansProfileView(CreateView):
         except:
             context['is_user'] = False
 
+        tagged_images = MusicianImageTag.objects.filter(tagged_musician=musician_profile)
+        context['tagged_images'] = tagged_images
+
         shoutbox_posts = musician_profile.shoutbox_posts.order_by("-created_date")
         paginator = Paginator(shoutbox_posts, 10)
         page = self.request.GET.get('page')
@@ -221,13 +272,21 @@ class MusiciansProfileView(CreateView):
         return context
 
     def form_valid(self, form):
+        
+        user_profile = self.get_object()
+
+        poster = UserProfile.objects.get(user_id=self.request.user.id)
         shoutbox_post = form.save()
-        shoutbox_post.created_by = UserProfile.objects.get(user_id=self.request.user.id)
-        shoutbox_post.modified_by = UserProfile.objects.get(user_id=self.request.user.id)
+        shoutbox_post.created_by = poster
+        shoutbox_post.modified_by = poster
         shoutbox_post.save()
 
         user_profile = self.get_object()
         user_profile.shoutbox_posts.add(shoutbox_post)
+
+        message = "%s wrote %s a post" % (poster.display_name, user_profile.display_name)
+        for user in user_profile.user_profiles.all(): 
+            Notifications.objects.create(user=user, message=message)
 
         return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
 
@@ -288,24 +347,20 @@ class MusiciansProfileAddPhoto(FormView):
     def form_valid(self, form):
         
         user = UserProfile.objects.get(user_id=self.request.user.id)
+        musician_profile = self.get_object()
         
-        raise Exception(self.request.FILES['images'])
         try:
-            if self.request.FILES['images']:
-                profile_image = Image.objects.create()
-                profile_image.created_by = user
-                profile_image.modified_by = user
-                profile_image.image = self.request.FILES['profile_image']
-                profile_image.save()
+            if self.request.FILES['image']:
+                image = Image.objects.create()
+                image.created_by = user
+                image.modified_by = user
+                image.image = self.request.FILES['image']
+                image.save()
 
-                user_profile.profile_image = profile_image
-
-                musician_image_tag = MusicianImageTag.objects.create(image=profile_image, tagged_musician=user_profile)
+                musician_image_tag = MusicianImageTag.objects.create(image=image, tagged_musician=musician_profile)
                 musician_image_tag.save()
         except:
             pass
-
-        user_profile.save()
 
         return HttpResponseRedirect(reverse('musicians_profile', args=(self.get_object().username,)))
 
@@ -350,6 +405,9 @@ class VenuesProfileView(CreateView):
         except:
             context['is_user'] = False
 
+        tagged_images = VenueImageTag.objects.filter(tagged_venue=self.get_object())
+        context['tagged_images'] = tagged_images
+
         shoutbox_posts = venue_profile.shoutbox_posts.order_by("-created_date")
         paginator = Paginator(shoutbox_posts, 10)
         page = self.request.GET.get('page')
@@ -374,7 +432,85 @@ class VenuesProfileView(CreateView):
         user_profile = self.get_object()
         user_profile.shoutbox_posts.add(shoutbox_post)
 
+        message = "%s wrote %s a post" % (poster.display_name, user_profile.display_name)
+        for user in user_profile.user_profiles.all(): 
+            Notifications.objects.create(user=user, message=message)
+
         return HttpResponseRedirect(reverse('venues_profile', args=(self.get_object().username,)))
+
+class VenuesProfileEditView(UpdateView):
+
+    form_class = EditVenueProfileForm
+    template_name = 'users/venues_profile_edit.html'
+
+    def get_object(self, queryset=None):
+        obj = VenueProfile.objects.get(username=self.kwargs['name'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(VenuesProfileEditView, self).get_context_data(**kwargs)
+        context['user'] = self.get_object()
+        
+        return context
+    
+    def form_valid(self, form):
+        user_profile = form.save()
+        
+        user = UserProfile.objects.get(user_id=self.request.user.id)
+        
+        try:
+            if self.request.FILES['profile_image']:
+                profile_image = Image.objects.create()
+                profile_image.created_by = user
+                profile_image.modified_by = user
+                profile_image.image = self.request.FILES['profile_image']
+                profile_image.save()
+
+                user_profile.profile_image = profile_image
+
+                venue_image_tag = VenueImageTag.objects.create(image=profile_image, tagged_venue=user_profile)
+                venue_image_tag.save()
+        except:
+            pass
+
+        user_profile.save()
+
+        return HttpResponseRedirect(reverse('venues_profile', args=(self.get_object().username,)))
+        
+class VenuesProfileAddPhoto(FormView):
+    
+    form_class = AddPhotoForm
+    template_name = 'uploads/upload_images.html'
+
+    def get_object(self, queryset=None):
+        obj = VenueProfile.objects.get(username=self.kwargs['name'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(VenuesProfileAddPhoto, self).get_context_data(**kwargs)
+        context['user_profile'] = self.get_object()
+        
+        return context
+    
+    def form_valid(self, form):
+        
+        user = UserProfile.objects.get(user_id=self.request.user.id)
+        venue_profile = self.get_object()
+
+        try:
+            if self.request.FILES['image']:
+                image = Image.objects.create()
+                image.created_by = user
+                image.modified_by = user
+                image.image = self.request.FILES['image']
+                image.save()
+
+                venue_image_tag = VenueImageTag.objects.create(image=image, tagged_venue=user_profile)
+                venue_image_tag.save()
+        except:
+            pass
+
+        return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().username,)))
 
 class BaseRegistrationView(_RequestPassingFormView):
 	"""

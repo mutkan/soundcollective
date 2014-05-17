@@ -1,31 +1,93 @@
 {% extends "base.html" %}
 
 {% block content-margins %}
-    <div class="pull-left"><img class="post-image" src="{{ MEDIA_PREFIX }}{{ post.flyer.image }}"></div>
-    <div><h2 class="source600">{{ post.subject }}</h2></div>
-    <div>{{ post.date }}</div>
-    <div>{{ post.location }}</div>
-    <div>{{ post.body|urlize }}</div>
-    <div>
-        musicians:<br />
-        {% if musician_tags %}
-            {% for musician_tag in musician_tags %}
-                <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
-                    {{ musician_tag.tagged_musician.display_name }}
-                </a><br />
-            {% endfor %}
-        {% else %}
-            no musicians tagged
-        {% endif %}
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="media">
+                <div class="pull-left">
+                    <img class="post-image media-object" src={{ MEDIA_PREFIX }}{{ post.flyer.image }}>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <legend class="green source600">&nbsp;&nbsp;{{ post.date|date:"l"|upper }}, {{ post.date|date:"F d"|upper }}</legend>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4 class="source600 post-title">
+                        {{ post.subject }}
+                        {% if post.created_by.user == user %}
+                             - <a href="{% url 'posts_edit' post.id %}">(edit)</a>
+                        {% endif %}
+                    </h4>
+
+                    <div class="shoutbox-post-created-date">
+                        in {{ post.location }}
+                    </div>
+
+                    <div>
+
+                        <b>POSTED BY </b>
+                        {% if post.created_by %}
+                            <a href="{% url 'listeners_profile' post.created_by.user.username %}">
+                                {{ post.created_by.display_name }}
+                            </a>
+                        {% endif %}
+                        </a>
+                    </div>
+
+                    <div>
+                        <b>MUSICIANS </b>
+                        {% if musician_tags %}
+                            {% for musician_tag in musician_tags %}
+                                {% if musician_tag.tagged_musician %}
+                                    <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
+                                        {{ musician_tag.tagged_musician.display_name }}
+                                    </a><br />
+                                {% else %}
+                                    {{ musician_tag.string_used }}<br />
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            no musicians tagged
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div>
+                        <b>VENUE </b> 
+                        {% if venue_tags %}
+                            {% for venue_tag in venue_tags %}
+                                {% if venue_tag.tagged_musician %}
+                                    <a href="{% url 'venues_profile' venue_tag.tagged_venue.username %}">
+                                        {{ venue_tag.tagged_venue.display_name }}
+                                    </a><br />
+                                {% else %}
+                                    {{ venue_tag.string_used }}<br />
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            no venue tagged
+                        {% endif %}
+                    </div>
+                    <div>
+                        <div><b>OPENS </b> {{ post.opens }}</div>
+                        <div><b>STARTS </b> {{ post.starts }}</div>
+                        <div><b>COST </b> {{ post.cost }}</div>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="margin-top: 12px;">
+                    <b>INFO </b> 
+                    {{ post.body|urlize|linebreaks }}
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        venue:<br />
-        {% if venue_tags %}
-            {% for venue_tag in venue_tags %}
-                {{ venue_tag.tagged_venue.display_name }}
-            {% endfor %}
-        {% else %}
-            no venue tagged
-        {% endif %}
-    </div>
+
 {% endblock content-margins %}

@@ -69,19 +69,7 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label for="input-embedded_player">Embed a Music Player</label>
-                {{ form.embedded_player }}
-            </div>
-        </div>
-    </div>
-
     <button class="btn btn-primary btn-block" type="submit">Save</button>
 </form>
 
-    <div class="content">
-        {{ form.instance.embedded_player|safe }}
-    </div>
 {% endblock content-margins %}

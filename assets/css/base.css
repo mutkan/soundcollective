@@ -91,6 +91,13 @@ body {
     width: 400px;
 }
 
+.viewed-notification {
+    background-color: gray;
+}
+.unviewed-notification {
+    background-color: blue;
+}
+
 /* POST LISTING */
 .list-image {
     max-height: 150px;
@@ -108,9 +115,10 @@ body {
 
 /* POST */
 .post-image {
-    margin-right: 12px;
     width: auto;
-    max-height: 300px;
+    max-width: 240px;
+    height: auto;
+    max-height: 360px;
 }
 
 /* LISTS */

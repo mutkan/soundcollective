@@ -15,11 +15,13 @@
         var musicianTags = {{ musicians|safe }}
         $("#input-musicians").tagit({
             availableTags: musicianTags,
+            allowSpaces: true,
         });
 
         var venueTags = {{ venues|safe }}
         $("#input-venues").tagit({
             availableTags: venueTags,
+            allowSpaces: true,
         });
 
     });

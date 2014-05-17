@@ -167,11 +167,90 @@ class EditMusicianProfileForm(ModelForm):
             }
         )
 
+class EditVenueProfileForm(ModelForm):
+    profile_image = forms.ImageField()
+    profile_image.required = False
+    profile_image.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-profile-image',
+        }
+    )
+
+    splash_image = forms.ImageField()
+    splash_image.required = False
+    splash_image.widget = forms.ClearableFileInput(
+        attrs = {
+            'id': 'input-splash-image',
+        }
+    )
+
+    class Meta:
+        model = MusicianProfile
+        fields = ['display_name', 'location', 'blurb', 'embedded_player', 'contact_email', 'contact_twitter', 'contact_facebook']
+
+    def __init__(self, *args, **kwargs):
+        super(EditVenueProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields['display_name'].required = False
+        self.fields['display_name'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Display Name',
+                'class': 'form-control',
+                'id': 'input-display-name',
+            }
+        )
+
+        self.fields['location'].required = False
+        self.fields['location'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Location',
+                'class': 'form-control',
+                'id': 'input-location',
+            }
+        )
+
+        self.fields['blurb'].required = False
+        self.fields['blurb'].widget = forms.Textarea(
+            attrs = {
+                'placeholder': 'Blurb',
+                'class': 'form-control',
+                'id': 'input-blurb',
+                'rows': 5,
+            }
+        )
+
+        self.fields['contact_email'].required = False
+        self.fields['contact_email'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Email',
+                'class': 'form-control',
+                'id': 'input-email',
+            }
+        )
+        
+        self.fields['contact_twitter'].required = False
+        self.fields['contact_twitter'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Twitter Username',
+                'class': 'form-control',
+                'id': 'input-twitter',
+            }
+        )
+
+        self.fields['contact_facebook'].required = False
+        self.fields['contact_facebook'].widget = forms.TextInput(
+            attrs = {
+                'placeholder': 'Facebook Username',
+                'class': 'form-control',
+                'id': 'input-facebook',
+            }
+        )
+
 class AddPhotoForm(forms.Form):
     
-    images = forms.ImageField()
-    images.required = True
-    images.widget = forms.ClearableFileInput(
+    image = forms.ImageField()
+    image.required = True
+    image.widget = forms.ClearableFileInput(
         attrs = {
             'id': 'input-add-photo',
         }

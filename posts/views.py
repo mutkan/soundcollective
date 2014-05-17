@@ -8,6 +8,8 @@ from django.views.generic.list import ListView
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.urlresolvers import reverse
 
+from notifications.models import Notifications
+
 from posts.forms import PostForm#, CreateFeatureForm
 from posts.models import Post#, FeaturePost
 
@@ -89,19 +91,29 @@ class CreatePostView(CreateView):
         for musician_tag in musician_tags:
             try:
                 musician = MusicianProfile.objects.get(username=musician_tag)
-                tag = MusicianPostTag.objects.create(post=post, tagged_musician=musician)
+                tag = MusicianPostTag.objects.create(post=post, tagged_musician=musician, string_used=musician_tag)
                 tag.save()
+
+                message = "%s has been tagged in an event post." % musician.display_name
+                for user in musician.user_profiles.all():
+                    Notifications.objects.create(user=user, message=message)
             except:
-                pass
+                tag = MusicianPostTag.objects.create(post=post, string_used=musician_tag)
+                tag.save()
 
         venue_tags = form.cleaned_data['venues'].split(',')
         for venue_tag in venue_tags:
             try:
                 venue = VenueProfile.objects.get(username=venue_tag)
-                tag = VenuePostTag.objects.create(post=post, tagged_venue=venue)
+                tag = VenuePostTag.objects.create(post=post, tagged_venue=venue, string_used=venue_tag)
                 tag.save()
+
+                message = "%s has been tagged in an event post." % venue.display_name
+                for user in venue.user_profiles.all():
+                    Notifications.objects.create(user=user, message=message)
             except:
-                pass
+                tag = VenuePostTag.objects.create(post=post, string_used=venue_tag)
+                tag.save()
 
         try: 
             flyer = self.request.FILES['flyer']

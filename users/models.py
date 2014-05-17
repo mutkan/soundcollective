@@ -26,7 +26,7 @@ class UserProfile(CreateModifyDatesNoUser):
     last_name = models.CharField(max_length=32, null=True)
     interested_in = models.CharField(max_length=128, null=True)
     instruments = models.CharField(max_length=128, null=True)
-    profile_image = models.ForeignKey('uploads.Image', related_name='user_profile_image', null=True)
+    profile_image = models.ForeignKey('uploads.Image', related_name='user_profile_image', null=True, default=1)
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='user_shoutbox_posts')
 
     embedded_player = models.CharField(max_length=512, null=True)
@@ -38,7 +38,7 @@ class MusicianProfile(BaseProfile):
 
     username = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
-    profile_image = models.ForeignKey('uploads.Image', related_name='musician_profile_image', null=True)
+    profile_image = models.ForeignKey('uploads.Image', related_name='musician_profile_image', null=True, default=1)
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='musician_shoutbox_posts')
     user_profiles = models.ManyToManyField(UserProfile, related_name='%(class)s')
 
@@ -50,7 +50,7 @@ class VenueProfile(BaseProfile):
 
     username = models.CharField(max_length=128, null=False)
     genre = models.CharField(max_length=128, null=True)
-    profile_image = models.ForeignKey('uploads.Image', related_name='venue_profile_image', null=True)
+    profile_image = models.ForeignKey('uploads.Image', related_name='venue_profile_image', null=True, default=1)
     shoutbox_posts = models.ManyToManyField('posts.ShoutboxPost', related_name='venue_shoutbox_posts')
     user_profiles = models.ManyToManyField(UserProfile, related_name='%(class)s')
 

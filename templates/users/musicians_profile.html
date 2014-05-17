@@ -6,6 +6,11 @@
                     <div class="display-name"><h2 class="source600">{{ user_profile.display_name }}</h2></div>
                     <div class="location source600">{{ user_profile.location }}</div>
 
+                    {% if is_user %}
+                        <br /><a class="btn btn-primary" href="{% url 'musicians_profile_edit' user_profile.username %}">Edit Profile</a>
+                    {% endif %}
+                    <a class="btn btn-primary" href="{% url 'musicians_profile_add_photo' user_profile.username %}">Add Photo</a>
+
                     <div class="blurb">
                         {% if user_profile.blurb %}
                             {{ user_profile.blurb }}
@@ -41,12 +46,13 @@
                 </div>
                 <div class="col-sm-9">
                     
-                    <div id="gallery">
-                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg1.jpg" >
-                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg2.jpg" >
-                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg3.jpg" >
-                        <img data-src="{{ MEDIA_PREFIX }}images/common/gg4.jpg" >
-                    </div>
+                    {% if tagged_images %}
+                        <div id="gallery">
+                            {% for tag in tagged_images %}
+                                <img data-src="{{ MEDIA_PREFIX }}{{ tag.image.image }}" >
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
                     <div class="row">
                         {% if embedded_player %}

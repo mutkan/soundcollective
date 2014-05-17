@@ -41,6 +41,34 @@
             </ul>-->
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
+                    <li id="notifications-menu" class="dropdown">
+                        
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-envelope" />
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            {% for notification in notifications %}
+                                <li><a href="#">
+                                    <div>
+                                        <div>
+                                            {{ notification.message }}
+                                        </div>
+                                        <div style="color: gray; font-size: 85%;">
+                                            {{ notification.created_date }}
+                                        </div>
+                                    </div>
+                                </a></li>
+                                {% if not forloop.last %}
+                                    <li class="divider"></li>
+                                {% else %}
+                                    
+                                {% endif %}
+                            {% empty %}
+                                No notifications.
+                            {% endfor %}
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user" />
@@ -62,7 +90,9 @@
                             <li class="divider"></li>
 
                             {% for venue_profile in venue_profiles %}
-
+                                <li><a href="{% url 'venues_profile' venue_profile.username %}">
+                                    {{ venue_profile.display_name }}
+                                </a></li>
                             {% endfor %}
                             <li><a href="{% url 'venues_registration' %}">+ New Venue Profile</a></li>
 
@@ -87,7 +117,7 @@
                     <li><a href="{% url 'registration_login' %}"><span class="glyphicon glyphicon-user" /></a></li>
                 {% endif %}
             </ul>
-            <form action="{% url 'main_search' %}" method="get" class="navbar-form navbar-right" role="search">
+            <form action="{% url 'main_search' %}" method="get" class="navbar-form navbar-right" role="search" style="margin-right: 1px;">
                 <div class="right-inner-addon">
                     <input type="text" class="form-control" placeholder="Search for artist or venue" name="search_term" size="40">
                     <i type="submit" class="glyphicon glyphicon-search"></i>

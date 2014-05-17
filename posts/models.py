@@ -7,7 +7,7 @@ from uploads.models import Image
 class Post(CreateModifyDates):
     
     subject = models.CharField(max_length=64, null=True)
-    flyer = models.ForeignKey(Image, null=True)
+    flyer = models.ForeignKey(Image, null=True, default=1)
     location = models.CharField(max_length=64, null=True)
     body = models.TextField(null=True)
     date = models.DateField(null=True)

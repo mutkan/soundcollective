@@ -28,28 +28,54 @@
                                         in {{ p.location }}
                                     </div>
                                     <div>
-                                        <b>POSTED BY </b> 
-                                        <a href="{% url 'listeners_profile' p.created_by.user.username %}">
-                                            {{ p.created_by.display_name }}                                        
+                                        <b>POSTED BY </b>
+                                        {% if p.created_by %}
+                                            <a href="{% url 'listeners_profile' p.created_by.user.username %}">
+                                                {{ p.created_by.display_name }}
+                                            </a>
+                                        {% endif %}
                                         </a>
                                     </div>
                                     <div>
                                         <b>MUSICIANS </b>
-                                        {% for musician_tag in p.musicianposttag_set.all %}
-                                            <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
-                                                {{ musician_tag.tagged_musician.display_name }}
-                                            </a>
-                                        {% endfor %}
+                                        {% if musician_tags %}
+                                            {% for musician_tag in musician_tags %}
+                                                {% if musician_tag.tagged_musician %}
+                                                    <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
+                                                        {{ musician_tag.tagged_musician.display_name }}
+                                                    </a><br />
+                                                {% else %}
+                                                    {{ musician_tag.string_used }}<br />
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            no musicians tagged
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-sm-4">
-                                <div><b>VENUE </b></div>
+                                <div>
+                                    <b>VENUE </b> 
+                                    {% if venue_tags %}
+                                        {% for venue_tag in venue_tags %}
+                                            {% if venue_tag.tagged_musician %}
+                                                <a href="{% url 'venues_profile' venue_tag.tagged_venue.username %}">
+                                                    {{ venue_tag.tagged_venue.display_name }}
+                                                </a><br />
+                                            {% else %}
+                                                {{ venue_tag.string_used }}<br />
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        no venue tagged
+                                    {% endif %}
+                                </div>
                                 <div>
                                     <div><b>OPENS </b> {{ p.opens }}</div>
                                     <div><b>STARTS </b> {{ p.starts }}</div>
-                                    <div><b>COST </b>{{ p.cost }}</div>
+                                    <div><b>COST </b> {{ p.cost }}</div>
                                 </div>
                             </div>
                         </div>

@@ -18,12 +18,15 @@ class VenueImageTag(models.Model):
 
 class MusicianPostTag(models.Model):
     post = models.ForeignKey(Post)
-    tagged_musician = models.ForeignKey(MusicianProfile)
+    tagged_musician = models.ForeignKey(MusicianProfile, null=True)
+    string_used = models.CharField(max_length=32)
 
 class UserPostTag(models.Model):
     post = models.ForeignKey(Post)
-    tagged_user = models.ForeignKey(UserProfile)
+    tagged_user = models.ForeignKey(UserProfile, null=True)
+    string_used = models.CharField(max_length=32)
 
 class VenuePostTag(models.Model):
     post = models.ForeignKey(Post)
-    tagged_venue = models.ForeignKey(VenueProfile)
+    tagged_venue = models.ForeignKey(VenueProfile, null=True)
+    string_used = models.CharField(max_length=32)
