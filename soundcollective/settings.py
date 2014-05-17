@@ -138,14 +138,6 @@ EMAIL_HOST_PASSWORD = os.environ['GMAIL_PASSWORD']
 
 ACCOUNT_ACTIVATION_DAYS = 999
 
-# tinymce
-TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,spellchecker,paste,searchreplace",
-    'theme': "advanced",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
-}
-
 # Heroku
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
