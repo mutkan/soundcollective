@@ -47,7 +47,7 @@
                                                 {{ musician_tag.string_used }}
                                             {% endif %}
 
-                                            {% if not forloop.last %},{% endif %}
+                                            {% if not forloop.last %}|{% endif %}
                                         {% empty %}
                                             no musicians tagged
                                         {% endfor %}
@@ -67,7 +67,7 @@
                                             {{ venue_tag.string_used }}
                                         {% endif %}
 
-                                        {% if not forloop.last %},{% endif %}
+                                        {% if not forloop.last %}|{% endif %}
                                     {% empty %}
                                         no venue tagged
                                     {% endfor %}
