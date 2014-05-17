@@ -34,11 +34,11 @@
             <a class="navbar-brand" id="logo-text" href="{% url 'home' %}">THE HAPPS</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
-            <!--<ul class="nav navbar-nav nav-pills">
+            <ul class="nav navbar-nav nav-pills">
                 <li><a href="{% url 'musicians' %}">MUSICIANS</a></li>
                 <li><a href="{% url 'venues' %}">VENUES</a></li>
                 <li><a href="{% url 'listeners' %}">LISTENERS</a></li>
-            </ul>-->
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li id="notifications-menu" class="dropdown">
