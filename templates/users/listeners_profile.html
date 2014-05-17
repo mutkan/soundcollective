@@ -10,9 +10,9 @@
                     <div class="location source600">{{ user_profile.location }}</div>
 
                     {% if is_user %}
-                        <br /><a class="btn btn-primary" href="{% url 'listeners_profile_edit' user.username %}">Edit Profile</a>
+                        <br /><a class="btn btn-primary" href="{% url 'listeners_profile_edit' user_profile.user.username %}">Edit Profile</a>
                     {% endif %}
-                    <a class="btn btn-primary" href="{% url 'listeners_profile_add_photo' user.username %}">Add Photo</a>
+                    <a class="btn btn-primary" href="{% url 'listeners_profile_add_photo' user_profile.user.username %}">Add Photo</a>
 
                     <div class="blurb">
                         {% if user_profile.blurb %}
