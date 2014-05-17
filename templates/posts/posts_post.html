@@ -5,14 +5,12 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="media">
-                <div class="pull-left">
-                    <img class="post-image media-object" src={{ MEDIA_PREFIX }}{{ post.flyer.image }}>
-                </div>
+                <img class="post-image media-object" src={{ MEDIA_PREFIX }}{{ post.flyer.image }} />
             </div>
         </div>
 
         <div class="col-sm-8">
-            <legend class="green source600">&nbsp;&nbsp;{{ post.date|date:"l"|upper }}, {{ post.date|date:"F d"|upper }}</legend>
+            <legend class="green source600">{{ post.date|date:"l"|upper }}, {{ post.date|date:"F d"|upper }}</legend>
             <div class="row">
                 <div class="col-sm-6">
                     <h4 class="source600 post-title">
@@ -27,7 +25,6 @@
                     </div>
 
                     <div>
-
                         <b>POSTED BY </b>
                         {% if post.created_by %}
                             <a href="{% url 'listeners_profile' post.created_by.user.username %}">
@@ -72,6 +69,7 @@
                             no venue tagged
                         {% endif %}
                     </div>
+
                     <div>
                         <div><b>OPENS </b> {{ post.opens }}</div>
                         <div><b>STARTS </b> {{ post.starts }}</div>
@@ -80,14 +78,15 @@
                 </div>
             </div>
         
-        <div class="row">
-            <div class="col-sm-12">
-                <div style="margin-top: 12px;">
-                    <b>INFO </b> 
-                    {{ post.body|urlize|linebreaks }}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="margin-top: 12px;">
+                        <b>INFO </b> 
+                        {{ post.body|urlize|linebreaks }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div></div>
 
 {% endblock content-margins %}
