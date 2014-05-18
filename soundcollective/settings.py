@@ -116,7 +116,7 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
-MEDIA_URL = 'https://s3.amazonaws.com/soundcollective/'
+MEDIA_URL = 'https://s3.amazonaws.com/soundcollective/media/'
 
 LOGIN_URL = '/listeners/login/'
 LOGIN_REDIRECT_URL = '/listeners/me/'
