@@ -74,7 +74,7 @@ body {
     padding: 0 0 64px;
 }
 .content-wrapper-margins {
-    max-width: 1080px;
+    max-width: 920px;
     margin: 0 auto 0 auto;
 }
 
@@ -116,9 +116,12 @@ body {
 /* POST */
 .post-image {
     width: auto;
-    max-width: 240px;
+    max-width: 320px;
     height: auto;
-    max-height: 360px;
+    max-height: 480px;
+}
+.post-body {
+    font-family: 'Georgia', sans-serif;
 }
 
 /* LISTS */

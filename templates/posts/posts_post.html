@@ -13,15 +13,15 @@
             <legend class="green source600">{{ post.date|date:"l"|upper }}, {{ post.date|date:"F d"|upper }}</legend>
             <div class="row">
                 <div class="col-sm-6">
-                    <h4 class="source600 post-title">
+                    <h3 class="source600 post-title">
                         {{ post.subject }}
                         {% if post.created_by.user == user %}
                              - <a href="{% url 'posts_edit' post.id %}">(edit)</a>
                         {% endif %}
-                    </h4>
+                    </h3>
 
                     <div class="shoutbox-post-created-date">
-                        in {{ post.location }}
+                        {{ post.location }}
                     </div>
 
                     <div>
@@ -36,38 +36,39 @@
 
                     <div>
                         <b>MUSICIANS </b>
-                        {% if musician_tags %}
-                            {% for musician_tag in musician_tags %}
-                                {% if musician_tag.tagged_musician %}
-                                    <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
-                                        {{ musician_tag.tagged_musician.display_name }}
-                                    </a><br />
-                                {% else %}
-                                    {{ musician_tag.string_used }}<br />
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
+                        {% for musician_tag in musician_tags %}
+                            {% if musician_tag.tagged_musician %}
+                                <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
+                                    {{ musician_tag.tagged_musician.display_name }}
+                                </a>
+                            {% else %}
+                                {{ musician_tag.string_used }}
+                            {% endif %}
+
+                            {% if not forloop.last %}|{% endif %}
+
+                        {% empty %}
                             no musicians tagged
-                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div>
                         <b>VENUE </b> 
-                        {% if venue_tags %}
-                            {% for venue_tag in venue_tags %}
-                                {% if venue_tag.tagged_musician %}
-                                    <a href="{% url 'venues_profile' venue_tag.tagged_venue.username %}">
-                                        {{ venue_tag.tagged_venue.display_name }}
-                                    </a><br />
-                                {% else %}
-                                    {{ venue_tag.string_used }}<br />
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
+                        {% for venue_tag in venue_tags %}
+                            {% if venue_tag.tagged_musician %}
+                                <a href="{% url 'venues_profile' venue_tag.tagged_venue.username %}">
+                                    {{ venue_tag.tagged_venue.display_name }}
+                                </a>
+                            {% else %}
+                                {{ venue_tag.string_used }}
+                            {% endif %}
+
+                            {% if not forloop.last %}|{% endif %}
+                        {% empty %}
                             no venue tagged
-                        {% endif %}
+                        {% endfor %}
                     </div>
 
                     <div>
@@ -78,10 +79,10 @@
                 </div>
             </div>
         
-            <div class="row">
+            <div class="row" style="margin-top: 12px;">
                 <div class="col-sm-12">
-                    <div style="margin-top: 12px;">
-                        <b>INFO </b> 
+                    <legend style="margin-bottom: 12px;"></legend>
+                    <div class="post-body">
                         {{ post.body|urlize|linebreaks }}
                     </div>
                 </div>

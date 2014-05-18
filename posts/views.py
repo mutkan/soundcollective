@@ -158,6 +158,10 @@ class EditPostView(UpdateView):
 
         image = self.get_object().flyer
 
+        post = form.save()
+        post.flyer = image
+        post.save()
+
         try: 
             flyer = self.request.FILES['flyer']
             image = Image.objects.create()
@@ -169,8 +173,34 @@ class EditPostView(UpdateView):
         except:
             pass
 
-        post = form.save()
-        post.flyer = image
+        musician_tags = form.cleaned_data['musicians'].split(',')
+        for musician_tag in musician_tags:
+            try:
+                musician = MusicianProfile.objects.get(username=musician_tag)
+                tag = MusicianPostTag.objects.create(post=post, tagged_musician=musician, string_used=musician_tag)
+                tag.save()
+
+                message = "%s has been tagged in an event post." % musician.display_name
+                for user in musician.user_profiles.all():
+                    Notifications.objects.create(user=user, message=message)
+            except:
+                tag = MusicianPostTag.objects.create(post=post, string_used=musician_tag)
+                tag.save()
+
+        venue_tags = form.cleaned_data['venues'].split(',')
+        for venue_tag in venue_tags:
+            try:
+                venue = VenueProfile.objects.get(username=venue_tag)
+                tag = VenuePostTag.objects.create(post=post, tagged_venue=venue, string_used=venue_tag)
+                tag.save()
+
+                message = "%s has been tagged in an event post." % venue.display_name
+                for user in venue.user_profiles.all():
+                    Notifications.objects.create(user=user, message=message)
+            except:
+                tag = VenuePostTag.objects.create(post=post, string_used=venue_tag)
+                tag.save()
+
         post.save()
 
         return HttpResponseRedirect(reverse('posts_post', args=(post.id,)))
