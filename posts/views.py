@@ -35,7 +35,7 @@ class PostView(TemplateView):
         context['musician_tags'] = MusicianPostTag.objects.filter(post=post)
         context['venue_tags'] = VenuePostTag.objects.filter(post=post)
 
-        if self.request.user.is_authenticated:
+        if self.request.user.is_authenticated():
             context['attending'] = self.request.user.userprofile.shows_attended.filter(id=post.id).exists()
 
         try:
