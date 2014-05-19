@@ -35,6 +35,9 @@ class PostView(TemplateView):
         context['musician_tags'] = MusicianPostTag.objects.filter(post=post)
         context['venue_tags'] = VenuePostTag.objects.filter(post=post)
 
+        if self.request.user.is_authenticated:
+            context['attending'] = self.request.user.userprofile.shows_attended.filter(id=post.id).exists()
+
         try:
             context['is_user'] = True if self.get_object().created_by == self.request.user.userprofile else False
         except:
@@ -205,38 +208,14 @@ class EditPostView(UpdateView):
 
         return HttpResponseRedirect(reverse('posts_post', args=(post.id,)))
 
-#class CreateFeaturePost(CreateView):
-#    
-#    model = FeaturePost
-#    form_class = CreateFeatureForm
-#    template_name = 'posts/create_feature_post.html'
-#
-#    def form_valid(self, form):
-#        feature_post = form.save()
-#
-#        feature_post.created_by = self.request.user.userprofile
-#        feature_post.modified_by = self.request.user.userprofile
-#        feature_post.save()
-#
-#        return HttpResponseRedirect(reverse('posts_feature_post', args=(feature_post.id,)))
-#
-#class FeaturePostView(TemplateView):
-#
-#    template_name = "posts/feature_post.html"
-#
-#    def get_object(self, queryset=None):
-#        obj = FeaturePost.objects.get(id=self.kwargs['post'])
-#        return obj
-#
-#    def get_context_data(self, **kwargs):
-#        context = super(FeaturePost, self).get_context_data(**kwargs)
-#        post = self.get_object()
-#
-#        context['post'] = post
-#
-#        try:
-#            context['is_user'] = True if self.get_object().created_by == self.request.user.userprofile else False
-#        except:
-#            context['is_user'] = False
-#
-#        return context
+def attend_post_view(request, post):
+    
+    post = Post.objects.get(id=post)
+    
+    user_profile = request.user.userprofile
+    if user_profile.shows_attended.filter(id=post.id).exists():
+        user_profile.shows_attended.remove(post)
+    else:
+        user_profile.shows_attended.add(post)
+
+    return HttpResponseRedirect(reverse('posts_post', args=(post.id,)))

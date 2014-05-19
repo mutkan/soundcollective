@@ -34,6 +34,8 @@ class UserProfile(CreateModifyDatesNoUser):
     contact_twitter = models.CharField(max_length=128, null=True)
     contact_facebook = models.CharField(max_length=128, null=True)
 
+    shows_attended = models.ManyToManyField('posts.Post')
+
 class MusicianProfile(BaseProfile):
 
     username = models.CharField(max_length=128, null=False)

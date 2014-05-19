@@ -1,116 +1,116 @@
 {% extends "base.html" %}
 
 {% block content-margins %}
-            <div class="row">
-                <div class="col-sm-3">
-                    {% if user_profile.profile_image %}
-                        <img class="profile-image" src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}" />
-                    {% endif %}
-                    <div class="display-name"><h2 class="source600">{{ user_profile.display_name }}</h2></div>
-                    <div class="location source600">{{ user_profile.location }}</div>
+    <div class="row">
+        <div class="col-sm-3">
+            {% if user_profile.profile_image %}
+                <img class="profile-image" src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}" />
+            {% endif %}
+            <div class="display-name"><h2 class="source600">{{ user_profile.display_name }}</h2></div>
+            <div class="location source600">{{ user_profile.location }}</div>
 
-                    {% if is_user %}
-                        <br /><a class="btn btn-primary" href="{% url 'listeners_profile_edit' user_profile.user.username %}">Edit Profile</a>
-                    {% endif %}
-                    <a class="btn btn-primary" href="{% url 'listeners_profile_add_photo' user_profile.user.username %}">Add Photo</a>
+            {% if is_user %}
+                <br /><a class="btn btn-primary" href="{% url 'listeners_profile_edit' user_profile.user.username %}">Edit Profile</a>
+            {% endif %}
+            <a class="btn btn-primary" href="{% url 'listeners_profile_add_photo' user_profile.user.username %}">Add Photo</a>
 
-                    <div class="blurb">
-                        {% if user_profile.blurb %}
-                            {{ user_profile.blurb }}
-                        {% endif %}
+            <div class="blurb">
+                {% if user_profile.blurb %}
+                    {{ user_profile.blurb }}
+                {% endif %}
+            </div>
+            <div class="social-media-box">
+                {% if user.email %}
+                    <div class="social-media-spacing">
+                        <a href="mailto:{{ user.email }}">
+                            <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
+                            &nbsp;{{ user.email }}
+                        </a>
                     </div>
-                    <div class="social-media-box">
-                        {% if user.email %}
-                            <div class="social-media-spacing">
-                                <a href="mailto:{{ user.email }}">
-                                    <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
-                                    &nbsp;{{ user.email }}
-                                </a>
-                            </div>
-                        {% endif %}
-                        {% if user_profile.contact_twitter %}
-                            <div class="social-media-spacing">
-                                <a href="https://twitter.com/{{ user_profile.contact_twitter }}">
-                                    <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/twitter.png" >
-                                    &nbsp;{{ user_profile.contact_twitter }}
-                                </a>
-                            </div>
-                        {% endif %}
-                        {% if user_profile.contact_facebook %}
-                            <div class="social-media-spacing">
-                                <a href="https://facebook.com/{{ user_profile.contact_facebook }}">
-                                    <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/facebook.png" >
-                                    &nbsp;{{ user_profile.contact_facebook }}
-                                </a>
-                            </div>
-                        {% endif %}
+                {% endif %}
+                {% if user_profile.contact_twitter %}
+                    <div class="social-media-spacing">
+                        <a href="https://twitter.com/{{ user_profile.contact_twitter }}">
+                            <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/twitter.png" >
+                            &nbsp;{{ user_profile.contact_twitter }}
+                        </a>
                     </div>
-                    <legend class="orange">ASSOCIATED ACTS</legend>
-                    <div>
-                        {% for act in associated_acts %}
-                            <a href="{% url 'musicians_profile' act.username %}">
-                                <img class="pull-left related-image" src="{{ MEDIA_PREFIX }}{{ act.profile_image.image }}" />
-                            </a>
-                        {% endfor %}
+                {% endif %}
+                {% if user_profile.contact_facebook %}
+                    <div class="social-media-spacing">
+                        <a href="https://facebook.com/{{ user_profile.contact_facebook }}">
+                            <img class="social-media-icon" src="{{ MEDIA_PREFIX }}images/common/facebook.png" >
+                            &nbsp;{{ user_profile.contact_facebook }}
+                        </a>
                     </div>
+                {% endif %}
+            </div>
+            <legend class="orange">ASSOCIATED ACTS</legend>
+            <div>
+                {% for act in associated_acts %}
+                    <a href="{% url 'musicians_profile' act.username %}">
+                        <img class="pull-left related-image" src="{{ MEDIA_PREFIX }}{{ act.profile_image.image }}" />
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-9">
+            
+            {% if tagged_images %}
+                <div id="gallery">
+                    {% for tag in tagged_images %}
+                        <img data-src="{{ MEDIA_PREFIX }}{{ tag.image.image }}" >
+                    {% endfor %}
                 </div>
-                <div class="col-sm-9">
-                    
-                    {% if tagged_images %}
-                        <div id="gallery">
-                            {% for tag in tagged_images %}
-                                <img data-src="{{ MEDIA_PREFIX }}{{ tag.image.image }}" >
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+            {% endif %}
 
-                    <div class="col-sm-6">
-                        <legend class="green">SHOWS ATTENDED</legend>
-                            {% for show in upcoming_shows %}
-                                <a href="{% url 'posts_post' show.post.id %}"><div class="source600">{{ show.post.subject }}</div></a>
-                                <div class="pull-right">{{ show.post.date }}</div>
-                                <div>{{ show.post.location }}</div>
-                                <br />
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div>
-                        {% if user.is_authenticated %}
-                            {% include 'posts/shoutbox_post.html' %}
-                        {% endif %}
-                        {% for shoutbox_post in shoutbox %}
-                            <div class="l-box">
-                                <div class="media">
-                                    <div class="pull-left">
-                                        <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
-                                            <img class="media-object shoutbox-post-image" src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}" class="img-responsive" />
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <div class="shoutbox-post-display-name pull-left">
-                                            <a class="source600" href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
-                                                {{ shoutbox_post.created_by.display_name }}
-                                            </a>
-                                        </div>
-                                        <div class="shoutbox-post-created-date">&nbsp;&nbsp;{{ shoutbox_post.created_date }}</div>
-                                        {{ shoutbox_post.body|urlize }}
-                                    </div>
-                                </div>
-                            </div>                
-                        {% endfor %}
-
-                        {% if shoutbox.has_previous %}
-                            <a href="?page={{ shoutbox.previous_page_number }}">&lt; newer posts</a>
-                        {% endif %}
-
-                        <div class="pull-right">
-                            {% if shoutbox.has_next %}
-                                <a href="?page={{ shoutbox.next_page_number }}">older posts &gt;</a>
-                            {% endif %}
-                        </div>
-                    </div>
+            <div class="col-sm-6">
+                <legend class="green">SHOWS ATTENDED</legend>
+                    {% for show in user_profile.shows_attended.all %}
+                        <a href="{% url 'posts_post' show.id %}"><span class="source600">{{ show.subject }}</span></a>
+                        <span class="pull-right">{{ show.date }}</span>
+                        <div>{{ post.location }}</div>
+                        <br />
+                    {% endfor %}
                 </div>
             </div>
+            <div>
+                {% if user.is_authenticated %}
+                    {% include 'posts/shoutbox_post.html' %}
+                {% endif %}
+                {% for shoutbox_post in shoutbox %}
+                    <div class="l-box">
+                        <div class="media">
+                            <div class="pull-left">
+                                <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                    <img class="media-object shoutbox-post-image" src="{{ MEDIA_URL }}{{ shoutbox_post.created_by.profile_image.image }}" class="img-responsive" />
+                                </a>
+                            </div>
+                            <div>
+                                <div class="shoutbox-post-display-name pull-left">
+                                    <a class="source600" href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
+                                        {{ shoutbox_post.created_by.display_name }}
+                                    </a>
+                                </div>
+                                <div class="shoutbox-post-created-date">&nbsp;&nbsp;{{ shoutbox_post.created_date }}</div>
+                                {{ shoutbox_post.body|urlize }}
+                            </div>
+                        </div>
+                    </div>                
+                {% endfor %}
+
+                {% if shoutbox.has_previous %}
+                    <a href="?page={{ shoutbox.previous_page_number }}">&lt; newer posts</a>
+                {% endif %}
+
+                <div class="pull-right">
+                    {% if shoutbox.has_next %}
+                        <a href="?page={{ shoutbox.next_page_number }}">older posts &gt;</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function() {
                 var p = $("#gallery").portfolio({

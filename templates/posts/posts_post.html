@@ -10,14 +10,31 @@
         </div>
 
         <div class="col-sm-7">
-            <legend class="green source600">{{ post.date|date:"l"|upper }}, {{ post.date|date:"F d"|upper }}</legend>
+            <legend class="green source600">
+                {{ post.date|date:"l"|upper }}, {{ post.date|date:"F d"|upper }} 
+                <span class="pull-right">
+                    {% if user.is_authenticated %}
+                        {% if attending %}
+                            <a class="btn btn-default" href="{% url 'posts_attend' post.id %}">
+                                Attending
+                            </a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'posts_attend' post.id %}">
+                                Attend
+                            </a>
+                        {% endif %} 
+                    {% endif %}
+                    {% if post.created_by.user == user %}
+                        <a class="btn btn-primary" href="{% url 'posts_edit' post.id %}">
+                            Edit Post
+                        </a>
+                    {% endif %}
+                </span>
+            </legend>
             <div class="row">
                 <div class="col-sm-6">
                     <h3 class="source600 post-title">
                         {{ post.subject }}
-                        {% if post.created_by.user == user %}
-                             - <a href="{% url 'posts_edit' post.id %}">(edit)</a>
-                        {% endif %}
                     </h3>
 
                     <div class="shoutbox-post-created-date">
