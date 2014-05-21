@@ -12,45 +12,51 @@
                     {% if p.date == event_date %}
                         <div class="row">
                             <div class="col-sm-8">
-                                <div class="media">
-                                    <div class="list-image pull-left">
+                                <div class="row">
+                                    <div class="col-sm-3">
                                         <a href="{% url 'posts_post' p.id %}">
                                             <img class="media-object list-image" src={{ MEDIA_PREFIX }}{{ p.flyer.image }}>
                                         </a>
                                     </div>
-                                    <h4 class="source600 post-title">
-                                        <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
-                                        {% if p.created_by.user == user %}
-                                             <a class="btn btn-primary" href="{% url 'posts_edit' p.id %}">Edit</a>
-                                        {% endif %}
-                                    </h4>
-                                    <div class="shoutbox-post-created-date">
-                                        {{ p.location }}
-                                    </div>
-                                    <div>
-                                        <b>POSTED BY </b>
-                                        {% if p.created_by %}
-                                            <a href="{% url 'listeners_profile' p.created_by.user.username %}">
-                                                {{ p.created_by.display_name }}
-                                            </a>
-                                        {% endif %}
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <b>MUSICIANS </b>
-                                        {% for musician_tag in p.musicianposttag_set.all %}
-                                            {% if musician_tag.tagged_musician %}
-                                                <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
-                                                    {{ musician_tag.tagged_musician.display_name }}
-                                                </a>        
-                                            {% else %}
-                                                {{ musician_tag.string_used }}
-                                            {% endif %}
 
-                                            {% if not forloop.last %}|{% endif %}
-                                        {% empty %}
-                                            no musicians tagged
-                                        {% endfor %}
+                                    <div class="col-sm-9">
+                                        <h4 class="source600 post-title">
+                                            <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
+                                            {% if p.created_by.user == user %}
+                                                 <a class="btn btn-primary" href="{% url 'posts_edit' p.id %}">Edit</a>
+                                            {% endif %}
+                                        </h4>
+
+                                        <div class="shoutbox-post-created-date">
+                                            {{ p.location }}
+                                        </div>
+
+                                        <div>
+                                            <b>POSTED BY </b>
+                                            {% if p.created_by %}
+                                                <a href="{% url 'listeners_profile' p.created_by.user.username %}">
+                                                    {{ p.created_by.display_name }}
+                                                </a>
+                                            {% endif %}
+                                            </a>
+                                        </div>
+
+                                        <div>
+                                            <b>MUSICIANS </b>
+                                            {% for musician_tag in p.musicianposttag_set.all %}
+                                                {% if musician_tag.tagged_musician %}
+                                                    <a href="{% url 'musicians_profile' musician_tag.tagged_musician.username %}">
+                                                        {{ musician_tag.tagged_musician.display_name }}
+                                                    </a>        
+                                                {% else %}
+                                                    {{ musician_tag.string_used }}
+                                                {% endif %}
+
+                                                {% if not forloop.last %}|{% endif %}
+                                            {% empty %}
+                                                no musicians tagged
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
