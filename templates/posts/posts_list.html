@@ -7,19 +7,19 @@
         {% for event_date in dates_list %}
             <legend class="green source600">&nbsp;&nbsp;{{ event_date|date:"l"|upper }}, {{ event_date|date:"F d"|upper }}</legend>
             
-            <div class="l-box">
+            <div class="l-box" style="margin-left: 0;">
                 {% for p in object_list %}
                     {% if p.date == event_date %}
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <a href="{% url 'posts_post' p.id %}">
                                             <img class="media-object list-image" src={{ MEDIA_PREFIX }}{{ p.flyer.image }}>
                                         </a>
                                     </div>
 
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-8">
                                         <h4 class="source600 post-title">
                                             <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
                                             {% if p.created_by.user == user %}
