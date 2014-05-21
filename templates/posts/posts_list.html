@@ -3,11 +3,11 @@
 {% block content-margins %}
 
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-12">
         {% for event_date in dates_list %}
             <legend class="green source600">&nbsp;&nbsp;{{ event_date|date:"l"|upper }}, {{ event_date|date:"F d"|upper }}</legend>
             
-            <div class="l-box" style="margin-left: 0;">
+            <div class="l-box" style="margin-left: 0; margin-right: 0;">
                 {% for p in object_list %}
                     {% if p.date == event_date %}
                         <div class="row">
@@ -95,9 +95,9 @@
         {% endfor %}
     </div>
 
-    <div class="col-sm-4">
+    <!--<div class="col-sm-4">
         <legend class="orange source600">&nbsp;&nbsp;THE HAPPS</legend>
-    </div>
+    </div>-->
 </div>
 
 {% endblock content-margins %}
