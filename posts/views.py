@@ -53,7 +53,7 @@ class PostListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
 
-        context['dates_list'] = Post.objects.values_list('date', flat=True)
+        context['dates_list'] = Post.objects.values_list('date', flat=True).distinct()
         
         if self.request.user.is_authenticated():
             context['musician_profiles'] = self.request.user.userprofile.musicianprofile.all()
@@ -67,6 +67,17 @@ class PostMineView(ListView):
     
     def get_queryset(self):
         return Post.objects.filter(created_by=self.request.user.userprofile)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostMineView, self).get_context_data(**kwargs)
+
+        context['dates_list'] = self.get_queryset().values_list('date', flat=True).distinct()
+        
+        if self.request.user.is_authenticated():
+            context['musician_profiles'] = self.request.user.userprofile.musicianprofile.all()
+            context['venue_profiles'] = self.request.user.userprofile.venueprofile.all()
+
+        return context
 
 class CreatePostView(CreateView):
 
