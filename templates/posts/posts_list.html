@@ -21,7 +21,7 @@
                                     <h4 class="source600 post-title">
                                         <a href="{% url 'posts_post'  p.id %}">{{ p.subject }}</a>
                                         {% if p.created_by.user == user %}
-                                             - <a class="btn btn-primary" href="{% url 'posts_edit' p.id %}">Edit</a>
+                                             <a class="btn btn-primary" href="{% url 'posts_edit' p.id %}">Edit</a>
                                         {% endif %}
                                     </h4>
                                     <div class="shoutbox-post-created-date">
