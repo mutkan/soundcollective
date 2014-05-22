@@ -15,9 +15,15 @@
                 <span class="pull-right">
                     {% if user.is_authenticated %}
                         {% if attending %}
-                            <a class="btn btn-default" href="{% url 'posts_attend' post.id %}">
-                                Attending
-                            </a>
+                            {% if past_event %}
+                                <a class="btn btn-default" href="{% url 'posts_attend' post.id %}">
+                                    Attended
+                                </a>
+                            {% else %}
+                                <a class="btn btn-default" href="{% url 'posts_attend' post.id %}">
+                                    Attending
+                                </a>
+                            {% endif %}
                         {% else %}
                             <a class="btn btn-primary" href="{% url 'posts_attend' post.id %}">
                                 Attend

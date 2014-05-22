@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -31,6 +32,8 @@ class PostView(TemplateView):
         context = super(PostView, self).get_context_data(**kwargs)
         post = self.get_object()
 
+        if post.date < date.today():
+            context['past_event'] = True
         context['post'] = post
         context['musician_tags'] = MusicianPostTag.objects.filter(post=post)
         context['venue_tags'] = VenuePostTag.objects.filter(post=post)

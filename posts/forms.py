@@ -3,7 +3,7 @@ from datetime import date
 from django.contrib.admin import widgets
 from django.forms import ModelForm
 
-from posts.models import Post, ShoutboxPost#, FeaturePost
+from posts.models import Post, ShoutboxPost
 
 class PostForm(ModelForm):
 
@@ -113,16 +113,8 @@ class ShoutboxPostForm(ModelForm):
         self.fields['body'].widget = forms.Textarea(
             attrs = {
                 'placeholder': 'Write a comment',
-                'class': 'form-group',
+                'class': 'form-control',
                 'rows': 4,
-                'cols': 68,
+                'cols': 64,
             }
         )
-
-#class CreateFeatureForm(ModelForm):
-#
-#    class Meta:
-#        model = FeaturePost
-#        fields = ['subject', 'content']
-#
-#    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 10}))

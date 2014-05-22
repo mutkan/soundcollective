@@ -6,8 +6,12 @@
             {% if user_profile.profile_image %}
                 <img class="profile-image" src="{{ MEDIA_PREFIX }}{{ user_profile.profile_image.image }}" />
             {% endif %}
+
             <div class="display-name"><h2 class="source600">{{ user_profile.display_name }}</h2></div>
-            <div class="location source600">{{ user_profile.location }}</div>
+
+            {% if user_profile.location %}
+                <div class="location source600">{{ user_profile.location }}</div>
+            {% endif %}
 
             {% if is_user %}
                 <br /><a class="btn btn-primary" href="{% url 'listeners_profile_edit' user_profile.user.username %}">Edit Profile</a>
@@ -45,9 +49,11 @@
                     </div>
                 {% endif %}
             </div>
-            <legend class="orange">ASSOCIATED ACTS</legend>
             <div>
                 {% for act in associated_acts %}
+                    {% if forloop.first %}
+                        <legend class="orange">ASSOCIATED ACTS</legend>
+                    {% endif %}
                     <a href="{% url 'musicians_profile' act.username %}">
                         <img class="pull-left related-image" src="{{ MEDIA_PREFIX }}{{ act.profile_image.image }}" />
                     </a>
@@ -55,7 +61,6 @@
             </div>
         </div>
         <div class="col-sm-9">
-            
             {% if tagged_images %}
                 <div id="gallery">
                     {% for tag in tagged_images %}
@@ -64,22 +69,28 @@
                 </div>
             {% endif %}
 
-            <div class="col-sm-6">
-                <legend class="green">SHOWS ATTENDED</legend>
+            <div class="row">
+                <div class="col-sm-6">
+                    {% if user.is_authenticated %}
+                        {% include 'posts/shoutbox_post.html' %}
+                    {% endif %}
+                </div>
+                <div class="col-sm-6">
+                    <legend class="green">SHOWS ATTENDED</legend>
                     {% for show in user_profile.shows_attended.all %}
                         <a href="{% url 'posts_post' show.id %}"><span class="source600">{{ show.subject }}</span></a>
                         <span class="pull-right">{{ show.date }}</span>
                         <div>{{ post.location }}</div>
                         <br />
+                    {% empty %}
+                        No shows attended! Go out to one!
                     {% endfor %}
                 </div>
             </div>
-            <div>
-                {% if user.is_authenticated %}
-                    {% include 'posts/shoutbox_post.html' %}
-                {% endif %}
+
+            <div style="margin-left: 0;">
                 {% for shoutbox_post in shoutbox %}
-                    <div class="l-box">
+                    <div class="l-box" style="margin-left: 0;">
                         <div class="media">
                             <div class="pull-left">
                                 <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
@@ -113,13 +124,13 @@
     </div>
     <script>
         $(document).ready(function() {
-                var p = $("#gallery").portfolio({
-                    enableKeyboardNavigation: false,
-                    loop: true,
-                    height: '240px',
-                    width: '100%',
-                });
-                p.init();
+            var p = $("#gallery").portfolio({
+                enableKeyboardNavigation: false,
+                loop: true,
+                height: '240px',
+                width: '100%',
+            });
+            p.init();
         });
     </script>
 {% endblock content-margins %}
