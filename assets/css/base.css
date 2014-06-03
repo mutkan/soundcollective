@@ -112,9 +112,8 @@ body {
 /* PROFILE */
 .profile-image {
     margin-top: 24px;
-    width: auto;
-    max-width: 248px;
-    max-height: 240px;
+    max-width: 220px;
+    height: auto;
 }
 .related-image {
     width: auto;

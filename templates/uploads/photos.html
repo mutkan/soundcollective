@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content-margins %}
+
+    <div class="l-box">
+        
+        <div class="row">
+            {% for image in uploaded_images %}
+                <div class="col-sm-3">
+                    <img class="media-object" src="{{ MEDIA_PREFIX }}{{ image.image }}">
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            {% if uploaded_images.has_previous %}
+                <a href="?page={{ uploaded_images.previous_page_number }}">&lt; newer images</a>
+            {% endif %}
+
+            <div class="pull-right">
+                {% if uploaded_images.has_next %}
+                    <a href="?page={{ uploaded_images.next_page_number }}">older images &gt;</a>
+                {% endif %}
+            </div>
+        </div>
+
+{% endblock content-margins %}

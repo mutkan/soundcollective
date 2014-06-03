@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 from registration.backends.default.views import ActivationView
 
 from users.views import (check_if_user, UserRegistrationView, login, UsersView, UserHomeView,
-    UserProfileView, UserProfileEditView, UserProfileAddPhoto) 
+    UserProfileView, UserProfileEditView, UserProfileAddPhoto, ManagePhotos, UploadedPhotos)
 
 urlpatterns = patterns('',
 
@@ -46,4 +46,10 @@ urlpatterns = patterns('',
     url(r'^(?P<username>\w+)/add_photo/$',
         login_required(UserProfileAddPhoto.as_view()),
         name='listeners_profile_add_photo'),
+    url(r'^(?P<username>\w+)/manage_photos/$',
+        login_required(ManagePhotos.as_view()),
+        name='manage_photos'),
+    url(r'^(?P<username>\w+)/photos/$',
+        login_required(UploadedPhotos.as_view()),
+        name='uploaded_photos'),
 )

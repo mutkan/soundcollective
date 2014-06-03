@@ -512,6 +512,47 @@ class VenuesProfileAddPhoto(FormView):
 
         return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().username,)))
 
+class ManagePhotos(TemplateView):
+    
+    template_name = 'uploads/manage_photos.html'
+
+    def get_object(self, queryset=None):
+
+        obj = UserProfile.objects.get(user__username=self.kwargs['username'])
+        return obj
+        
+    def get_context_data(self, **kwargs):
+        context = super(ManagePhotos, self).get_context_data(**kwargs)
+
+        context['uploaded_images'] = Image.objects.filter(created_by=self.get_object())[:8]
+
+        return context
+
+class UploadedPhotos(TemplateView):
+    
+    template_name = 'uploads/photos.html'
+
+    def get_object(self, queryset=None):
+
+        obj = UserProfile.objects.get(user__username=self.kwargs['username'])
+        return obj
+        
+    def get_context_data(self, **kwargs):
+        context = super(UploadedPhotos, self).get_context_data(**kwargs)
+
+        uploaded_images = Image.objects.filter(created_by=self.get_object())
+        paginator = Paginator(uploaded_images, 16)
+        page = self.request.GET.get('page')
+        try:
+            uploaded_images = paginator.page(page)
+        except PageNotAnInteger:
+            uploaded_images = paginator.page(1)
+        except EmptyPage:
+            uploaded_images = paginator.page(paginator.num_pages)
+        context['uploaded_images'] = uploaded_images
+
+        return context
+
 class BaseRegistrationView(_RequestPassingFormView):
 	"""
 	Base class for user registration views.
@@ -712,4 +753,3 @@ def login(request, template_name='registration/login.html',
 
     return TemplateResponse(request, template_name, context,
                             current_app=current_app)
-                            
