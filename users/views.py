@@ -83,7 +83,7 @@ class UserProfileView(CreateView):
         except:
             context['is_user'] = False
 
-        tagged_images = UserImageTag.objects.filter(tagged_user=self.get_object())
+        tagged_images = UserImageTag.objects.filter(tagged_user=user_profile)
         context['tagged_images'] = tagged_images
 
         shoutbox_posts = user_profile.shoutbox_posts.order_by("-created_date")
@@ -154,9 +154,6 @@ class UserProfileEditView(UpdateView):
                 profile_image.save()
 
                 user_profile.profile_image = profile_image
-
-                user_image_tag = UserImageTag.objects.create(image=profile_image, tagged_user=user_profile)
-                user_image_tag.save()
         except:
             pass
 
@@ -319,9 +316,6 @@ class MusiciansProfileEditView(UpdateView):
                 profile_image.save()
 
                 user_profile.profile_image = profile_image
-
-                musician_image_tag = MusicianImageTag.objects.create(image=profile_image, tagged_musician=user_profile)
-                musician_image_tag.save()
         except:
             pass
 
@@ -467,9 +461,6 @@ class VenuesProfileEditView(UpdateView):
                 profile_image.save()
 
                 user_profile.profile_image = profile_image
-
-                venue_image_tag = VenueImageTag.objects.create(image=profile_image, tagged_venue=user_profile)
-                venue_image_tag.save()
         except:
             pass
 

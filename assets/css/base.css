@@ -169,6 +169,9 @@ body {
     color: white;
     background: #c6c6c6;
 }
+.gray-font {
+    color: gray;
+}
 .green {
     color: #60c884;
 }

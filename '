@@ -23,10 +23,8 @@
 
         <div class="row">
             {% for image in uploaded_images %}
-                <div class="col-sm-3" style="margin-bottom: 32px;">
-                    <a href="">
-                        <img class="media-object list-image center-it" src="{{ MEDIA_PREFIX }}{{ image.image }}">
-                    </a>
+                <div class="col-sm-3">
+                    <img class="media-object" src={{ MEDIA_PREFIX}}{{image.image}}>
                 </div>
             {% endfor %}
         </div>
