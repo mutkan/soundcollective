@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
@@ -21,6 +22,8 @@ class PhotoView(TemplateView):
     template_name = "uploads/photo.html"
 
     def post(self, request, *args, **kwargs):
+        image = Image.objects.get(id=self.request.POST['photo_id'])
+        image.delete()
         return HttpResponseRedirect(reverse('manage_photos', kwargs={'username': request.user.username}))
 
     def get_object(self, queryset=None):
