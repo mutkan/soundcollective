@@ -37,11 +37,11 @@ class PhotoView(TemplateView):
         context['photo'] = photo
 
         try:
-            photo_tags_user = UserImageTag.filter(image=photo)
+            photo_tags_user = UserImageTag.filter(image=photo, tagged_user=self.request.user.userprofile)
         except:
             photo_tags_user = None
 
-        if self.request.user == photo.created_by or photo_tags_user:
+        if self.request.user.userprofile == photo.created_by or photo_tags_user:
             context['is_user'] = True
 
         return context

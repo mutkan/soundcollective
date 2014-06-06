@@ -42,7 +42,10 @@
                             </div>
                         {% endif %}
                     </div>
-                    <legend class="orange source600">RELATED ACTS</legend>
+                    {% if embedded_player %}
+                        {{ embedded_player|safe }}
+                    {% endif %}
+                    <!--<legend class="orange source600">RELATED ACTS</legend>-->
                 </div>
                 <div class="col-sm-9">
                     
@@ -55,9 +58,9 @@
                     {% endif %}
 
                     <div class="row">
-                        {% if embedded_player %}
+                        {% if user.is_authenticated %}
                             <div class="col-sm-6">
-                                {{ embedded_player|safe }}
+                                {% include 'posts/shoutbox_post.html' %}
                             </div>
                         {% endif %}
                         <div class="col-sm-6">
@@ -73,9 +76,6 @@
                         </div>
                     </div>
                     <div>
-                        {% if user.is_authenticated %}
-                            {% include 'posts/shoutbox_post.html' %}
-                        {% endif %}
                         {% for shoutbox_post in shoutbox %}
                             <div class="l-box">
                                 <div class="media">
