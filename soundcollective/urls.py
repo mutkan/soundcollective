@@ -18,6 +18,8 @@ urlpatterns = patterns('',
 
     url(r'^posts/', include('posts.urls')),	
 
+    url(r'^photos/', include('uploads.urls')),
+
     url(r'^logout/$', 
             'django.contrib.auth.views.logout_then_login', 
             name='logout'),

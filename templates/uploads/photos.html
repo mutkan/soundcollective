@@ -3,18 +3,20 @@
 {% block content-margins %}
 
     <div class="l-box">
-        
+        <h3 style="margin-bottom: 16px;">Your Photos</h3>
         <div class="row">
             {% for image in uploaded_images %}
                 <div class="col-sm-3" style="margin-bottom: 32px;">
-                    <a href="">
+                    <a href="{% url 'photo' image.id %}">
                         <img class="media-object list-image center-it" src="{{ MEDIA_PREFIX }}{{ image.image }}">
                     </a>
                     <div>
                         <p style="margin-top: 0px;">
-                            <div><a href=""><b>{{ image.image }}</b></a></div>
+                            <div><a href="{% url 'photo' image.id %}"><b>{{ image.image }}</b></a></div>
                             <div class="gray-font"><i>{{ image.created_date|date:"F d, o" }}</i></div>
-                            <div>{{ image.created_by.user.username }}</div>
+                            <a href="{% url 'listeners_profile' image.created_by.user.username%}">
+                                {{ image.created_by.user.username }}
+                            </a>
                         </p>
                     </div>
                 </div>

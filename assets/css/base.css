@@ -141,7 +141,6 @@ body {
     color: gray;
 }
 
-
 .carousel-image {
     max-height: 200px;
     width: auto;
@@ -159,6 +158,12 @@ body {
 }
 .social-media-box {
     margin-bottom: 2em;
+}
+
+/* PHOTO */
+.view-photo {
+    max-height: 500px;
+    width: auto;
 }
 
 .l-box-header {
