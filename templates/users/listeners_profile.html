@@ -70,11 +70,11 @@
             {% endif %}
 
             <div class="row">
-                <div class="col-sm-6">
-                    {% if user.is_authenticated %}
+                {% if user.is_authenticated %}
+                    <div class="col-sm-6">
                         {% include 'posts/shoutbox_post.html' %}
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
                 <div class="col-sm-6">
                     <legend class="green">SHOWS ATTENDED</legend>
                     {% for show in user_profile.shows_attended.all %}
