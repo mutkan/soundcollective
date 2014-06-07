@@ -71,7 +71,7 @@
                             {% include 'posts/shoutbox_post.html' %}
                         {% endif %}
                         {% for shoutbox_post in shoutbox %}
-                            <div class="l-box">
+                            <div class="l-box" style="margin-left: 0; padding-left: 0;">
                                 <div class="media">
                                     <div class="pull-left">
                                         <a href="{% url 'listeners_profile' shoutbox_post.created_by.user.username %}">
