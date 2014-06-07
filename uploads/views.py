@@ -41,7 +41,8 @@ class PhotoView(TemplateView):
         except:
             photo_tags_user = None
 
-        if self.request.user.userprofile == photo.created_by or photo_tags_user:
-            context['is_user'] = True
+        if self.request.user.is_authenticated():
+            if self.request.user.userprofile == photo.created_by or photo_tags_user:
+                context['is_user'] = True
 
         return context
