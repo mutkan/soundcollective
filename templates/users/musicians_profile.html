@@ -55,7 +55,9 @@
                     {% if tagged_images %}
                         <div id="gallery">
                             {% for tag in tagged_images %}
-                                <img data-src="{{ MEDIA_PREFIX }}{{ tag.image.image }}" >
+                                <a href="{% url 'photo' tag.image.id %}">
+                                    <img data-src="{{ MEDIA_PREFIX }}{{ tag.image.image }}" >
+                                </a>
                             {% endfor %}
                         </div>
                     {% endif %}

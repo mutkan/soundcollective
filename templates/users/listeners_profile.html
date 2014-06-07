@@ -24,14 +24,12 @@
                 {% endif %}
             </div>
             <div class="social-media-box">
-                {% if user.email %}
-                    <div class="social-media-spacing">
-                        <a href="mailto:{{ user.email }}">
-                            <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
-                            &nbsp;{{ user_profile.user.email }}
-                        </a>
-                    </div>
-                {% endif %}
+                <div class="social-media-spacing">
+                    <a href="mailto:{{ user.email }}">
+                        <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
+                        &nbsp;{{ user_profile.user.email }}
+                    </a>
+                </div>
                 {% if user_profile.contact_twitter %}
                     <div class="social-media-spacing">
                         <a href="https://twitter.com/{{ user_profile.contact_twitter }}">
@@ -64,7 +62,9 @@
             {% if tagged_images %}
                 <div id="gallery">
                     {% for tag in tagged_images %}
-                        <img data-src="{{ MEDIA_PREFIX }}{{ tag.image.image }}" >
+                        <a href="{% url 'photo' tag.image.id %}">
+                            <img data-src="{{ MEDIA_PREFIX }}{{ tag.image.image }}" >
+                        </a>
                     {% endfor %}
                 </div>
             {% endif %}
