@@ -7,11 +7,25 @@ from django.utils.translation import ugettext_lazy as _
 from users.models import UserProfile, MusicianProfile, VenueProfile
 
 class EditUserProfileForm(ModelForm):
+
     profile_image = forms.ImageField()
     profile_image.required = False
     profile_image.widget = forms.ClearableFileInput(
         attrs = {
             'id': 'input-profile-image',
+        }
+    )
+
+    display_email = forms.BooleanField()
+    display_email.required = False
+    display_email.widget = forms.CheckboxInput()
+
+    email = forms.EmailField()
+    email.required = True
+    email.widget = forms.EmailInput(
+        attrs = {
+            'class': 'form-control',
+            'id': 'input-email',
         }
     )
 
@@ -21,6 +35,9 @@ class EditUserProfileForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EditUserProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields['email'].initial = self.instance.user.email
+        self.fields['display_email'].initial = self.instance.display_email
 
         self.fields['display_name'].required = False
         self.fields['display_name'].widget = forms.TextInput(
@@ -51,12 +68,11 @@ class EditUserProfileForm(ModelForm):
         )
 
         self.fields['embedded_player'].required = False
-        self.fields['embedded_player'].widget = forms.Textarea(
+        self.fields['embedded_player'].widget = forms.TextInput(
             attrs = {
-                'placeholder': 'Embed a music player',
+                'placeholder': 'Provide a SoundCloud link',
                 'class': 'form-control',
                 'id': 'input-embedded_player',
-                'rows': 5,
             }
         )
 

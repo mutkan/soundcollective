@@ -31,6 +31,7 @@ class UserProfile(CreateModifyDatesNoUser):
 
     embedded_player = models.CharField(max_length=512, null=True)
 
+    display_email = models.BooleanField(default=True)
     contact_twitter = models.CharField(max_length=128, null=True)
     contact_facebook = models.CharField(max_length=128, null=True)
 

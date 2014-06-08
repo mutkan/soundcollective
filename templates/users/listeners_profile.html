@@ -24,12 +24,14 @@
                 {% endif %}
             </div>
             <div class="social-media-box">
-                <div class="social-media-spacing">
-                    <a href="mailto:{{ user.email }}">
-                        <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
-                        &nbsp;{{ user_profile.user.email }}
-                    </a>
-                </div>
+                {% if user_profile.display_email %}
+                    <div class="social-media-spacing">
+                        <a href="mailto:{{ user.email }}">
+                            <img class="social-media-icon-gmail" src="{{ MEDIA_PREFIX }}images/common/gmail.png" >
+                            &nbsp;{{ user_profile.user.email }}
+                        </a>
+                    </div>
+                {% endif %}
                 {% if user_profile.contact_twitter %}
                     <div class="social-media-spacing">
                         <a href="https://twitter.com/{{ user_profile.contact_twitter }}">

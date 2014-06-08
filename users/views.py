@@ -157,6 +157,10 @@ class UserProfileEditView(UpdateView):
         except:
             pass
 
+        user_profile.user.email = form.cleaned_data['email']
+        user_profile.user.save()
+        
+        user_profile.display_email = form.cleaned_data['display_email']
         user_profile.save()
 
         return HttpResponseRedirect(reverse('listeners_profile', args=(self.get_object().user.username,)))

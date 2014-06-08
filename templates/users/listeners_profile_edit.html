@@ -24,6 +24,7 @@
         </div>
     </div>
 
+
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
@@ -33,8 +34,9 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="input-twitter">Twitter Username</label>
-                {{ form.contact_twitter }}
+                <label for="input-email-check">Email Address (Display on Profile: </label>
+                {{ form.display_email }})
+                {{ form.email }}
             </div>
         </div>
     </div>
@@ -62,9 +64,21 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="form-group">                           
-                <label for="input-embedded_player">Embed a Music Player</label>
-                {{ form.embedded_player }}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="input-twitter">Twitter Username</label>
+                        {{ form.contact_twitter }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">                           
+                        <label for="input-embedded_player">Embed a Music Player</label>
+                        {{ form.embedded_player }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
