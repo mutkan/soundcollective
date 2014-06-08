@@ -54,10 +54,11 @@
                     {% if forloop.first %}
                         <legend class="orange">ASSOCIATED ACTS</legend>
                     {% endif %}
-                    <a id="band-link" href="{% url 'musicians_profile' act.username %}"
-                        data-toggle="tooltip" title="{{ act.display_name }}" data-placement="bottom">
-                        <img class="pull-left related-image" src="{{ MEDIA_PREFIX }}{{ act.profile_image.image }}" />
-                    </a>
+                    <button id="band-link" data-toggle="tooltip" title="{{ act.display_name }}" data-placement="bottom">
+                        <a href="{% url 'musicians_profile' act.username %}">
+                            <img class="pull-left related-image" src="{{ MEDIA_PREFIX }}{{ act.profile_image.image }}" />
+                        </a>
+                    </button>
                 {% endfor %}
             </div>
         </div>
