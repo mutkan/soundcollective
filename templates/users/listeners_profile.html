@@ -54,7 +54,8 @@
                     {% if forloop.first %}
                         <legend class="orange">ASSOCIATED ACTS</legend>
                     {% endif %}
-                    <a href="{% url 'musicians_profile' act.username %}">
+                    <a id="band-link" href="{% url 'musicians_profile' act.username %}"
+                        data-toggle="tooltip" title="{{ act.display_name }}" data-placement="bottom">
                         <img class="pull-left related-image" src="{{ MEDIA_PREFIX }}{{ act.profile_image.image }}" />
                     </a>
                 {% endfor %}
@@ -125,6 +126,7 @@
         </div>
     </div>
     <script>
+        $("#band-link").tooltip()
         $(document).ready(function() {
             var p = $("#gallery").portfolio({
                 enableKeyboardNavigation: false,
